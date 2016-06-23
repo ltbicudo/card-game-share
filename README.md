@@ -14,10 +14,12 @@ A short description of the motivation behind the creation and maintenance of the
 
 * Configure your plugin groups tag at settings.xml to referente jetty:
 
+	```
 	<pluginGroups>
 	  ... others plugins already configured ...
 	  <pluginGroup>org.mortbay.jetty</pluginGroup>
 	</pluginGroups>
+	```
 
 ## API Reference
 
