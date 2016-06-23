@@ -12,7 +12,11 @@ A short description of the motivation behind the creation and maintenance of the
 
 ## Installation
 
-Provide code examples and explanations of how to get the project.
+Configurar o plugin do jetty em seu settings.xml conforme abaixo:
+	<pluginGroups>
+	  ... demais plugins já existentes ...
+	  <pluginGroup>org.mortbay.jetty</pluginGroup>
+	</pluginGroups>
 
 ## API Reference
 
