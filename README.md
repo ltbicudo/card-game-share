@@ -12,10 +12,10 @@ A short description of the motivation behind the creation and maintenance of the
 
 ## Installation
 
-Configurar o plugin do jetty em seu settings.xml conforme abaixo:
+* Configure your plugin groups tag at settings.xml to referente jetty:
 
 	<pluginGroups>
-	  ... demais plugins já existentes ...
+	  ... others plugins already configured ...
 	  <pluginGroup>org.mortbay.jetty</pluginGroup>
 	</pluginGroups>
 
@@ -29,7 +29,8 @@ Describe and show how to run the tests with code examples.
 
 ## Contributors
 
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+* Lucas Tavares Bicudo
+* Flavia Stockchneider
 
 ## License
 
