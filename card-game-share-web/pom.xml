@@ -35,11 +35,11 @@
                         <contextPath>/card-game-share</contextPath>
                     </webAppConfig>
                     <connectors>
-                        <connector
-                                implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                             <port>9090</port>
                         </connector>
                     </connectors>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
                 </configuration>
             </plugin>
         </plugins>
