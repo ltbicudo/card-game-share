@@ -13,6 +13,7 @@ A short description of the motivation behind the creation and maintenance of the
 ## Installation
 
 Configurar o plugin do jetty em seu settings.xml conforme abaixo:
+
 	<pluginGroups>
 	  ... demais plugins já existentes ...
 	  <pluginGroup>org.mortbay.jetty</pluginGroup>
