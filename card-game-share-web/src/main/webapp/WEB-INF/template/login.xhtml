@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:commandButton id="btnLogin" value="#{message['btn.login']}" />
+
+    <p:overlayPanel for="btnLogin"
+                    showEffect="blind"
+                    dismissable="true"
+                    showEvent="mousedown"
+                    hideEvent="mousedown"
+                    showCloseIcon="true">
+        <h:outputLabel value="Login: " />
+        <h:inputText />
+        <br/>
+        <h:outputLabel value="Senha: " />
+        <h:inputSecret />
+    </p:overlayPanel>
+
+</ui:composition>
