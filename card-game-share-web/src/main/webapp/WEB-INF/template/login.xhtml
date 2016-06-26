@@ -4,7 +4,16 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:commandButton id="btnLogin" value="#{message['btn.login']}" />
+    <p:panelGrid style="width: 100%">
+        <p:row>
+            <p:column>
+                <p:outputLabel value="Restante do conteúdo do login aqui" />
+            </p:column>
+            <p:column>
+                <h:commandButton id="btnLogin" value="#{message['btn.login']}" />
+            </p:column>
+        </p:row>
+    </p:panelGrid>
 
     <p:overlayPanel for="btnLogin"
                     showEffect="blind"
@@ -12,11 +21,41 @@
                     showEvent="mousedown"
                     hideEvent="mousedown"
                     showCloseIcon="true">
-        <h:outputLabel value="Login: " />
-        <h:inputText />
-        <br/>
-        <h:outputLabel value="Senha: " />
-        <h:inputSecret />
+
+        <p:panelGrid>
+            <p:row>
+                <p:column>
+                    <p:outputLabel value="#{message['label.login']}" />
+                </p:column>
+                <p:column>
+                    <p:inputText />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel value="#{message['label.senha']}" />
+                </p:column>
+                <p:column>
+                    <p:password />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column colspan="2">
+                    <p:commandLink>
+                        #{message['link.esqueceu.senha']}
+                    </p:commandLink>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column colspan="2">
+                    <p:commandLink>
+                        #{message['link.cadastrese']}
+                    </p:commandLink>
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+
+
     </p:overlayPanel>
 
 </ui:composition>
