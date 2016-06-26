@@ -7,7 +7,9 @@
     <p:panelGrid style="width: 100%">
         <p:row>
             <p:column>
-                <p:outputLabel value="Restante do conteúdo do login aqui" />
+                <h:link outcome="pretty:inicio">
+                    <p:outputLabel value="#{message['link.home']}" />
+                </h:link>
             </p:column>
             <p:column>
                 <h:commandButton id="btnLogin" value="#{message['btn.login']}" />
@@ -41,16 +43,16 @@
             </p:row>
             <p:row>
                 <p:column colspan="2">
-                    <p:commandLink>
+                    <h:link>
                         #{message['link.esqueceu.senha']}
-                    </p:commandLink>
+                    </h:link>
                 </p:column>
             </p:row>
             <p:row>
                 <p:column colspan="2">
-                    <p:commandLink>
+                    <h:link outcome="pretty:cadastrar">
                         #{message['link.cadastrese']}
-                    </p:commandLink>
+                    </h:link>
                 </p:column>
             </p:row>
         </p:panelGrid>

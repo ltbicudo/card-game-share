@@ -13,7 +13,8 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean(name = "nav", eager = true)
 @ApplicationScoped
 @URLMappings(mappings = {
-        @URLMapping(id = "inicio", pattern = "/", viewId = "/WEB-INF/pages/landing.xhtml")
+        @URLMapping(id = "inicio", pattern = "/", viewId = "/WEB-INF/pages/landing.xhtml"),
+        @URLMapping(id = "cadastrar", pattern = "/cadastrar", viewId = "/WEB-INF/pages/cadastro/cadastro.xhtml")
     }
 )
 public class NavigationContext {
