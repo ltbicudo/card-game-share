@@ -9,12 +9,12 @@
         <param-name>com.ocpsoft.pretty.BASE_PACKAGES</param-name>
         <param-value>br.com.cardgameshare</param-value>
     </context-param>
-    <!--
+
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <param-value>home</param-value>
     </context-param>
-    -->
+
 
     <!-- Define the JSF listener class when using the Jetty Maven Plugin with Jetty8 -->
     <listener>
