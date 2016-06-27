@@ -2,6 +2,7 @@ package br.com.cardgameshare.navigation;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLMappings;
+import org.omnifaces.util.Faces;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -18,4 +19,9 @@ import javax.faces.bean.ManagedBean;
     }
 )
 public class NavigationContext {
+
+    public String direcionarParaTela(String mappingId) {
+        return mappingId;
+    }
+
 }

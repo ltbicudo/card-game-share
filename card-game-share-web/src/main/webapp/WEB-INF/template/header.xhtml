@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="ui-grid-col-12">
+        <h:form id="formMenuBar" prependId="false">
+            <p:menubar>
+                <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" />
+
+                <f:facet name="options">
+                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" />
+                </f:facet>
+            </p:menubar>
+
+            <p:overlayPanel for="menuItemLogin"
+                            showEffect="blind"
+                            dismissable="true"
+                            showEvent="mousedown"
+                            hideEvent="mousedown"
+                            showCloseIcon="true">
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="#{message['label.login']}" />
+                        </p:column>
+                        <p:column>
+                            <p:inputText />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="#{message['label.senha']}" />
+                        </p:column>
+                        <p:column>
+                            <p:password />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <h:link>
+                                #{message['link.esqueceu.senha']}
+                            </h:link>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <h:link outcome="pretty:cadastrar">
+                                #{message['link.cadastrese']}
+                            </h:link>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:overlayPanel>
+
+        </h:form>
+    </div>
+
+</ui:composition>
