@@ -6,7 +6,14 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="body">
-        Tela de Cadastro
+        <div class="ui-grid-responsive">
+            <div class="ui-grid-col-4">
+                <p:outputLabel for="name"  value="Nome: "/>
+            </div>
+            <div class="ui-grid-col-8">
+                <p:inputText id="name"/>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>
