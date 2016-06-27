@@ -6,14 +6,34 @@
                 template="/WEB-INF/template/template.xhtml">
 
     <ui:define name="body">
-        <div class="ui-grid-responsive">
-            <div class="ui-grid-col-4">
-                <p:outputLabel for="name"  value="Nome: "/>
+        <h:form id="formCadastro" prependId="false">
+
+            <p:growl />
+
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-col-1">
+                    <p:outputLabel for="name" value="Nome: "/>
+                </div>
+                <div class="ui-grid-col-11">
+                    <p:inputText id="name" required="true" />
+                </div>
+
+                <div class="ui-grid-col-11">
+                    <p:spacer />
+                </div>
+
+                <div class="ui-grid-col-11">
+                    <p:commandButton    id="btnCriarConta"
+                                        value="Criar conta"
+                                        update="formCadastro"
+                                        action="#{cadastroManager.cadastrar()}" />
+                </div>
+
+                <div class="ui-grid-col-11">
+                    <p:spacer />
+                </div>
             </div>
-            <div class="ui-grid-col-8">
-                <p:inputText id="name"/>
-            </div>
-        </div>
+        </h:form>
     </ui:define>
 
 </ui:composition>
