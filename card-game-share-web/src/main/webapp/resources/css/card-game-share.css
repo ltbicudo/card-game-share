@@ -1,0 +1,14 @@
+body {
+    margin: 0px;
+    padding: 0;
+    font-size: 12px;
+}
+
+.ui-grid-allign-right {
+    text-align: right !important;
+}
+
+.ui-grid-label {
+    text-align: right !important;
+    padding-right: 5px !important;
+}
