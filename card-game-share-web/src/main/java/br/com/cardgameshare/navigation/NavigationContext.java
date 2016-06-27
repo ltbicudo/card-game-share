@@ -20,6 +20,18 @@ import javax.faces.bean.ManagedBean;
 )
 public class NavigationContext {
 
+    /**
+     * Método para direcionar para o mapeamento pretty desejado.
+     *
+     * Deve-se sempre informar o valor desejado colocando o prefixo "pretty:" no texto.
+     *
+     * Exemplo:
+     *  Para navegar para a tela de início devemos passar o seguinte parâmetro
+     *      pretty:inicio
+     *
+     * @param mappingId mapeamento a ser utilizado
+     * @return mapeamento que será navegado
+     */
     public String direcionarParaTela(String mappingId) {
         return mappingId;
     }
