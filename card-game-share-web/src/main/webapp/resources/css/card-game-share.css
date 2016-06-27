@@ -4,6 +4,10 @@ body {
     font-size: 12px;
 }
 
+.ui-grid-row {
+    padding-bottom: 5px;
+}
+
 .ui-grid-allign-right {
     text-align: right !important;
 }
