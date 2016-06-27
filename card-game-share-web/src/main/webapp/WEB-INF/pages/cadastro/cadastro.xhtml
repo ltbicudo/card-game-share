@@ -11,38 +11,57 @@
             <p:growl />
 
             <div class="ui-grid ui-grid-responsive">
-                <div class="ui-grid-col-1">
-                    <p:outputLabel for="name" value="Nome: " />
-                </div>
-                <div class="ui-grid-col-11">
-                    <p:inputText id="name" size="80" maxlength="100" required="true" requiredMessage="Nome é obrigatório" />
+
+                <!-- Nome -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-1">
+                        <p:outputLabel for="name" value="Nome: " />
+                    </div>
+                    <div class="ui-grid-col-11">
+                        <p:inputText id="name" size="60" maxlength="100" required="true" requiredMessage="Nome é obrigatório" />
+                    </div>
                 </div>
 
-                <div class="ui-grid-col-12">
-                    <p:spacer />
+                <!-- Email -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-1">
+                        <p:outputLabel for="email" value="Email: " />
+                    </div>
+                    <div class="ui-grid-col-11">
+                        <p:inputText id="email" size="60" maxlength="100" required="true" />
+                    </div>
                 </div>
 
-                <div class="ui-grid-col-1">
-                    <p:outputLabel for="email" value="Email: " />
-                </div>
-                <div class="ui-grid-col-11">
-                    <p:inputText id="email" size="80" maxlength="100" required="true" />
-                </div>
-
-                <div class="ui-grid-col-12">
-                    <p:spacer />
-                </div>
-
-                <div class="ui-grid-col-12">
-                    <p:commandButton    id="btnCriarConta"
-                                        value="Criar conta"
-                                        update="formCadastro"
-                                        action="#{cadastroManager.cadastrar()}" />
+                <!-- Confirmação Email -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-1">
+                        <p:outputLabel for="confirmacaoEmail" value="Confirmação email: " />
+                    </div>
+                    <div class="ui-grid-col-11">
+                        <p:inputText id="confirmacaoEmail" size="60" maxlength="100" required="true" />
+                    </div>
                 </div>
 
-                <div class="ui-grid-col-12">
-                    <p:spacer />
+                <!-- Senha -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-1">
+                        <p:outputLabel for="senha" value="Senha: " />
+                    </div>
+                    <div class="ui-grid-col-11">
+                        <p:password id="senha" size="30" maxlength="22" required="true" />
+                    </div>
                 </div>
+
+                <!-- Botoes -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-12">
+                        <p:commandButton    id="btnCriarConta"
+                                            value="Criar conta"
+                                            update="formCadastro"
+                                            action="#{cadastroManager.cadastrar()}" />
+                    </div>
+                </div>
+
             </div>
         </h:form>
     </ui:define>
