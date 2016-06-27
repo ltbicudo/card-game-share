@@ -4,51 +4,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <f:view encoding="UTF-8" contentType="text/html" locale="pt_BR">
         <h:head>
             <title>CardGame Share</title>
+            <h:outputStylesheet name="card-game-share.css" library="css" />
         </h:head>
-    </f:view>
 
-    <div class="ui-grid ui-responsive">
-        <div class="ui-grid-col-12" style="padding-bottom: 5px;">
-            <ui:include src="/WEB-INF/template/header.xhtml" />
-        </div>
-        <div class="ui-grid-col-10">
-            <ui:insert name="body" />
-        </div>
-        <div class="ui-grid-col-2">
-            <h:graphicImage url="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg"
-                            width="100%"/>
-
-        </div>
-        <div class="ui-grid-col-12">
-            <ui:include src="/WEB-INF/template/footer.xhtml" />
-        </div>
-
+        <div class="ui-grid ui-grid-responsive">
+            <div class="ui-grid-col-12" style="padding-bottom: 5px;">
+                <ui:include src="/WEB-INF/template/header.xhtml" />
+            </div>
+            <div class="ui-grid-col-1">
+                <p:spacer />
+            </div>
+            <div class="ui-grid-col-9">
+                <ui:insert name="body" />
+            </div>
+            <div class="ui-grid-col-2">
+                <!-- COMENTADO TEMPORARIAMENTE -->
                 <!--
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, orci nec dictum convallis, ligula mauris vestibulum turpis, nec varius tortor quam at diam. Nullam a viverra nibh. In tincidunt tempor lectus quis vulputate. Pellentesque nec dui aliquam, lobortis est in, lobortis ante</div>
-                    <div class="ui-g-12 ui-md-4">Maecenas vel nisi aliquet, vulputate tortor id, laoreet massa. Maecenas mattis tristique bibendum. Suspendisse vel mi dictum, vestibulum lacus quis, pulvinar quam. Proin vulputate, nibh at finibus varius, leo eros lacinia elit, nec blandit odio tellus a justo. Donec nec ex auctor, tristique nulla nec, rutrum sapien.</div>
-                    <div class="ui-g-12 ui-md-4">Proin efficitur in leo eget ornare. Nam vestibulum neque sed velit sagittis sodales. Sed scelerisque hendrerit magna a hendrerit. Cras tempor sem at justo pharetra convallis. Curabitur vel sodales purus. Vestibulum interdum facilisis nulla imperdiet suscipit. Quisque lectus felis, condimentum eget hendrerit sit amet.</div>
-                </div>
-
-                <div class="ui-g">
-                    <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature1.jpg" style="width:100%"/></div>
-                    <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature2.jpg" style="width:100%"/></div>
-                    <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature3.jpg" style="width:100%"/></div>
-                    <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature4.jpg" style="width:100%"/></div>
-                </div>
-
-                <div class="ui-g">
-                    <div class="ui-g-12 ui-md-6">Phasellus faucibus purus volutpat mauris lacinia sodales. Ut sit amet sapien facilisis, commodo dui non, fringilla tellus. Quisque tempus facilisis nisi sodales finibus. Pellentesque neque orci, ullamcorper vitae ligula quis, dignissim euismod augue.</div>
-                    <div class="ui-g-12 ui-md-6">Fusce ullamcorper congue massa, eget ullamcorper nunc lobortis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultrices dui eget dolor feugiat dapibus. Aliquam pretium leo et egestas luctus. Nunc facilisis gravida tellus.</div>
-                </div>
+                <h:graphicImage url="https://upload.wikimedia.org/wikipedia/en/a/aa/Magic_the_gathering-card_back.jpg"
+                                width="100%"/>
                 -->
-    </div>
+                <p:spacer />
+            </div>
+            <div class="ui-grid-col-12">
+                <ui:include src="/WEB-INF/template/footer.xhtml" />
+            </div>
 
-    <br/>
+                    <!--
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, orci nec dictum convallis, ligula mauris vestibulum turpis, nec varius tortor quam at diam. Nullam a viverra nibh. In tincidunt tempor lectus quis vulputate. Pellentesque nec dui aliquam, lobortis est in, lobortis ante</div>
+                        <div class="ui-g-12 ui-md-4">Maecenas vel nisi aliquet, vulputate tortor id, laoreet massa. Maecenas mattis tristique bibendum. Suspendisse vel mi dictum, vestibulum lacus quis, pulvinar quam. Proin vulputate, nibh at finibus varius, leo eros lacinia elit, nec blandit odio tellus a justo. Donec nec ex auctor, tristique nulla nec, rutrum sapien.</div>
+                        <div class="ui-g-12 ui-md-4">Proin efficitur in leo eget ornare. Nam vestibulum neque sed velit sagittis sodales. Sed scelerisque hendrerit magna a hendrerit. Cras tempor sem at justo pharetra convallis. Curabitur vel sodales purus. Vestibulum interdum facilisis nulla imperdiet suscipit. Quisque lectus felis, condimentum eget hendrerit sit amet.</div>
+                    </div>
 
+                    <div class="ui-g">
+                        <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature1.jpg" style="width:100%"/></div>
+                        <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature2.jpg" style="width:100%"/></div>
+                        <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature3.jpg" style="width:100%"/></div>
+                        <div class="ui-g-6 ui-md-3"><p:graphicImage name="demo/images/nature/nature4.jpg" style="width:100%"/></div>
+                    </div>
+
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6">Phasellus faucibus purus volutpat mauris lacinia sodales. Ut sit amet sapien facilisis, commodo dui non, fringilla tellus. Quisque tempus facilisis nisi sodales finibus. Pellentesque neque orci, ullamcorper vitae ligula quis, dignissim euismod augue.</div>
+                        <div class="ui-g-12 ui-md-6">Fusce ullamcorper congue massa, eget ullamcorper nunc lobortis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultrices dui eget dolor feugiat dapibus. Aliquam pretium leo et egestas luctus. Nunc facilisis gravida tellus.</div>
+                    </div>
+                    -->
+        </div>
+    </f:view>
 </html>
