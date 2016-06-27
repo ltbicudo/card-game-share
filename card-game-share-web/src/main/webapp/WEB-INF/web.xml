@@ -12,9 +12,8 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>home</param-value>
+        <param-value>cruze</param-value>
     </context-param>
-
 
     <!-- Define the JSF listener class when using the Jetty Maven Plugin with Jetty8 -->
     <listener>
