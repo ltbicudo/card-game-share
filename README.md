@@ -12,14 +12,15 @@ A short description of the motivation behind the creation and maintenance of the
 
 ## Installation
 
-* Configure your plugin groups tag at settings.xml to referente jetty:
-
-	```
-	<pluginGroups>
-	  ... others plugins already configured ...
-	  <pluginGroup>org.mortbay.jetty</pluginGroup>
-	</pluginGroups>
-	```
+1. Download TomEE from [Apache Page](http://tomee.apache.org/apache-tomee.html)
+  1. Version apache-tomee-webprofile-1.7.4
+2. Configure Application Servers at IntelliJ IDEA 
+3. Open system.properties
+  1. Change tomee.serialization.class.blacklist pro from * to -
+4. Add the card-game-share-web:exploded artifact into server
+5. Configure the context root to card-game-share
+6. Run the server
+7. Open http://localhost:8080/card-game-share
 
 ## API Reference
 
