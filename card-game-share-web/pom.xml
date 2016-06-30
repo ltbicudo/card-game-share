@@ -98,6 +98,12 @@
             <version>1.0.8</version>
             <type>pom</type>
         </dependency>
+        <!-- CardGame Share Service -->
+        <dependency>
+            <groupId>br.com.card-share</groupId>
+            <artifactId>card-game-share-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     
 </project>

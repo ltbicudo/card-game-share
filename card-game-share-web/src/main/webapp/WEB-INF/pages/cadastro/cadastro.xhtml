@@ -18,7 +18,7 @@
                         <p:outputLabel for="name" value="Nome: " />
                     </div>
                     <div class="ui-grid-col-11">
-                        <p:inputText id="name" size="60" maxlength="100" required="true" requiredMessage="Nome é obrigatório" />
+                        <p:inputText id="name" size="60" maxlength="100" required="true" requiredMessage="Nome é obrigatório" value="#{cadastroManager.cadastroDTO.nome}" />
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@
                         <p:outputLabel for="email" value="Email: " />
                     </div>
                     <div class="ui-grid-col-11">
-                        <p:inputText id="email" size="60" maxlength="100" required="true" />
+                        <p:inputText id="email" size="60" maxlength="100" required="true" value="#{cadastroManager.cadastroDTO.email}" />
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@
                         <p:outputLabel for="confirmacaoEmail" value="Confirmação email: " />
                     </div>
                     <div class="ui-grid-col-11">
-                        <p:inputText id="confirmacaoEmail" size="60" maxlength="100" required="true" />
+                        <p:inputText id="confirmacaoEmail" size="60" maxlength="100" required="true" value="#{cadastroManager.cadastroDTO.confirmacaoEmail}" />
                     </div>
                 </div>
 

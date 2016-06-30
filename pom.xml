@@ -24,6 +24,24 @@
 
     <modules>
         <module>card-game-share-web</module>
+        <module>card-game-share-service</module>
+        <module>card-game-share-common</module>
     </modules>
+
+    <dependencies>
+        <!-- Apache OpenEJB -->
+        <dependency>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0-6</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- CardGame Share Common -->
+        <dependency>
+            <groupId>br.com.card-share</groupId>
+            <artifactId>card-game-share-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     
 </project>
