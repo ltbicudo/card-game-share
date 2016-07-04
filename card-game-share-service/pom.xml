@@ -15,5 +15,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>ejb</packaging>
 
+    <dependencies>
+        <!-- CardGame Share Persistence -->
+        <dependency>
+            <groupId>br.com.card-share</groupId>
+            <artifactId>card-game-share-persistence</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     
 </project>
