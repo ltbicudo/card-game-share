@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Flavia on 7/3/2016.
  */
-public class Carta {
+public class Carta extends Entity {
 
     private Artista artista;
     private Integer custoManaConvertido;

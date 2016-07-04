@@ -5,9 +5,8 @@ import java.util.Date;
 /**
  * Created by Flavia on 7/3/2016.
  */
-public class Colecao {
+public class Colecao extends Entity {
 
-    private Long id;
     private String nome;
     private String codigo;
     private String jsonGetererCode;

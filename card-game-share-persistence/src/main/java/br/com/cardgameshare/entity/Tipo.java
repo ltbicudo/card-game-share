@@ -3,8 +3,7 @@ package br.com.cardgameshare.entity;
 /**
  * Created by Flavia on 7/3/2016.
  */
-public class Tipo {
+public class Tipo extends Entity {
 
-    private Long id;
     private  String descricao;
 }
