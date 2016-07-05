@@ -2,11 +2,17 @@ package br.com.cardgameshare.service;
 
 import br.com.cardgameshare.dto.CadastroDTO;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
+import br.com.cardgameshare.repository.RepositoryFactory;
+import br.com.cardgameshare.repository.UsuarioRepository;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class UsuarioService extends Service {
+
+    @EJB
+    private RepositoryFactory repositoryFactory;
 
     public void validarUsuarioParaCriacao(CadastroDTO dto) throws ExcecaoNegocial {
 
