@@ -1,6 +1,7 @@
 package br.com.cardgameshare.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -9,6 +10,10 @@ import javax.persistence.Table;
 @javax.persistence.Entity
 @Table(name = "artista")
 public class Artista extends Entity {
+
+    @Id
+    @Column(unique = true, nullable = false, precision = 22)
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
@@ -19,5 +24,15 @@ public class Artista extends Entity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }
