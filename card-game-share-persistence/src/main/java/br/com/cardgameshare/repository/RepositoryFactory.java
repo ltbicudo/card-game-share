@@ -14,12 +14,20 @@ public class RepositoryFactory {
     private EntityManager em;
 
     private UsuarioRepository usuarioRepository = null;
+    private ContatoRepository contatoRepository= null;
 
     public UsuarioRepository createUsuarioRepository() {
         if (this.usuarioRepository == null) {
             return new UsuarioRepository(em);
         }
         return this.usuarioRepository;
+    }
+
+    public ContatoRepository createContatoRepository() {
+        if (this.contatoRepository == null) {
+            return new ContatoRepository(em);
+        }
+        return this.contatoRepository;
     }
 
 }

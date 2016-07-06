@@ -14,9 +14,7 @@ public class ContatoService extends Service {
     public void enviarMensagem(ContatoDTO dto) throws ExcecaoNegocial {
 
         try {
-
-
-
+            super.createContatoRepository().save(dto);
         } catch (Exception e) {
             super.tratarExcecaoNaoNegocial(e, "Problemas na validação do usuário!");
         }

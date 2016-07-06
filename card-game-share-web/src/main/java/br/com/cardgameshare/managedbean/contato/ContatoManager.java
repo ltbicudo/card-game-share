@@ -3,6 +3,7 @@ package br.com.cardgameshare.managedbean.contato;
 import br.com.cardgameshare.dto.CadastroDTO;
 import br.com.cardgameshare.dto.ContatoDTO;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
+import br.com.cardgameshare.service.ContatoService;
 import br.com.cardgameshare.service.UsuarioService;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,9 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class ContatoManager {
 
+    @EJB
+    private ContatoService contatoService;
+
     private ContatoDTO contatoDTO;
 
     @PostConstruct
@@ -33,16 +37,13 @@ public class ContatoManager {
      */
     public String enviar() {
 
-        /**
         try {
-            this.usuarioService.validarUsuarioParaCriacao(this.cadastroDTO);
+            this.contatoService.enviarMensagem(this.contatoDTO);
             return "pretty:inicio";
         } catch (ExcecaoNegocial e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
             return null;
         }
-         */
-        return null;
     }
 
     public ContatoDTO getContatoDTO() {
