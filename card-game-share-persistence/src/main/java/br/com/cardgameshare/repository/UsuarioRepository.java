@@ -4,12 +4,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class UsuarioRepository {
-
-    private EntityManager em;
+public class UsuarioRepository extends Repository {
 
     public UsuarioRepository(EntityManager em) {
-        this.em = em;
+        super.em = em;
     }
 
 }
