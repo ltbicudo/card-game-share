@@ -11,9 +11,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class UsuarioService extends Service {
 
-    @EJB
-    private RepositoryFactory repositoryFactory;
-
     public void validarUsuarioParaCriacao(CadastroDTO dto) throws ExcecaoNegocial {
 
         try {
