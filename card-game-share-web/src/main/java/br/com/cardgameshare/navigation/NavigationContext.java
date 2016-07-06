@@ -15,7 +15,8 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 @URLMappings(mappings = {
         @URLMapping(id = "inicio", pattern = "/", viewId = "/WEB-INF/pages/landing.xhtml"),
-        @URLMapping(id = "cadastrar", pattern = "/cadastrar", viewId = "/WEB-INF/pages/cadastro/cadastro.xhtml")
+        @URLMapping(id = "cadastrar", pattern = "/cadastrar", viewId = "/WEB-INF/pages/cadastro/cadastro.xhtml"),
+        @URLMapping(id = "contato", pattern = "/contato", viewId = "/WEB-INF/pages/contato/contato.xhtml")
     }
 )
 public class NavigationContext {

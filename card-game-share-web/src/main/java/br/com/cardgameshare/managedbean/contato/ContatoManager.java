@@ -1,6 +1,7 @@
-package br.com.cardgameshare.managedbean.cadastro;
+package br.com.cardgameshare.managedbean.contato;
 
 import br.com.cardgameshare.dto.CadastroDTO;
+import br.com.cardgameshare.dto.ContatoDTO;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.service.UsuarioService;
 
@@ -12,29 +13,27 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
- * ManagedBean para controle da tela de Cadastro
+ * ManagedBean para controle da tela de Contato
  */
 @ManagedBean
 @RequestScoped
-public class CadastroManager {
+public class ContatoManager {
 
-    @EJB
-    private UsuarioService usuarioService;
-
-    private CadastroDTO cadastroDTO;
+    private ContatoDTO contatoDTO;
 
     @PostConstruct
     private void init() {
-        this.cadastroDTO = new CadastroDTO();
+        this.contatoDTO = new ContatoDTO();
     }
 
     /**
-     * Realiza o cadastro de um novo usuário.
+     * Realiza o envio da mensagem de contato.
      *
      * @return
      */
-    public String cadastrar() {
+    public String enviar() {
 
+        /**
         try {
             this.usuarioService.validarUsuarioParaCriacao(this.cadastroDTO);
             return "pretty:inicio";
@@ -42,13 +41,15 @@ public class CadastroManager {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
             return null;
         }
+         */
+        return null;
     }
 
-    public CadastroDTO getCadastroDTO() {
-        return cadastroDTO;
+    public ContatoDTO getContatoDTO() {
+        return contatoDTO;
     }
 
-    public void setCadastroDTO(CadastroDTO cadastroDTO) {
-        this.cadastroDTO = cadastroDTO;
+    public void setContatoDTO(ContatoDTO contatoDTO) {
+        this.contatoDTO = contatoDTO;
     }
 }
