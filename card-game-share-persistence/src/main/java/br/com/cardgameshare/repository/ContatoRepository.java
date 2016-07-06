@@ -18,12 +18,14 @@ public class ContatoRepository extends Repository {
 
         super.em.getTransaction().begin();
 
+        // FIXME Implementar via dozer a conversao entre dto e entity
+        // garantir que os valores em branco na tela virem NULL
         Contato contatoFake = new Contato();
-        contatoFake.setId(1L);
         contatoFake.setMensagem(dto.getMensagem());
+        contatoFake.setNome(dto.getNome());
+        contatoFake.setEmail(dto.getEmail());
 
-        // TODO Implementar via dozer a conversao entre dto e entity
-        super.em.merge(contatoFake); // TODO Mudar aqui para persistir a entity
+        super.em.merge(contatoFake);
 
         super.em.getTransaction().commit();
 

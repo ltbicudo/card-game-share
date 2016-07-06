@@ -14,6 +14,10 @@
             <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=/card-game-share"/>
         </h:head>
 
+        <h:form id="formGrowl" prependId="false">
+            <p:growl autoUpdate="true" />
+        </h:form>
+
         <div class="ui-grid ui-grid-responsive">
             <div class="ui-grid-col-12" style="padding-bottom: 5px;">
                 <ui:include src="/WEB-INF/template/header.xhtml" />

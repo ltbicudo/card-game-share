@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -39,6 +40,8 @@ public class ContatoManager {
 
         try {
             this.contatoService.enviarMensagem(this.contatoDTO);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensagem enviada", ""));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             return "pretty:inicio";
         } catch (ExcecaoNegocial e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
