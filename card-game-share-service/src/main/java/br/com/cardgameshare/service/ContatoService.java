@@ -7,8 +7,12 @@ import br.com.cardgameshare.repository.RepositoryFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Stateless
+@TransactionManagement()
 public class ContatoService extends Service {
 
     public void enviarMensagem(ContatoDTO dto) throws ExcecaoNegocial {
@@ -16,7 +20,8 @@ public class ContatoService extends Service {
         try {
             super.createContatoRepository().save(dto);
         } catch (Exception e) {
-            super.tratarExcecaoNaoNegocial(e, "Problemas na validação do usuário!");
+            e.printStackTrace(); // FIXME mudar para log
+            super.tratarExcecaoNaoNegocial(e, "Problemas ao enviar a mensagem!");
         }
     }
 

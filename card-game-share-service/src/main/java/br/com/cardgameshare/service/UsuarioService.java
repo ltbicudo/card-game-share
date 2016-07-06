@@ -7,8 +7,10 @@ import br.com.cardgameshare.repository.UsuarioRepository;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
 
 @Stateless
+@TransactionManagement
 public class UsuarioService extends Service {
 
     public void validarUsuarioParaCriacao(CadastroDTO dto) throws ExcecaoNegocial {
@@ -24,6 +26,7 @@ public class UsuarioService extends Service {
             }
 
         } catch (Exception e) {
+            e.printStackTrace(); // FIXME mudar para log
             super.tratarExcecaoNaoNegocial(e, "Problemas na validação do usuário!");
         }
     }

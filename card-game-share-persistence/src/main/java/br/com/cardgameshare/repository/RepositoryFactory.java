@@ -2,6 +2,8 @@ package br.com.cardgameshare.repository;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -10,22 +12,27 @@ import javax.persistence.PersistenceContext;
 @Singleton
 public class RepositoryFactory {
 
-    @PersistenceContext
+    private EntityManagerFactory entityManagerFactory;
     private EntityManager em;
 
     private UsuarioRepository usuarioRepository = null;
     private ContatoRepository contatoRepository= null;
 
+    public RepositoryFactory() {
+        entityManagerFactory = Persistence.createEntityManagerFactory("CardGameSharePU");
+        em = entityManagerFactory.createEntityManager();
+    }
+
     public UsuarioRepository createUsuarioRepository() {
         if (this.usuarioRepository == null) {
-            return new UsuarioRepository(em);
+            this.usuarioRepository = new UsuarioRepository(em);
         }
         return this.usuarioRepository;
     }
 
     public ContatoRepository createContatoRepository() {
         if (this.contatoRepository == null) {
-            return new ContatoRepository(em);
+            this.contatoRepository = new ContatoRepository(em);
         }
         return this.contatoRepository;
     }
