@@ -13,8 +13,13 @@ public class RepositoryFactory {
     @PersistenceContext
     private EntityManager em;
 
+    private UsuarioRepository usuarioRepository = null;
+
     public UsuarioRepository createUsuarioRepository() {
-        return new UsuarioRepository(em);
+        if (this.usuarioRepository == null) {
+            return new UsuarioRepository(em);
+        }
+        return this.usuarioRepository;
     }
 
 }
