@@ -2,6 +2,7 @@ package br.com.cardgameshare.managedbean.contato;
 
 import br.com.cardgameshare.dto.CadastroDTO;
 import br.com.cardgameshare.dto.ContatoDTO;
+import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.service.ContatoService;
 import br.com.cardgameshare.service.UsuarioService;
@@ -13,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import java.util.List;
 
 /**
  * ManagedBean para controle da tela de Contato
@@ -25,10 +27,12 @@ public class ContatoManager {
     private ContatoService contatoService;
 
     private ContatoDTO contatoDTO;
+    private List<TipoContato> listaTipoContato;
 
     @PostConstruct
     private void init() {
         this.contatoDTO = new ContatoDTO();
+        listaTipoContato = this.contatoService.listarTiposContato();
     }
 
     /**
@@ -55,5 +59,13 @@ public class ContatoManager {
 
     public void setContatoDTO(ContatoDTO contatoDTO) {
         this.contatoDTO = contatoDTO;
+    }
+
+    public List<TipoContato> getListaTipoContato() {
+        return listaTipoContato;
+    }
+
+    public void setListaTipoContato(List<TipoContato> listaTipoContato) {
+        this.listaTipoContato = listaTipoContato;
     }
 }

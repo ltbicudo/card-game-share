@@ -2,16 +2,16 @@ package br.com.cardgameshare.dto;
 
 public class ContatoDTO {
 
-    private String motivo;
+    private Long motivo;
     private String mensagem;
     private String nome;
     private String email;
 
-    public String getMotivo() {
+    public Long getMotivo() {
         return motivo;
     }
 
-    public void setMotivo(String motivo) {
+    public void setMotivo(Long motivo) {
         this.motivo = motivo;
     }
 

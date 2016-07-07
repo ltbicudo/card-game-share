@@ -12,6 +12,10 @@ public class Contato extends Entity {
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_contato", nullable = false)
+    private TipoContato tipoContato;
+
     @Column(name = "mensagem", length = 4000, nullable = false)
     private String mensagem;
 
@@ -51,5 +55,13 @@ public class Contato extends Entity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public TipoContato getTipoContato() {
+        return tipoContato;
+    }
+
+    public void setTipoContato(TipoContato tipoContato) {
+        this.tipoContato = tipoContato;
     }
 }
