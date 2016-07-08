@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -36,13 +37,16 @@ public class ContatoRepository extends Repository {
         super.em.merge(contatoFake);
 
         super.em.getTransaction().commit();
+        super.em.close();
 
     }
 
     public List<TipoContato> listarTiposContato() {
         Session session = super.em.unwrap(Session.class);
         Criteria criteriaTipoContato = session.createCriteria(TipoContato.class);
-        return criteriaTipoContato.list();
+        List<TipoContato> listaTipoContato = criteriaTipoContato.list();
+        super.em.close();
+        return listaTipoContato;
     }
 
 }

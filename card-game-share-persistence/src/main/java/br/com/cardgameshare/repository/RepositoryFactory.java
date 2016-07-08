@@ -1,11 +1,13 @@
 package br.com.cardgameshare.repository;
 
+import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 
 /**
  * Created by ltbicudo on 05/07/2016.
@@ -13,27 +15,23 @@ import javax.persistence.PersistenceContext;
 @Singleton
 public class RepositoryFactory {
 
-    @Inject
-    private EntityManager em;
-
-    private UsuarioRepository usuarioRepository = null;
-    private ContatoRepository contatoRepository= null;
+    private EntityManagerFactory entityManagerFactory;
 
     public RepositoryFactory() {
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("CardGameSharePU");
     }
 
     public UsuarioRepository createUsuarioRepository() {
-        if (this.usuarioRepository == null) {
-            this.usuarioRepository = new UsuarioRepository(em);
-        }
-        return this.usuarioRepository;
+        return new UsuarioRepository(entityManagerFactory.createEntityManager());
     }
 
     public ContatoRepository createContatoRepository() {
-        if (this.contatoRepository == null) {
-            this.contatoRepository = new ContatoRepository(em);
-        }
-        return this.contatoRepository;
+        return new ContatoRepository(entityManagerFactory.createEntityManager());
+    }
+
+    @PreDestroy
+    private void preDestroy() {
+        this.entityManagerFactory.close();
     }
 
 }

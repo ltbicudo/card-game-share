@@ -6,8 +6,12 @@ import br.com.cardgameshare.repository.RepositoryFactory;
 import br.com.cardgameshare.repository.UsuarioRepository;
 
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-public abstract class Service {
+@Singleton
+public class Service {
 
     @EJB
     private RepositoryFactory repositoryFactory;
