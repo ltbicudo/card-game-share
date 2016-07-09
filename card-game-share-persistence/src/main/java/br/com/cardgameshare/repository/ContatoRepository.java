@@ -3,17 +3,16 @@ package br.com.cardgameshare.repository;
 import br.com.cardgameshare.dto.ContatoDTO;
 import br.com.cardgameshare.entity.Contato;
 import br.com.cardgameshare.entity.TipoContato;
+import br.com.cardgameshare.orika.converter.StringConverter;
+import br.com.cardgameshare.orika.factory.TipoContatoFactory;
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.converter.ConverterFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class ContatoRepository extends Repository {
@@ -22,19 +21,28 @@ public class ContatoRepository extends Repository {
         super.em = em;
     }
 
+    public TipoContato find(Long id) {
+        return super.em.find(TipoContato.class, id);
+    }
+
     public void salvar(ContatoDTO dto) {
 
         super.em.getTransaction().begin();
 
-        // FIXME Implementar via dozer a conversao entre dto e entity
-        // garantir que os valores em branco na tela virem NULL
-        Contato contatoFake = new Contato();
-        contatoFake.setTipoContato(super.em.find(TipoContato.class, dto.getMotivo()));
-        contatoFake.setMensagem(dto.getMensagem());
-        contatoFake.setNome(dto.getNome());
-        contatoFake.setEmail(dto.getEmail());
+        MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+        ConverterFactory converterFactory = mapperFactory.getConverterFactory();
+        converterFactory.registerConverter(new StringConverter());
+        mapperFactory.registerObjectFactory(new TipoContatoFactory(this), TipoContato.class);
+        mapperFactory.classMap(ContatoDTO.class, Contato.class)
+                .field("mensagem", "mensagem")
+                .field("nome", "nome")
+                .field("email", "email")
+                .fieldAToB("motivo", "tipoContato")
+                .register();
+        MapperFacade mapperFacade = mapperFactory.getMapperFacade();
+        Contato contato = mapperFacade.map(dto, Contato.class);
 
-        super.em.merge(contatoFake);
+        super.em.merge(contato);
 
         super.em.getTransaction().commit();
         super.em.close();

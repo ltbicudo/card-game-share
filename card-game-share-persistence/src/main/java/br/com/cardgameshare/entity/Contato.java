@@ -46,7 +46,12 @@ public class Contato extends Entity {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        // FIXME consertar quando o orika corrigir o converter
+        if ("(null)".equals(nome)) {
+            this.nome = null;
+        } else {
+            this.nome = nome;
+        }
     }
 
     public String getEmail() {
@@ -54,7 +59,12 @@ public class Contato extends Entity {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        // FIXME consertar quando o orika corrigir o converter
+        if ("(null)".equals(email)) {
+            this.email = null;
+        } else {
+            this.email = email;
+        }
     }
 
     public TipoContato getTipoContato() {

@@ -7,7 +7,7 @@ public class StringConverter extends CustomConverter<String, String> {
 
     public String convert(String source, Type<? extends String> destinationType) {
         if (source != null && "".equals(source.trim())) {
-            return null;
+            return "(null)"; // FIXME consertar quando o orika corrigir o converter
         }
         return source;
     }
