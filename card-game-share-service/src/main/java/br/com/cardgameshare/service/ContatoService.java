@@ -16,7 +16,7 @@ public class ContatoService extends Service {
     public void enviarMensagem(ContatoDTO dto) throws ExcecaoNegocial {
 
         try {
-            super.createContatoRepository().save(dto);
+            super.createContatoRepository().salvar(dto);
         } catch (Exception e) {
             e.printStackTrace(); // FIXME mudar para log
             super.tratarExcecaoNaoNegocial(e, "Problemas ao enviar a mensagem!");

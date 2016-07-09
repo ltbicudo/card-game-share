@@ -22,7 +22,7 @@ public class ContatoRepository extends Repository {
         super.em = em;
     }
 
-    public void save(ContatoDTO dto) {
+    public void salvar(ContatoDTO dto) {
 
         super.em.getTransaction().begin();
 
