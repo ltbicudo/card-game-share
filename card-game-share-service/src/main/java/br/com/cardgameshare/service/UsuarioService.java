@@ -1,6 +1,7 @@
 package br.com.cardgameshare.service;
 
 import br.com.cardgameshare.dto.CadastroDTO;
+import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.repository.RepositoryFactory;
 import br.com.cardgameshare.repository.UsuarioRepository;

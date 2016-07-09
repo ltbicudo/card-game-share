@@ -13,17 +13,29 @@ public class Usuario extends Entity {
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 
-    @Column(name = "nome", length = 100)
+    @Column(name = "nome", length = 100, nullable = false)
     private String nome;
 
-    @Column(name = "email", length = 100)
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(name = "data_ultimo_login")
+    @Column(name = "data_ultimo_login", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltimoLogin;
 
-    @Column(name = "bloqueado")
+    @Column(name = "bloqueado", nullable = false)
     private String bloqueado;
+
+    @Column(name = "senha", length = 32, nullable = false)
+    private String senha;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public Long getId() {
         return id;
