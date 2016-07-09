@@ -24,7 +24,7 @@ public class Usuario extends Entity {
     private Date dataUltimoLogin;
 
     @Column(name = "bloqueado", nullable = false)
-    private String bloqueado;
+    private Boolean bloqueado;
 
     @Column(name = "senha", length = 32, nullable = false)
     private String senha;
@@ -69,11 +69,11 @@ public class Usuario extends Entity {
         this.dataUltimoLogin = dataUltimoLogin;
     }
 
-    public String getBloqueado() {
+    public Boolean getBloqueado() {
         return bloqueado;
     }
 
-    public void setBloqueado(String bloqueado) {
+    public void setBloqueado(Boolean bloqueado) {
         this.bloqueado = bloqueado;
     }
 }

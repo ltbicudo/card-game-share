@@ -41,7 +41,7 @@ public class CadastroManager {
             this.usuarioService.validarUsuarioParaCriacao(this.cadastroDTO);
 
             // Salvar o novo usuário
-            this.usuarioService.salvar(this.cadastroDTO);
+            this.usuarioService.cadastrar(this.cadastroDTO);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso", ""));
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);

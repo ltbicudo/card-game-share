@@ -7,6 +7,15 @@ public class CadastroDTO {
     private String confirmacaoEmail;
     private String senha;
     private String confirmacaoSenha;
+    private Boolean bloqueado;
+
+    public Boolean getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(Boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
 
     public String getNome() {
         return nome;
