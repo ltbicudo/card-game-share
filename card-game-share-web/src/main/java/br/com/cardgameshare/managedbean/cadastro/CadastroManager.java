@@ -36,8 +36,18 @@ public class CadastroManager {
     public String cadastrar() {
 
         try {
+
+            // Validação do usuário
             this.usuarioService.validarUsuarioParaCriacao(this.cadastroDTO);
+
+            // Salvar o novo usuário
+            this.usuarioService.salvar(this.cadastroDTO);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro realizado com sucesso", ""));
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
             return "pretty:inicio";
+
         } catch (ExcecaoNegocial e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
             return null;
