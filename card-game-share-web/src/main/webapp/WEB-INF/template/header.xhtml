@@ -22,10 +22,10 @@
             <p:panelGrid style="border: hidden;">
                 <p:row>
                     <p:column style="border: hidden;">
-                        <p:outputLabel value="#{message['label.login']}" />
+                        <p:outputLabel value="#{message['label.email']}" />
                     </p:column>
                     <p:column style="border: hidden;">
-                        <p:inputText value="#{loginManager.loginDTO.email}" size="30" required="true" />
+                        <p:inputText value="#{loginManager.loginDTO.email}" size="30" maxlength="100" required="true" />
                     </p:column>
                 </p:row>
                 <p:row>
@@ -33,7 +33,7 @@
                         <p:outputLabel value="#{message['label.senha']}" />
                     </p:column>
                     <p:column style="border: hidden;">
-                        <p:password value="#{loginManager.loginDTO.senha}" size="30" required="true" />
+                        <p:password value="#{loginManager.loginDTO.senha}" size="30" maxlength="22" required="true" />
                     </p:column>
                 </p:row>
                 <p:row>
@@ -43,7 +43,7 @@
                 </p:row>
                 <p:row>
                     <p:column colspan="2" style="border: hidden;">
-                        <h:link style="font-size: 80%;">
+                        <h:link style="font-size: 80%;" onclick="PF('esqueceuSenhaModal').show(); return false;">
                             #{message['link.esqueceu.senha']}
                         </h:link>
                     </p:column>
@@ -53,6 +53,26 @@
                         <h:link outcome="pretty:cadastrar" style="font-size: 80%;">
                             #{message['link.cadastrese']}
                         </h:link>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
+
+    <p:dialog appendTo="@(body)" closable="true" resizable="false" draggable="false" modal="true" showHeader="true" widgetVar="esqueceuSenhaModal">
+        <h:form id="formModalEsqueceuSenha" prependId="false">
+            <p:panelGrid style="border: hidden;">
+                <p:row>
+                    <p:column style="border: hidden;">
+                        <p:outputLabel value="#{message['label.email.cadastro']}" />
+                    </p:column>
+                    <p:column style="border: hidden;">
+                        <p:inputText value="#{loginManager.loginDTO.emailCadastro}" size="30" maxlength="100" required="true" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="2" style="border: hidden;">
+                        <p:commandButton value="ENVIAR" id="btnPedidoNovaSenha" action="#{loginManager.enviarSenhaNova()}" />
                     </p:column>
                 </p:row>
             </p:panelGrid>

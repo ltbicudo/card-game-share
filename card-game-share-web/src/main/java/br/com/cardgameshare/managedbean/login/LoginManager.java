@@ -67,6 +67,27 @@ public class LoginManager {
         return "pretty:inicio";
     }
 
+    /**
+     * Realiza o envio de uma nova senha para o email de cadastro.
+     *
+     * @return
+     */
+    public String enviarSenhaNova() {
+
+        try {
+            // Validação do usuário
+            this.usuarioService.enviarSenhaNova(this.loginDTO);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uma senha nova foi enviada para o email de cadastro", ""));
+
+            return null;
+
+        } catch (ExcecaoNegocial e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+            return null;
+        }
+    }
+
     public LoginDTO getLoginDTO() {
         return loginDTO;
     }

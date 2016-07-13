@@ -55,9 +55,9 @@ public class UsuarioService extends Service {
 
         try {
 
-            // Validação do campo e-mail
+            // Validação do campo email
             if (dto.getEmail() == null || "".equals(dto.getEmail().trim())) {
-                throw new ExcecaoNegocial("Informe seu e-mail");
+                throw new ExcecaoNegocial("Informe seu email");
             }
 
             // Validação do campo senha
@@ -87,6 +87,21 @@ public class UsuarioService extends Service {
 
         usuarioLogin.setDataUltimoLogin(new Date());
         super.createUsuarioRepository().atualizarUsuario(usuarioLogin);
+    }
+
+    public void enviarSenhaNova(LoginDTO dto) throws ExcecaoNegocial {
+
+        // Localizar a conta
+        CadastroDTO usuarioEncontrado = super.createUsuarioRepository().buscarUsuarioPorEmail(dto.getEmailCadastro());
+        if (usuarioEncontrado == null) {
+            throw new ExcecaoNegocial("Conta não encontrada");
+        }
+
+        // Geração da senha nova
+
+        // Salvar a senha na base de dados
+
+        // Enviar email contendo a senha e instruções para se conectar usando essa senha nova
     }
 
 }
