@@ -21,33 +21,38 @@
                             hideEvent="mousedown"
                             showCloseIcon="true">
 
-                <p:panelGrid>
+                <p:panelGrid style="border: hidden;">
                     <p:row>
-                        <p:column>
+                        <p:column style="border: hidden;">
                             <p:outputLabel value="#{message['label.login']}" />
                         </p:column>
-                        <p:column>
-                            <p:inputText />
+                        <p:column style="border: hidden;">
+                            <p:inputText size="30" />
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column>
+                        <p:column style="border: hidden;">
                             <p:outputLabel value="#{message['label.senha']}" />
                         </p:column>
-                        <p:column>
-                            <p:password />
+                        <p:column style="border: hidden;">
+                            <p:password size="30" />
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column colspan="2">
-                            <h:link>
+                        <p:column colspan="2" style="border: hidden;">
+                            <p:commandButton value="ENTRAR" id="btnEntrar" />
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2" style="border: hidden;">
+                            <h:link style="font-size: 80%;">
                                 #{message['link.esqueceu.senha']}
                             </h:link>
                         </p:column>
                     </p:row>
                     <p:row>
-                        <p:column colspan="2">
-                            <h:link outcome="pretty:cadastrar">
+                        <p:column colspan="2" style="border: hidden;">
+                            <h:link outcome="pretty:cadastrar" style="font-size: 80%;">
                                 #{message['link.cadastrese']}
                             </h:link>
                         </p:column>
