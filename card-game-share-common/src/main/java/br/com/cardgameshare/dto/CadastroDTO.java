@@ -1,6 +1,8 @@
 package br.com.cardgameshare.dto;
 
-public class CadastroDTO {
+import java.util.Date;
+
+public class CadastroDTO extends DTO {
 
     private String nome;
     private String email;
@@ -8,6 +10,7 @@ public class CadastroDTO {
     private String senha;
     private String confirmacaoSenha;
     private Boolean bloqueado;
+    private Date dataUltimoLogin;
 
     public Boolean getBloqueado() {
         return bloqueado;
@@ -55,5 +58,13 @@ public class CadastroDTO {
 
     public void setConfirmacaoSenha(String confirmacaoSenha) {
         this.confirmacaoSenha = confirmacaoSenha;
+    }
+
+    public Date getDataUltimoLogin() {
+        return dataUltimoLogin;
+    }
+
+    public void setDataUltimoLogin(Date dataUltimoLogin) {
+        this.dataUltimoLogin = dataUltimoLogin;
     }
 }

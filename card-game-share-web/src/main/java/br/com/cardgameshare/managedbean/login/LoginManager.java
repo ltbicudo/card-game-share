@@ -44,6 +44,8 @@ public class LoginManager {
             // Login com usuário
             this.usuarioService.entrar(this.loginDTO);
 
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("CGS_USUARIO_LOGADO", "S");
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso", "")); // Possivelmente remover
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
@@ -53,6 +55,16 @@ public class LoginManager {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
             return null;
         }
+    }
+
+    /**
+     * Realiza o logout do usuário na aplicação.
+     *
+     * @return
+     */
+    public String sair() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CGS_USUARIO_LOGADO");
+        return "pretty:inicio";
     }
 
     public LoginDTO getLoginDTO() {

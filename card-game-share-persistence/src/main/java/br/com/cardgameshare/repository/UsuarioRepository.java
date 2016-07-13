@@ -52,9 +52,12 @@ public class UsuarioRepository extends Repository {
         if(usuarioEncontrado != null) {
             // FIXME mudar para orika
             CadastroDTO cadastroDTO = new CadastroDTO();
+            cadastroDTO.setId(usuarioEncontrado.getId());
             cadastroDTO.setNome(usuarioEncontrado.getNome());
             cadastroDTO.setEmail(usuarioEncontrado.getEmail());
+            cadastroDTO.setSenha(usuarioEncontrado.getSenha());
             cadastroDTO.setBloqueado(usuarioEncontrado.getBloqueado());
+            cadastroDTO.setDataUltimoLogin(usuarioEncontrado.getDataUltimoLogin());
             return cadastroDTO;
         }
         return null;
@@ -72,12 +75,33 @@ public class UsuarioRepository extends Repository {
         if(usuarioEncontrado != null) {
             // FIXME mudar para orika
             CadastroDTO cadastroDTO = new CadastroDTO();
+            cadastroDTO.setId(usuarioEncontrado.getId());
             cadastroDTO.setNome(usuarioEncontrado.getNome());
             cadastroDTO.setEmail(usuarioEncontrado.getEmail());
+            cadastroDTO.setSenha(usuarioEncontrado.getSenha());
             cadastroDTO.setBloqueado(usuarioEncontrado.getBloqueado());
+            cadastroDTO.setDataUltimoLogin(usuarioEncontrado.getDataUltimoLogin());
             return cadastroDTO;
         }
         return null;
+    }
+
+    public void atualizarUsuario(CadastroDTO dto) {
+
+        super.abrirTransacao();
+        // FIXME mudar para orika
+        Usuario usuario = new Usuario();
+        usuario.setId(dto.getId());
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setSenha(dto.getSenha());
+        usuario.setBloqueado(dto.getBloqueado());
+        usuario.setDataUltimoLogin(dto.getDataUltimoLogin());
+
+        super.em.merge(usuario);
+        super.persistirTransacao();
+        super.fecharTransacao();
+
     }
 
 }

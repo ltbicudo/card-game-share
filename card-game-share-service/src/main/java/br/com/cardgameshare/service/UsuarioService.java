@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -79,11 +80,13 @@ public class UsuarioService extends Service {
         }
 
         // Verificar a senha com a conta
-        CadastroDTO usuarioSenhaCorreta = super.createUsuarioRepository().validarSenhaUsuario(dto.getEmail(), dto.getSenha());
-        if (usuarioSenhaCorreta == null) {
+        CadastroDTO usuarioLogin = super.createUsuarioRepository().validarSenhaUsuario(dto.getEmail(), dto.getSenha());
+        if (usuarioLogin == null) {
             throw new ExcecaoNegocial("Senha inválida");
         }
 
+        usuarioLogin.setDataUltimoLogin(new Date());
+        super.createUsuarioRepository().atualizarUsuario(usuarioLogin);
     }
 
 }
