@@ -9,7 +9,7 @@
             <p:menubar>
                 <p:menuitem containerStyle="padding-top: 7px !important;">CardGame Share</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton value="CONTATO" id="menuItemContato" action="#{nav.direcionarParaTela('pretty:contato')}" />
+                    <p:commandButton value="CONTATO" id="menuItemContato" action="#{nav.direcionarParaTela('pretty:contato')}" oncomplete="PF('statusDialog').show();" />
                 </f:facet>
             </p:menubar>
         </h:form>
