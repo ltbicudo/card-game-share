@@ -14,6 +14,12 @@
             <meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=/card-game-share"/>
         </h:head>
 
+        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+
+        <p:dialog widgetVar="statusDialog" appendTo="@(body)" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage name="ajaxloadingbar.gif" library="images" />
+        </p:dialog>
+
         <h:form id="formGrowl" prependId="false">
             <p:growl autoUpdate="true" />
         </h:form>
