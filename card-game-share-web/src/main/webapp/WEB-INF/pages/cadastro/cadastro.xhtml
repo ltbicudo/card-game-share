@@ -53,6 +53,18 @@
                     </div>
                 </div>
 
+                <!-- Confirmação Senha -->
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-1">
+                        <p:outputLabel for="confirmacaoSenha" value="#{message['label.confirmacao.senha']}" />
+                    </div>
+                    <div class="ui-grid-col-11">
+                        <p:password id="confirmacaoSenha" size="30" maxlength="22"
+                                    goodLabel="Boa" strongLabel="Forte" weakLabel="Fraca" promptLabel="#{message['label.promptSenha']}" feedback="true"
+                                    required="true" value="#{cadastroManager.cadastroDTO.confirmacaoSenha}" />
+                    </div>
+                </div>
+
                 <!-- Botoes -->
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-12">

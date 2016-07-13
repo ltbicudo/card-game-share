@@ -19,7 +19,7 @@ public class Usuario extends Entity {
     @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(name = "data_ultimo_login", nullable = false)
+    @Column(name = "data_ultimo_login")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltimoLogin;
 

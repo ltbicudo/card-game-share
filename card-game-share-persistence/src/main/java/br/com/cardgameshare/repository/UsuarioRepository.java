@@ -3,6 +3,7 @@ package br.com.cardgameshare.repository;
 import br.com.cardgameshare.dto.CadastroDTO;
 import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.entity.Usuario;
+import br.com.cardgameshare.security.MD5Converter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -23,9 +24,9 @@ public class UsuarioRepository extends Repository {
 
     public void salvar(CadastroDTO dto) {
 
-        super.em.getTransaction().begin();
+        super.abrirTransacao();
 
-        // FIXME Implementar via dozer a conversao entre dto e entity
+        // FIXME Implementar via orika a conversao entre dto e entity
         // garantir que os valores em branco na tela virem NULL
         Usuario usuarioFake = new Usuario();
         usuarioFake.setNome(dto.getNome());
@@ -35,29 +36,48 @@ public class UsuarioRepository extends Repository {
 
         super.em.merge(usuarioFake);
 
-        super.em.getTransaction().commit();
-        super.em.close();
+        super.persistirTransacao();
+        super.fecharTransacao();
 
     }
 
-    public List<CadastroDTO> buscarUsuarioPorEmail (CadastroDTO dto) {
-        Session session = super.em.unwrap(Session.class);
+    public CadastroDTO buscarUsuarioPorEmail(String email) {
+        Session session = super.obterSession();
         Criteria criteria = session.createCriteria(Usuario.class);
-        List<Usuario> usuarios = (List<Usuario>) criteria.add(Restrictions.eq("email", dto.getEmail())).list();
-        super.em.close();
-        List<CadastroDTO> dtos = new ArrayList<CadastroDTO>();
-        if(usuarios != null && !usuarios.isEmpty()) {
-            for (Usuario usuario:
-                 usuarios) {
-                CadastroDTO cadastroDTO = new CadastroDTO();
-                cadastroDTO.setNome(usuario.getNome());
-                cadastroDTO.setEmail(usuario.getEmail());
-                cadastroDTO.setBloqueado(usuario.getBloqueado());
-                dtos.add(cadastroDTO);
-            }
-        }
+        criteria.add(Restrictions.eq("email", email));
 
-        return dtos;
+        Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
+        super.fecharTransacao();
+
+        if(usuarioEncontrado != null) {
+            // FIXME mudar para orika
+            CadastroDTO cadastroDTO = new CadastroDTO();
+            cadastroDTO.setNome(usuarioEncontrado.getNome());
+            cadastroDTO.setEmail(usuarioEncontrado.getEmail());
+            cadastroDTO.setBloqueado(usuarioEncontrado.getBloqueado());
+            return cadastroDTO;
+        }
+        return null;
+    }
+
+    public CadastroDTO validarSenhaUsuario(String email, String senha) {
+        Session session = super.obterSession();
+        Criteria criteria = session.createCriteria(Usuario.class);
+        criteria.add(Restrictions.eq("email", email));
+        criteria.add(Restrictions.eq("senha", MD5Converter.convertStringToMd5(senha)));
+
+        Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
+        super.fecharTransacao();
+
+        if(usuarioEncontrado != null) {
+            // FIXME mudar para orika
+            CadastroDTO cadastroDTO = new CadastroDTO();
+            cadastroDTO.setNome(usuarioEncontrado.getNome());
+            cadastroDTO.setEmail(usuarioEncontrado.getEmail());
+            cadastroDTO.setBloqueado(usuarioEncontrado.getBloqueado());
+            return cadastroDTO;
+        }
+        return null;
     }
 
 }

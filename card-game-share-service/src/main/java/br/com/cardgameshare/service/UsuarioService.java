@@ -6,6 +6,7 @@ import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.repository.RepositoryFactory;
 import br.com.cardgameshare.repository.UsuarioRepository;
+import br.com.cardgameshare.security.MD5Converter;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,8 +29,13 @@ public class UsuarioService extends Service {
                 throw new ExcecaoNegocial("Emails não conferem");
             }
 
-            if (!super.createUsuarioRepository().buscarUsuarioPorEmail(dto).isEmpty()) {
+            CadastroDTO usuarioEncontrato = super.createUsuarioRepository().buscarUsuarioPorEmail(dto.getEmail());
+            if (usuarioEncontrato != null) {
                 throw new ExcecaoNegocial("Usuário já cadastrado");
+            }
+
+            if (!dto.getSenha().equals(dto.getConfirmacaoSenha())) {
+                throw new ExcecaoNegocial("Senhas não conferem");
             }
 
         } catch (Exception e) {
@@ -38,39 +44,8 @@ public class UsuarioService extends Service {
         }
     }
 
-    private String convertStringToMd5(String valor) {
-        MessageDigest mDigest;
-        try {
-            //Instanciamos o nosso HASH MD5, poderíamos usar outro como
-            //SHA, por exemplo, mas optamos por MD5.
-            mDigest = MessageDigest.getInstance("MD5");
-
-            //Convert a String valor para um array de bytes em MD5
-            byte[] valorMD5 = mDigest.digest(valor.getBytes("UTF-8"));
-
-            //Convertemos os bytes para hexadecimal, assim podemos salvar
-            //no banco para posterior comparação se senhas
-            StringBuffer sb = new StringBuffer();
-            for (byte b : valorMD5){
-                sb.append(Integer.toHexString((b & 0xFF) |
-                        0x100).substring(1,3));
-            }
-
-            return sb.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public void cadastrar(CadastroDTO dto) throws ExcecaoNegocial {
-        dto.setSenha(this.convertStringToMd5(dto.getSenha()));
+        dto.setSenha(MD5Converter.convertStringToMd5(dto.getSenha()));
         dto.setBloqueado(Boolean.FALSE);
         super.createUsuarioRepository().salvar(dto);
     }
@@ -95,5 +70,20 @@ public class UsuarioService extends Service {
         }
     }
 
+    public void entrar(LoginDTO dto) throws ExcecaoNegocial {
+
+        // Localizar a conta
+        CadastroDTO usuarioEncontrado = super.createUsuarioRepository().buscarUsuarioPorEmail(dto.getEmail());
+        if (usuarioEncontrado == null) {
+            throw new ExcecaoNegocial("Conta não encontrada");
+        }
+
+        // Verificar a senha com a conta
+        CadastroDTO usuarioSenhaCorreta = super.createUsuarioRepository().validarSenhaUsuario(dto.getEmail(), dto.getSenha());
+        if (usuarioSenhaCorreta == null) {
+            throw new ExcecaoNegocial("Senha inválida");
+        }
+
+    }
 
 }

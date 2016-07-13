@@ -41,8 +41,8 @@ public class LoginManager {
             // Validação do usuário
             this.usuarioService.validarUsuarioParaEntrar(this.loginDTO);
 
-            // Salvar o novo usuário
-            //this.usuarioService.cadastrar(this.cadastroDTO);
+            // Login com usuário
+            this.usuarioService.entrar(this.loginDTO);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso", "")); // Possivelmente remover
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
