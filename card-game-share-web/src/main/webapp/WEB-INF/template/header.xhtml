@@ -7,10 +7,11 @@
     <div class="ui-grid-col-12">
         <h:form id="formMenuBarHeader" prependId="false">
             <p:menubar>
-                <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" />
+                <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" oncomplete="PF('statusDialog').show();" />
 
                 <f:facet name="options">
-                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show(); return false;" />
+                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show(); return false;" rendered="#{facesContext.externalContext.sessionMap['CGS_USUARIO_LOGADO'] eq null}" />
+                    <p:commandButton value="LOGOUT" id="menuItemLogout" icon="ui-icon-extlink" action="#{loginManager.sair()}" rendered="#{facesContext.externalContext.sessionMap['CGS_USUARIO_LOGADO'] ne null}" />
                 </f:facet>
             </p:menubar>
         </h:form>
