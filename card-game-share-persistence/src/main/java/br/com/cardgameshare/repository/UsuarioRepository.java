@@ -5,6 +5,7 @@ import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.security.MD5Converter;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -99,6 +100,20 @@ public class UsuarioRepository extends Repository {
         usuario.setDataUltimoLogin(dto.getDataUltimoLogin());
 
         super.em.merge(usuario);
+        super.persistirTransacao();
+        super.fecharTransacao();
+
+    }
+
+    public void atualizarSenhaGeradaUsuario(String email, String senha) {
+
+        super.abrirTransacao();
+        Session session = super.obterSession();
+        String hql = "update Usuario u set u.senha = :senha where u.email = :email";
+        Query query = session.createQuery(hql);
+        query.setString("senha", senha);
+        query.setString("email", email);
+        query.executeUpdate();
         super.persistirTransacao();
         super.fecharTransacao();
 
