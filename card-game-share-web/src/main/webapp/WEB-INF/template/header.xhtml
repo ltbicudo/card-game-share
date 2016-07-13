@@ -27,7 +27,7 @@
                             <p:outputLabel value="#{message['label.login']}" />
                         </p:column>
                         <p:column style="border: hidden;">
-                            <p:inputText size="30" />
+                            <p:inputText value="#{loginManager.loginDTO.email}" size="30" />
                         </p:column>
                     </p:row>
                     <p:row>
@@ -35,12 +35,12 @@
                             <p:outputLabel value="#{message['label.senha']}" />
                         </p:column>
                         <p:column style="border: hidden;">
-                            <p:password size="30" />
+                            <p:password value="#{loginManager.loginDTO.senha}" size="30" />
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column colspan="2" style="border: hidden;">
-                            <p:commandButton value="ENTRAR" id="btnEntrar" />
+                            <p:commandButton value="ENTRAR" id="btnEntrar" action="#{loginManager.entrar()}" />
                         </p:column>
                     </p:row>
                     <p:row>

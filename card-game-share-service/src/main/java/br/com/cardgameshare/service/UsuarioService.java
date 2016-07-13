@@ -1,6 +1,7 @@
 package br.com.cardgameshare.service;
 
 import br.com.cardgameshare.dto.CadastroDTO;
+import br.com.cardgameshare.dto.LoginDTO;
 import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.repository.RepositoryFactory;
@@ -72,6 +73,26 @@ public class UsuarioService extends Service {
         dto.setSenha(this.convertStringToMd5(dto.getSenha()));
         dto.setBloqueado(Boolean.FALSE);
         super.createUsuarioRepository().salvar(dto);
+    }
+
+    public void validarUsuarioParaEntrar(LoginDTO dto) throws ExcecaoNegocial {
+
+        try {
+
+            // Validação do campo e-mail
+            if (dto.getEmail() == null || "".equals(dto.getEmail().trim())) {
+                throw new ExcecaoNegocial("Informe seu e-mail");
+            }
+
+            // Validação do campo senha
+            if (dto.getSenha() == null || "".equals(dto.getSenha().trim())) {
+                throw new ExcecaoNegocial("Informe sua senha");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // FIXME mudar para log
+            super.tratarExcecaoNaoNegocial(e, "Problemas no login do usuário!");
+        }
     }
 
 
