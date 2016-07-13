@@ -10,57 +10,52 @@
                 <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" />
 
                 <f:facet name="options">
-                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" />
+                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show();" />
                 </f:facet>
             </p:menubar>
-
-            <p:overlayPanel for="menuItemLogin"
-                            showEffect="blind"
-                            dismissable="true"
-                            showEvent="mousedown"
-                            hideEvent="mousedown"
-                            showCloseIcon="true">
-
-                <p:panelGrid style="border: hidden;">
-                    <p:row>
-                        <p:column style="border: hidden;">
-                            <p:outputLabel value="#{message['label.login']}" />
-                        </p:column>
-                        <p:column style="border: hidden;">
-                            <p:inputText value="#{loginManager.loginDTO.email}" size="30" />
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column style="border: hidden;">
-                            <p:outputLabel value="#{message['label.senha']}" />
-                        </p:column>
-                        <p:column style="border: hidden;">
-                            <p:password value="#{loginManager.loginDTO.senha}" size="30" />
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="2" style="border: hidden;">
-                            <p:commandButton value="ENTRAR" id="btnEntrar" action="#{loginManager.entrar()}" />
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="2" style="border: hidden;">
-                            <h:link style="font-size: 80%;">
-                                #{message['link.esqueceu.senha']}
-                            </h:link>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="2" style="border: hidden;">
-                            <h:link outcome="pretty:cadastrar" style="font-size: 80%;">
-                                #{message['link.cadastrese']}
-                            </h:link>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
-            </p:overlayPanel>
-
         </h:form>
     </div>
+
+    <p:dialog appendTo="@(body)" closable="true" resizable="false" draggable="false" modal="true" showHeader="true" widgetVar="loginModal">
+        <h:form id="formModalLogin" prependId="false">
+            <p:panelGrid style="border: hidden;">
+                <p:row>
+                    <p:column style="border: hidden;">
+                        <p:outputLabel value="#{message['label.login']}" />
+                    </p:column>
+                    <p:column style="border: hidden;">
+                        <p:inputText value="#{loginManager.loginDTO.email}" size="30" required="true" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="border: hidden;">
+                        <p:outputLabel value="#{message['label.senha']}" />
+                    </p:column>
+                    <p:column style="border: hidden;">
+                        <p:password value="#{loginManager.loginDTO.senha}" size="30" required="true" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="2" style="border: hidden;">
+                        <p:commandButton value="ENTRAR" id="btnEntrar" action="#{loginManager.entrar()}" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="2" style="border: hidden;">
+                        <h:link style="font-size: 80%;">
+                            #{message['link.esqueceu.senha']}
+                        </h:link>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="2" style="border: hidden;">
+                        <h:link outcome="pretty:cadastrar" style="font-size: 80%;">
+                            #{message['link.cadastrese']}
+                        </h:link>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>
 
 </ui:composition>
