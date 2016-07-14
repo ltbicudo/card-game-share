@@ -29,6 +29,10 @@ public class LoginManager {
         this.loginDTO = new LoginDTO();
     }
 
+    public boolean isUsuarioLogado() {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("CGS_USUARIO_LOGADO") != null;
+    }
+
     /**
      * Realiza o login do usuário na aplicação.
      *

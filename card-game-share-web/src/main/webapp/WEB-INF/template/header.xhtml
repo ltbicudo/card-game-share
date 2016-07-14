@@ -9,9 +9,13 @@
             <p:menubar>
                 <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" oncomplete="PF('statusDialog').show();" />
 
+                <p:menuitem value="WANT LIST" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="HAVE LIST" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="MY CARDS" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+
                 <f:facet name="options">
-                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show(); return false;" rendered="#{facesContext.externalContext.sessionMap['CGS_USUARIO_LOGADO'] eq null}" />
-                    <p:commandButton value="LOGOUT" id="menuItemLogout" icon="ui-icon-extlink" action="#{loginManager.sair()}" rendered="#{facesContext.externalContext.sessionMap['CGS_USUARIO_LOGADO'] ne null}" />
+                    <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show(); return false;" rendered="#{!loginManager.isUsuarioLogado()}" />
+                    <p:commandButton value="LOGOUT" id="menuItemLogout" icon="ui-icon-extlink" action="#{loginManager.sair()}" rendered="#{loginManager.isUsuarioLogado()}" />
                 </f:facet>
             </p:menubar>
         </h:form>
