@@ -1,6 +1,7 @@
 package br.com.cardgameshare.service;
 
 import br.com.cardgameshare.exception.ExcecaoNegocial;
+import br.com.cardgameshare.repository.CartaRepository;
 import br.com.cardgameshare.repository.ContatoRepository;
 import br.com.cardgameshare.repository.RepositoryFactory;
 import br.com.cardgameshare.repository.UsuarioRepository;
@@ -31,4 +32,7 @@ public class Service {
         return this.repositoryFactory.createContatoRepository();
     }
 
+    protected CartaRepository createCartaRepository() {
+        return this.repositoryFactory.createCartaRepository();
+    }
 }

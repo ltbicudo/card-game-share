@@ -29,6 +29,10 @@ public class RepositoryFactory {
         return new ContatoRepository(entityManagerFactory.createEntityManager());
     }
 
+    public CartaRepository createCartaRepository() {
+        return new CartaRepository(entityManagerFactory.createEntityManager());
+    }
+
     @PreDestroy
     private void preDestroy() {
         this.entityManagerFactory.close();
