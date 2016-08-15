@@ -119,7 +119,7 @@ public class UsuarioService extends Service {
             EmailDTO emailSenhaNovaDTO = new EmailDTO();
             emailSenhaNovaDTO.adicionarDestinatario(dto.getEmailCadastro());
             emailSenhaNovaDTO.setAssunto("CardGame Share - Senha nova para acesso");
-            emailSenhaNovaDTO.setCorpo("Sua senha nova para acessar o sistema CardGame Share: " + senhaNova + "</br></br>Atenciosamente,</br>Equipe CardGame Share");
+            emailSenhaNovaDTO.setCorpo("Sua senha nova para acessar o sistema CardGame Share: " + senhaNova + "<br><br>Atenciosamente,<br>Equipe CardGame Share");
             MailSender.enviarEmail(emailSenhaNovaDTO);
         } catch(Exception e) {
             throw new ExcecaoNegocial("Problemas no envio de email! Tente novamente mais tarde.");

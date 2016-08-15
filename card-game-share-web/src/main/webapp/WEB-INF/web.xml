@@ -15,6 +15,7 @@
         <param-value>br.com.cardgameshare</param-value>
     </context-param>
 
+    <!-- Tema Primefaces -->
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>cruze</param-value>

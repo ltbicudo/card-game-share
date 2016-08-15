@@ -1,55 +1,98 @@
 package br.com.cardgameshare.importer;
 
-import br.com.cardgameshare.entity.Carta;
-import br.com.cardgameshare.service.ImportacaoService;
-import br.com.cardgameshare.service.UsuarioService;
+import br.com.cardgameshare.importer.exception.ImporterException;
+import br.com.cardgameshare.importer.properties.PropertiesKeyEnum;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import javax.ejb.embeddable.EJBContainer;
-import javax.naming.InitialContext;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.Properties;
 
 public class MTGJsonImporter {
 
-    private static final String JSON_FOLDER_NAME = "2016-07";
-    private static final String JSON_FILE_NAME = "AllSets-x.json";
+    private static Properties importerProperties;
 
-    public static void main(String args[]) throws Exception {
+    static {
 
+        try {
+            InputStream in = MTGJsonImporter.class.getResourceAsStream("/importer.properties");
+            importerProperties = new Properties();
+            importerProperties.load(in);
+            in.close();
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Problemas na leitura do properties! Execucao cancelada");
+        }
+    }
 
+    public static void main(String args[]) {
 
-        ImportacaoService service = (ImportacaoService) new InitialContext().lookup("java:comp/env/ImportacaoService");
-//        ImportacaoService service = (ImportacaoService) EJBContainer.createEJBContainer().getContext().lookup("java:global/lookup-of-ejbs/ImportacaoService");
-//        InitialContext ic = new InitialContext();
-//        ImportacaoService service = (ImportacaoService) ic.lookup("br.com.cardgameshare.service.ImportacaoService");
+        try {
 
-        JSONParser jsonParser = new JSONParser();
-        URL urlArquivo = MTGJsonImporter.class.getResource("json" + "/" + JSON_FOLDER_NAME + "/" + JSON_FILE_NAME);
-        //File arquivo = new File(urlArquivo.toURI());
-        File arquivo = new File("C:\\Flavia\\Particular\\projetos\\card-game-share\\card-game-share-importer\\src\\main\\resources\\json\\2016-07\\AllSets-x.json");
+            // Leitura do arquivo de importacao
+            // Para visualizar arquivo JSON online: http://www.jsoneditoronline.org/
+            JSONObject jsonObject = lerArquivoImportacao();
 
-        Object obj = jsonParser.parse(new FileReader(arquivo));
+            // Validação do tipo de arquivo importado
+            String tipoArquivo = (String) importerProperties.get(PropertiesKeyEnum.JSON_FILE_TYPE.getValor());
 
-        JSONObject jsonObject = (JSONObject) obj;
+            if ("SET".equals(tipoArquivo)) {
+                realizarImportacaoArquivoSet(jsonObject);
+            } else {
+                throw new ImporterException("Tipo de arquivo não suportado!");
+            }
 
-        JSONArray cartas = (JSONArray)((JSONObject) jsonObject.get("LEA")).get("cards");
-
-        System.out.println("Cartas: "+cartas);
-
-        Iterator<JSONObject> iterator = cartas.iterator();
-        while (iterator.hasNext()){
-            Carta carta = new Carta();
-            carta.setCustoManaConvertido((Long) iterator.next().get("cmc"));
-            service.cadastrar(carta);
-
+        } catch (ImporterException e) {
+            System.err.println("Execução MTGJsonImporter encontrou problemas e não finalizou!");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
 
-        // Verificar exemplos de leitura de tipos diferentes de objetos abaixo
+    }
+
+    private static JSONObject lerArquivoImportacao() throws ImporterException {
+        try {
+            JSONParser jsonParser = new JSONParser();
+            URL urlArquivo = MTGJsonImporter.class.getResource("/" + "json" + "/" + importerProperties.get(PropertiesKeyEnum.JSON_FOLDER_NAME.getValor()) + "/" + importerProperties.get(PropertiesKeyEnum.JSON_FILE_NAME.getValor()));
+            File arquivo = new File(urlArquivo.toURI());
+
+            Object obj = jsonParser.parse(new FileReader(arquivo));
+            JSONObject jsonObject = (JSONObject) obj;
+            return jsonObject;
+        } catch (FileNotFoundException fnfe) {
+            throw new ImporterException("Arquivo properties não encontrado!", fnfe);
+        } catch (URISyntaxException urise) {
+            throw new ImporterException("URI do arquivo properties é inválida!", urise);
+        } catch (IOException ioe) {
+            throw new ImporterException("Problemas de IO!", ioe);
+        } catch (org.json.simple.parser.ParseException pe) {
+            throw new ImporterException("Problemas no parse do arquivo properties!", pe);
+        }
+    }
+
+    private static void realizarImportacaoArquivoSet(JSONObject jsonObject) throws ImporterException {
+
+        System.out.println(jsonObject.get("name"));
+        System.out.println(jsonObject.get("code"));
+        System.out.println(jsonObject.get("releaseDate"));
+        System.out.println(jsonObject.get("border"));
+        System.out.println(jsonObject.get("type"));
+        System.out.println(jsonObject.get("block"));
+
+//            JSONArray cartas = (JSONArray)((JSONObject) jsonObject.get("LEA")).get("cards");
+//
+//            System.out.println("Cartas: "+cartas);
+//
+//            Iterator<JSONObject> iterator = cartas.iterator();
+//            while (iterator.hasNext()){
+//                //Carta carta = new Carta();
+//                //carta.setCustoManaConvertido((Long) iterator.next().get("cmc"));
+//                //service.cadastrar(carta);
+//
+//            }
 
     }
 
