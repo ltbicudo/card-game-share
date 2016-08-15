@@ -1,28 +1,52 @@
 package br.com.cardgameshare.importer.dao;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import br.com.cardgameshare.importer.util.ResultSetUtil;
+import br.com.cardgameshare.util.DateUtil;
+import com.mysql.jdbc.JDBC4ResultSet;
+
+import java.sql.*;
 import java.util.Date;
 
 public class ColecaoDao {
 
+    private Connection conn;
+
+    public ColecaoDao(Connection conn) {
+        this.conn = conn;
+    }
+
+    public ResultSet buscarPorCodigo(String codigo) {
+        try {
+            PreparedStatement sql =
+                    conn.prepareStatement(
+                            "SELECT * FROM COLECAO WHERE CODIGO = ?");
+            sql.setString(1, codigo);
+            JDBC4ResultSet resultadoConsulta = (JDBC4ResultSet) sql.executeQuery();
+
+            if (!ResultSetUtil.isEmpty(resultadoConsulta)) {
+                resultadoConsulta.next();
+                return resultadoConsulta;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return null;
+    }
+
     public void inserir(String nome, String codigo, Date dataLancamento) {
 
-        Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/card_game_share?UseUnicode=true&amp;characterEncoding=utf-8", "root", "root");
-
-            PreparedStatement sql = conn.prepareStatement("INSERT INTO COLECAO (NOME, CODIGO, DATA_LANCAMENTO) VALUES (?, ?, ?)");
+            PreparedStatement sql =
+                    conn.prepareStatement(
+                            "INSERT INTO COLECAO (NOME, CODIGO, DATA_LANCAMENTO) VALUES (?, ?, ?)");
             sql.setString(1, nome);
             sql.setString(2, codigo);
-            sql.setDate(3, new java.sql.Date(dataLancamento.getTime()));
+            sql.setDate(3, DateUtil.converterDataUtilEmDataSQL(dataLancamento));
             sql.executeUpdate();
-
-            conn.close();
-
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());

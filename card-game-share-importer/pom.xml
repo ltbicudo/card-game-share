@@ -16,6 +16,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- CardGame Share Common -->
+        <dependency>
+            <groupId>br.com.card-share</groupId>
+            <artifactId>card-game-share-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- JSON Simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
