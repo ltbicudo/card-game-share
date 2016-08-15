@@ -1,5 +1,6 @@
 package br.com.cardgameshare.importer;
 
+import br.com.cardgameshare.importer.dao.ColecaoDao;
 import br.com.cardgameshare.importer.exception.ImporterException;
 import br.com.cardgameshare.importer.properties.PropertiesKeyEnum;
 import org.json.simple.JSONArray;
@@ -9,15 +10,22 @@ import org.json.simple.parser.JSONParser;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Properties;
 
 public class MTGJsonImporter {
 
+    private static ColecaoDao colecaoDao;
     private static Properties importerProperties;
 
     static {
 
+        // Criacao classes DAO
+        colecaoDao = new ColecaoDao();
+
+        // Leitura do properties
         try {
             InputStream in = MTGJsonImporter.class.getResourceAsStream("/importer.properties");
             importerProperties = new Properties();
@@ -25,6 +33,13 @@ public class MTGJsonImporter {
             in.close();
         } catch (IOException e) {
             throw new IllegalArgumentException("Problemas na leitura do properties! Execucao cancelada");
+        }
+
+        // Inicialização do driver MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Problemas na leitura do driver MySQL! Execucao cancelada");
         }
     }
 
@@ -75,12 +90,8 @@ public class MTGJsonImporter {
 
     private static void realizarImportacaoArquivoSet(JSONObject jsonObject) throws ImporterException {
 
-        System.out.println(jsonObject.get("name"));
-        System.out.println(jsonObject.get("code"));
-        System.out.println(jsonObject.get("releaseDate"));
-        System.out.println(jsonObject.get("border"));
-        System.out.println(jsonObject.get("type"));
-        System.out.println(jsonObject.get("block"));
+        // Coleção
+        importarInformacoesColecao(jsonObject);
 
 //            JSONArray cartas = (JSONArray)((JSONObject) jsonObject.get("LEA")).get("cards");
 //
@@ -93,6 +104,25 @@ public class MTGJsonImporter {
 //                //service.cadastrar(carta);
 //
 //            }
+
+    }
+
+    private static void importarInformacoesColecao(JSONObject jsonObject) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        System.out.println(jsonObject.get("name"));
+        System.out.println(jsonObject.get("code"));
+        System.out.println(jsonObject.get("releaseDate"));
+        System.out.println(jsonObject.get("border"));
+        System.out.println(jsonObject.get("type"));
+        System.out.println(jsonObject.get("block"));
+
+        try {
+            colecaoDao.inserir((String) jsonObject.get("name"), (String) jsonObject.get("code"), sdf.parse((String) jsonObject.get("releaseDate")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 

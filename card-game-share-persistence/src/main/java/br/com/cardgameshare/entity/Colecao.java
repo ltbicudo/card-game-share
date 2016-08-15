@@ -8,8 +8,7 @@ import java.util.Date;
 public class Colecao extends Entity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_COLECAO")
-    @SequenceGenerator(name = "SEQ_COLECAO", sequenceName = "SEQ_COLECAO", allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 

@@ -7,8 +7,7 @@ import javax.persistence.*;
 public class Contato extends Entity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTATO")
-    @SequenceGenerator(name = "SEQ_CONTATO", sequenceName = "SEQ_CONTATO", allocationSize = 1)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 

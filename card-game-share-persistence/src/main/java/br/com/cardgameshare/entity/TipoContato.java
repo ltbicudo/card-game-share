@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class TipoContato extends Entity {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 
