@@ -22,6 +22,8 @@ public class Colecao extends Entity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataLancamento;
 
+    @ManyToOne
+    @JoinColumn(name = "id_borda")
     private Borda borda;
 
     private TipoColecao tipoColecao;

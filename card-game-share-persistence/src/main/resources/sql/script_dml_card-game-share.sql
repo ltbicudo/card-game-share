@@ -4,3 +4,6 @@ INSERT INTO tipo_contato (id, descricao) VALUES (2, 'Sugestão');
 INSERT INTO tipo_contato (id, descricao) VALUES (3, 'Reclamação');
 INSERT INTO tipo_contato (id, descricao) VALUES (4, 'Outros');
 -------------------------------------------------------------------------------
+-------------------------------- BORDA ---------------------------------
+INSERT INTO borda (descricao, codigo) VALUES ('Preta', 'black');
+-------------------------------------------------------------------------------
