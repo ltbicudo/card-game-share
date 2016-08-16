@@ -18,6 +18,15 @@ CREATE TABLE tipo_colecao
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- BLOCO ----------------------------------------*/
+CREATE TABLE bloco
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- COLECAO --------------------------------------*/
 CREATE TABLE colecao
 (
@@ -27,9 +36,11 @@ CREATE TABLE colecao
   data_lancamento DATE NOT NULL,
   id_borda BIGINT NOT NULL,
   id_tipo_colecao BIGINT NOT NULL,
+  id_bloco BIGINT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_borda) REFERENCES borda(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_tipo_colecao) REFERENCES tipo_colecao(id) ON DELETE CASCADE
+  FOREIGN KEY (id_tipo_colecao) REFERENCES tipo_colecao(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_bloco) REFERENCES bloco(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/

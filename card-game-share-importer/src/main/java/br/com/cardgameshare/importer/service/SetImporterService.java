@@ -1,10 +1,12 @@
 package br.com.cardgameshare.importer.service;
 
+import br.com.cardgameshare.importer.dao.BlocoDao;
 import br.com.cardgameshare.importer.dao.BordaDao;
 import br.com.cardgameshare.importer.dao.ColecaoDao;
 import br.com.cardgameshare.importer.dao.TipoColecaoDao;
 import br.com.cardgameshare.importer.exception.ImporterException;
 import br.com.cardgameshare.importer.properties.PropertiesKeyEnum;
+import br.com.cardgameshare.importer.util.SQLUtil;
 import br.com.cardgameshare.util.DateUtil;
 import org.json.simple.JSONObject;
 
@@ -19,6 +21,7 @@ public class SetImporterService {
     private ColecaoDao colecaoDao;
     private BordaDao bordaDao;
     private TipoColecaoDao tipoColecaoDao;
+    private BlocoDao blocoDao;
     private Properties importerProperties;
 
     public SetImporterService(Properties importerProperties) {
@@ -57,13 +60,20 @@ public class SetImporterService {
 
             ResultSet borda = this.bordaDao.buscarPorCodigo((String) jsonObject.get("border"));
             ResultSet tipo = this.tipoColecaoDao.buscarPorCodigo((String) jsonObject.get("type"));
+            ResultSet bloco = this.blocoDao.buscarPorNome((String) jsonObject.get("block"));
+
+            if (bloco == null) {
+                this.blocoDao.inserir((String) jsonObject.get("block"));
+                bloco = this.blocoDao.buscarPorNome((String) jsonObject.get("block"));
+            }
 
             this.colecaoDao.inserir(
                     (String) jsonObject.get("name"),
                     (String) jsonObject.get("code"),
                     DateUtil.converterStringEmData((String) jsonObject.get("releaseDate"), "yyyy-MM-dd"),
                     borda.getLong(BordaDao.COLUNA_ID),
-                    tipo.getLong(TipoColecaoDao.COLUNA_ID));
+                    tipo.getLong(TipoColecaoDao.COLUNA_ID),
+                    bloco.getLong(TipoColecaoDao.COLUNA_ID));
             resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
         }
 
@@ -95,11 +105,10 @@ public class SetImporterService {
             this.colecaoDao = new ColecaoDao(this.conn);
             this.bordaDao = new BordaDao(this.conn);
             this.tipoColecaoDao = new TipoColecaoDao(this.conn);
+            this.blocoDao = new BlocoDao(this.conn);
 
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+        } catch (SQLException e) {
+            SQLUtil.tratarSQLException(e);
         }
 
     }

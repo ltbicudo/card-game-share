@@ -30,6 +30,8 @@ public class Colecao extends Entity {
     @JoinColumn(name = "id_tipo_colecao")
     private TipoColecao tipoColecao;
 
+    @ManyToOne
+    @JoinColumn(name = "id_bloco")
     private Bloco bloco;
 
     private String jsonGetererCode;
