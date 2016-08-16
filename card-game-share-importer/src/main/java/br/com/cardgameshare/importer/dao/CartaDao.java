@@ -16,6 +16,7 @@ public class CartaDao {
     public static final String COLUNA_NOME = "NOME";
     public static final String COLUNA_CUSTO_MANA_CONVERTIDO = "CUSTO_MANA_CONVERTIDO";
     public static final String COLUNA_NUMERO = "NUMERO";
+    public static final String COLUNA_RARIDADE = "ID_RARIDADE";
     public static final String COLUNA_COLECAO = "ID_COLECAO";
 
     private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(CartaDao.class);

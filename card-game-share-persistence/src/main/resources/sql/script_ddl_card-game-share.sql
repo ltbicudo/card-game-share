@@ -66,6 +66,16 @@ CREATE TABLE contato
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- RARIDADE -------------------------------------*/
+CREATE TABLE raridade
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(100) NOT NULL,
+  codigo VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- CARTA ----------------------------------------*/
 CREATE TABLE carta
 (
@@ -73,9 +83,11 @@ CREATE TABLE carta
   nome VARCHAR(100) NOT NULL,
   custo_mana_convertido BIGINT NULL,
   numero varchar(100) NOT NULL,
+  id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE
+  FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_raridade) REFERENCES raridade(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/

@@ -27,6 +27,7 @@ public class SetImporterService {
     private TipoColecaoDao tipoColecaoDao;
     private BlocoDao blocoDao;
     private CartaDao cartaDao;
+    private RaridadeDao raridadeDao;
 
     private Properties importerProperties;
 
@@ -105,6 +106,8 @@ public class SetImporterService {
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_NOME, (String)cartaAtual.get("name"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CUSTO_MANA_CONVERTIDO, (Long)cartaAtual.get("cmc"), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_NUMERO, (String) cartaAtual.get("number"), Types.VARCHAR));
+            ResultSet raridade = this.raridadeDao.buscarPorCodigo((String) cartaAtual.get("rarity"));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_RARIDADE, raridade.getLong(RaridadeDao.COLUNA_ID), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_COLECAO, idColecao, Types.NUMERIC));
 
             this.genericDao.inserir(CartaDao.TABELA, listaParametrosInsercaoCarta);
@@ -129,6 +132,7 @@ public class SetImporterService {
             this.tipoColecaoDao = new TipoColecaoDao(this.conn);
             this.blocoDao = new BlocoDao(this.conn);
             this.cartaDao = new CartaDao(this.conn);
+            this.raridadeDao = new RaridadeDao(this.conn);
 
         } catch (SQLException e) {
             SQLUtil.tratarSQLException(e);

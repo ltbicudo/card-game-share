@@ -23,6 +23,10 @@ public class Carta extends Entity {
     @Column(name = "numero", length = 100, nullable = false)
     private String numero;
 
+    @ManyToOne
+    @JoinColumn(name = "id_raridade")
+    private Raridade raridade;
+
 //    private Artista artista;
 
 //    private List<Cor> cores;
@@ -39,7 +43,6 @@ public class Carta extends Entity {
 //    private String tipoOriginal;
 //    private String poder;
 //    private List<Colecao> colecoesPresentes;
-//    private Raridade raridade;
 //    private List<SubTipo> subTipos;
 //    private String texto;
 //    private String resistencia;
@@ -345,4 +348,12 @@ public class Carta extends Entity {
 //    public void setColecao(Colecao colecao) {
 //        this.colecao = colecao;
 //    }
+
+    public Raridade getRaridade() {
+        return raridade;
+    }
+
+    public void setRaridade(Raridade raridade) {
+        this.raridade = raridade;
+    }
 }
