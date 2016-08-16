@@ -1,4 +1,4 @@
--------------------------------- BORDA ---------------------------------
+/*-------------------------------- BORDA ----------------------------------------*/
 CREATE TABLE borda
 (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -7,9 +7,18 @@ CREATE TABLE borda
   PRIMARY KEY(id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
--------------------------------------------------------------------------------
-
--------------------------------- COLECAO ---------------------------------
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- TIPO COLECAO ---------------------------------*/
+CREATE TABLE tipo_colecao
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(100) NOT NULL,
+  codigo VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- COLECAO --------------------------------------*/
 CREATE TABLE colecao
 (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -17,13 +26,14 @@ CREATE TABLE colecao
   codigo VARCHAR(3) NOT NULL,
   data_lancamento DATE NOT NULL,
   id_borda BIGINT NOT NULL,
+  id_tipo_colecao BIGINT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_borda) REFERENCES borda(id) ON DELETE CASCADE
+  FOREIGN KEY (id_borda) REFERENCES borda(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_tipo_colecao) REFERENCES tipo_colecao(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
--------------------------------------------------------------------------------
-
--------------------------------- TIPO CONTATO ---------------------------------
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- TIPO CONTATO ---------------------------------*/
 CREATE TABLE tipo_contato
 (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -31,9 +41,8 @@ CREATE TABLE tipo_contato
   PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
--------------------------------------------------------------------------------
-
--------------------------------- CONTATO ---------------------------------
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- CONTATO --------------------------------------*/
 CREATE TABLE contato
 (
   id BIGINT NOT NULL AUTO_INCREMENT,
@@ -45,4 +54,4 @@ CREATE TABLE contato
   FOREIGN KEY (id_tipo_contato) REFERENCES tipo_contato(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
--------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------*/

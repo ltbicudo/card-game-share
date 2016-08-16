@@ -26,6 +26,8 @@ public class Colecao extends Entity {
     @JoinColumn(name = "id_borda")
     private Borda borda;
 
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_colecao")
     private TipoColecao tipoColecao;
 
     private Bloco bloco;

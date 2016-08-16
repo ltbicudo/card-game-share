@@ -12,20 +12,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class BordaDao {
+public class TipoColecaoDao {
 
 
-    public static final String TABELA = "BORDA";
+    public static final String TABELA = "TIPO_COLECAO";
     public static final String COLUNA_ID = "ID";
     public static final String COLUNA_DESCRICAO = "DESCRICAO";
     public static final String COLUNA_CODIGO = "CODIGO";
 
-    private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(BordaDao.class);
-    private static final String INSERT_COMPLETO = SQLUtil.obterInsertCompletoTabela(BordaDao.class);
+    private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(TipoColecaoDao.class);
+    private static final String INSERT_COMPLETO = SQLUtil.obterInsertCompletoTabela(TipoColecaoDao.class);
 
     private Connection conn;
 
-    public BordaDao(Connection conn) {
+    public TipoColecaoDao(Connection conn) {
         this.conn = conn;
     }
 

@@ -2,6 +2,7 @@ package br.com.cardgameshare.importer.service;
 
 import br.com.cardgameshare.importer.dao.BordaDao;
 import br.com.cardgameshare.importer.dao.ColecaoDao;
+import br.com.cardgameshare.importer.dao.TipoColecaoDao;
 import br.com.cardgameshare.importer.exception.ImporterException;
 import br.com.cardgameshare.importer.properties.PropertiesKeyEnum;
 import br.com.cardgameshare.util.DateUtil;
@@ -17,6 +18,7 @@ public class SetImporterService {
     private Connection conn;
     private ColecaoDao colecaoDao;
     private BordaDao bordaDao;
+    private TipoColecaoDao tipoColecaoDao;
     private Properties importerProperties;
 
     public SetImporterService(Properties importerProperties) {
@@ -54,12 +56,14 @@ public class SetImporterService {
         if (resultadoConsulta == null) {
 
             ResultSet borda = this.bordaDao.buscarPorCodigo((String) jsonObject.get("border"));
+            ResultSet tipo = this.tipoColecaoDao.buscarPorCodigo((String) jsonObject.get("type"));
 
             this.colecaoDao.inserir(
                     (String) jsonObject.get("name"),
                     (String) jsonObject.get("code"),
                     DateUtil.converterStringEmData((String) jsonObject.get("releaseDate"), "yyyy-MM-dd"),
-                    borda.getLong(BordaDao.COLUNA_ID));
+                    borda.getLong(BordaDao.COLUNA_ID),
+                    tipo.getLong(TipoColecaoDao.COLUNA_ID));
             resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
         }
 
@@ -90,6 +94,7 @@ public class SetImporterService {
             // Inicialização dos DAOs
             this.colecaoDao = new ColecaoDao(this.conn);
             this.bordaDao = new BordaDao(this.conn);
+            this.tipoColecaoDao = new TipoColecaoDao(this.conn);
 
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());

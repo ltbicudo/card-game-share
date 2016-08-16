@@ -2,6 +2,7 @@ package br.com.cardgameshare.importer.dao;
 
 
 import br.com.cardgameshare.importer.util.ResultSetUtil;
+import br.com.cardgameshare.importer.util.SQLUtil;
 import br.com.cardgameshare.util.DateUtil;
 import com.mysql.jdbc.JDBC4ResultSet;
 
@@ -10,16 +11,16 @@ import java.util.Date;
 
 public class ColecaoDao {
 
-
     public static final String TABELA = "COLECAO";
     public static final String COLUNA_ID = "ID";
     public static final String COLUNA_NOME = "NOME";
     public static final String COLUNA_CODIGO = "CODIGO";
-    public static final String COLUNA_BORDA = "ID_BORDA";
     public static final String COLUNA_DATA_LANCAMENTO = "DATA_LANCAMENTO";
+    public static final String COLUNA_BORDA = "ID_BORDA";
+    public static final String COLUNA_TIPO = "ID_TIPO_COLECAO";
 
-    private static final String SELECT_COMPLETO = "SELECT " + COLUNA_ID + ", " + COLUNA_NOME + ", " + COLUNA_CODIGO + ", " + COLUNA_DATA_LANCAMENTO + ", " + COLUNA_BORDA + " FROM " + TABELA;
-    private static final String INSERT_COMPLETO = "INSERT INTO " + TABELA + "(" + COLUNA_NOME + ", " + COLUNA_CODIGO + ", " + COLUNA_DATA_LANCAMENTO + ", " + COLUNA_BORDA + ") VALUES (?, ?, ?, ?)";
+    private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(ColecaoDao.class);
+    private static final String INSERT_COMPLETO = SQLUtil.obterInsertCompletoTabela(ColecaoDao.class);
 
     private Connection conn;
 
@@ -39,15 +40,13 @@ public class ColecaoDao {
                 return resultadoConsulta;
             }
 
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+        } catch (SQLException e) {
+            SQLUtil.tratarSQLException(e);
         }
         return null;
     }
 
-    public void inserir(String nome, String codigo, Date dataLancamento, Long borda) {
+    public void inserir(String nome, String codigo, Date dataLancamento, Long borda, Long tipo) {
 
         try {
             PreparedStatement sql = conn.prepareStatement(INSERT_COMPLETO);
@@ -55,11 +54,10 @@ public class ColecaoDao {
             sql.setString(2, codigo);
             sql.setDate(3, DateUtil.converterDataUtilEmDataSQL(dataLancamento));
             sql.setLong(4, borda);
+            sql.setLong(5, tipo);
             sql.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+        } catch (SQLException e) {
+            SQLUtil.tratarSQLException(e);
         }
 
     }
