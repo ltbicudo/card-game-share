@@ -39,6 +39,15 @@ public class Carta extends Entity {
     @Column(name = "tipo", length = 100, nullable = false)
     private String tipo;
 
+    @Column(name = "poder", length = 100)
+    private String poder;
+
+    @Column(name = "resistencia", length = 100)
+    private String resistencia;
+
+    @Column(name = "lealdade", length = 100)
+    private Integer lealdade;
+
     @ManyToMany
     @JoinTable(name = "tipos_cartas", joinColumns = {
             @JoinColumn(name = "id_carta", nullable = false) }, inverseJoinColumns = {
@@ -76,14 +85,13 @@ public class Carta extends Entity {
 //    private String jsonMciNumber;
 //    private Long jsonMultiVerseId;
 //    private List<String> names;
-//    private String textoOriginal;
 //    private String tipoOriginal;
-//    private String poder;
+
 //    private List<Colecao> colecoesPresentes;
 //    private List<SubTipo> subTipos;
-//    private String resistencia;
+
 //    private SuperTipo superTipo;
-//    private Integer lealdade;
+
 //    private String marcaDAgua;
 //    private Borda borda;
 //    private Boolean datada;
@@ -470,5 +478,29 @@ public class Carta extends Entity {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getPoder() {
+        return poder;
+    }
+
+    public void setPoder(String poder) {
+        this.poder = poder;
+    }
+
+    public String getResistencia() {
+        return resistencia;
+    }
+
+    public void setResistencia(String resistencia) {
+        this.resistencia = resistencia;
+    }
+
+    public Integer getLealdade() {
+        return lealdade;
+    }
+
+    public void setLealdade(Integer lealdade) {
+        this.lealdade = lealdade;
     }
 }

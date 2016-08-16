@@ -135,11 +135,13 @@ public class SetImporterService {
             identificadores de cor [] String
             layout String
             artista String
-
-        FAZER
+            tipo
             ataque - criatura
             defesa - criatura
             lealdade - planeswalker
+
+        FAZER
+
             subtipos
             fazer uma varredura nos demais atributos criados pela Flavia
 
@@ -176,6 +178,9 @@ public class SetImporterService {
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CUSTO_MANA, (String)cartaAtual.get("manaCost"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_NUMERO, (String) cartaAtual.get("number"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TIPO, (String) cartaAtual.get("type"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_PODER, (String) cartaAtual.get("power"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_RESISTENCIA, (String) cartaAtual.get("toughness"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_LEALDADE, (Long) cartaAtual.get("loyalty"), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO, (String) cartaAtual.get("text"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO_ORIGINAL, (String) cartaAtual.get("originalText"), Types.VARCHAR));
             ResultSet raridade = this.raridadeDao.buscarPorCodigo((String) cartaAtual.get("rarity")); // FIXME ajustar para não consultar a rairdade para cada carta
