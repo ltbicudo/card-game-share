@@ -141,8 +141,8 @@ public class SetImporterService {
             lealdade - planeswalker
 
         FAZER
-
             subtipos
+            supertipo
             fazer uma varredura nos demais atributos criados pela Flavia
 
         NOK
