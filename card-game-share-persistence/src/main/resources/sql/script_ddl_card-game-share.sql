@@ -82,6 +82,7 @@ CREATE TABLE carta
   id BIGINT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(100) NOT NULL,
   custo_mana_convertido BIGINT NULL,
+  custo_mana VARCHAR(100) NULL,
   numero varchar(100) NOT NULL,
   id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,

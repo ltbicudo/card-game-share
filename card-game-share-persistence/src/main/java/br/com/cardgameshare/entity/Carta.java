@@ -20,6 +20,9 @@ public class Carta extends Entity {
     @Column(name = "custo_mana_convertido", precision = 22)
     private Long custoManaConvertido;
 
+    @Column(name = "custo_mana", length = 100)
+    private String custoMana;
+
     @Column(name = "numero", length = 100, nullable = false)
     private String numero;
 
@@ -35,7 +38,6 @@ public class Carta extends Entity {
 //    private String nomeImagem;
 //    private Layout layout;
 //    private List<FormatoLegalidade> formatosLegalidades;
-//    private String custoMana;
 //    private String jsonMciNumber;
 //    private Long jsonMultiVerseId;
 //    private List<String> names;
@@ -355,5 +357,13 @@ public class Carta extends Entity {
 
     public void setRaridade(Raridade raridade) {
         this.raridade = raridade;
+    }
+
+    public String getCustoMana() {
+        return custoMana;
+    }
+
+    public void setCustoMana(String custoMana) {
+        this.custoMana = custoMana;
     }
 }
