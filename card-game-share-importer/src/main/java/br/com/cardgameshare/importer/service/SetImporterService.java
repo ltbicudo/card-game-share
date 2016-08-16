@@ -10,8 +10,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +26,8 @@ public class SetImporterService {
     private BlocoDao blocoDao;
     private CartaDao cartaDao;
     private RaridadeDao raridadeDao;
+    private TipoCartaDao tipoCartaDao;
+    private CorDao corDao;
 
     private Properties importerProperties;
 
@@ -107,12 +107,72 @@ public class SetImporterService {
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CUSTO_MANA_CONVERTIDO, (Long)cartaAtual.get("cmc"), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CUSTO_MANA, (String)cartaAtual.get("manaCost"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_NUMERO, (String) cartaAtual.get("number"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO, (String) cartaAtual.get("text"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO_ORIGINAL, (String) cartaAtual.get("originalText"), Types.VARCHAR));
             ResultSet raridade = this.raridadeDao.buscarPorCodigo((String) cartaAtual.get("rarity")); // FIXME ajustar para não consultar a rairdade para cada carta
+            if (raridade == null) {
+                throw new IllegalArgumentException("Raridade não encontrada: " + (String) cartaAtual.get("rarity"));
+            }
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CITACAO, (String) cartaAtual.get("flavor"), Types.VARCHAR));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_JSON_ID, (String) cartaAtual.get("id"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_RARIDADE, raridade.getLong(RaridadeDao.COLUNA_ID), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_COLECAO, idColecao, Types.NUMERIC));
 
             this.genericDao.inserir(CartaDao.TABELA, listaParametrosInsercaoCarta);
+
+            ResultSet carta = this.cartaDao.buscarPorJsonId((String) cartaAtual.get("id"));
+            if (carta == null) {
+                throw new IllegalArgumentException("Carta recém inserida não foi encontrada: " + (String) cartaAtual.get("id") + " : " + (String)cartaAtual.get("name"));
+            }
+
+            JSONArray tipos = (JSONArray) cartaAtual.get("types");
+            Iterator<String> iteratorTipos = tipos.iterator();
+            while (iteratorTipos.hasNext()) {
+                String tipoAtual = iteratorTipos.next();
+                ResultSet tipoCarta = this.tipoCartaDao.buscarPorCodigo(tipoAtual); // FIXME ajustar para não consultar o tipo de carta para cada carta
+                if (tipoCarta == null) {
+                    throw new IllegalArgumentException("Tipo de Carta não encontrado: " + tipoAtual);
+                }
+                List<ParametroDTO> listaParametrosInsercaoTiposCartas = new ArrayList<ParametroDTO>();
+                listaParametrosInsercaoTiposCartas.add(new ParametroDTO(TiposCartasDao.COLUNA_CARTA, carta.getLong(CartaDao.COLUNA_ID), Types.NUMERIC));
+                listaParametrosInsercaoTiposCartas.add(new ParametroDTO(TiposCartasDao.COLUNA_TIPO_CARTA, tipoCarta.getLong(TipoCartaDao.COLUNA_ID), Types.NUMERIC));
+                this.genericDao.inserir(TiposCartasDao.TABELA, listaParametrosInsercaoTiposCartas);
+            }
+
+            JSONArray cores = (JSONArray) cartaAtual.get("colors");
+            if (cores != null) {
+                Iterator<String> iteratorCores = cores.iterator();
+                while (iteratorCores.hasNext()) {
+                    String codigoCorAtual = iteratorCores.next();
+                    ResultSet cor = this.corDao.buscarPorCodigo(codigoCorAtual); // FIXME ajustar para não consultar a cor para cada carta
+                    if (cor == null) {
+                        throw new IllegalArgumentException("Cor não encontrada: " + codigoCorAtual);
+                    }
+
+                    List<ParametroDTO> listaParametrosInsercaoCoresCartas = new ArrayList<ParametroDTO>();
+                    listaParametrosInsercaoCoresCartas.add(new ParametroDTO(CoresCartasDao.COLUNA_CARTA, carta.getLong(CartaDao.COLUNA_ID), Types.NUMERIC));
+                    listaParametrosInsercaoCoresCartas.add(new ParametroDTO(CoresCartasDao.COLUNA_COR, cor.getLong(CorDao.COLUNA_ID), Types.NUMERIC));
+                    this.genericDao.inserir(CoresCartasDao.TABELA, listaParametrosInsercaoCoresCartas);
+                }
+            }
+
+            JSONArray identificadoresCores = (JSONArray) cartaAtual.get("colorIdentity");
+            if (cores != null) {
+                Iterator<String> iteratorIdentificadoresCores = identificadoresCores.iterator();
+                while (iteratorIdentificadoresCores.hasNext()) {
+                    String identificadorCorAtual = iteratorIdentificadoresCores.next();
+                    ResultSet cor = this.corDao.buscarPorSigla(identificadorCorAtual); // FIXME ajustar para não consultar a cor para cada carta
+                    if (cor == null) {
+                        throw new IllegalArgumentException("Identificador da cor não encontrada: " + identificadorCorAtual);
+                    }
+
+                    List<ParametroDTO> listaParametrosInsercaoIdentificadoresCoresCartas = new ArrayList<ParametroDTO>();
+                    listaParametrosInsercaoIdentificadoresCoresCartas.add(new ParametroDTO(IdentificadoresCoresCartasDao.COLUNA_CARTA, carta.getLong(CartaDao.COLUNA_ID), Types.NUMERIC));
+                    listaParametrosInsercaoIdentificadoresCoresCartas.add(new ParametroDTO(IdentificadoresCoresCartasDao.COLUNA_COR, cor.getLong(CorDao.COLUNA_ID), Types.NUMERIC));
+                    this.genericDao.inserir(IdentificadoresCoresCartasDao.TABELA, listaParametrosInsercaoIdentificadoresCoresCartas);
+                }
+            }
+
         }
     }
 
@@ -135,6 +195,8 @@ public class SetImporterService {
             this.blocoDao = new BlocoDao(this.conn);
             this.cartaDao = new CartaDao(this.conn);
             this.raridadeDao = new RaridadeDao(this.conn);
+            this.tipoCartaDao = new TipoCartaDao(this.conn);
+            this.corDao = new CorDao(this.conn);
 
         } catch (SQLException e) {
             SQLUtil.tratarSQLException(e);

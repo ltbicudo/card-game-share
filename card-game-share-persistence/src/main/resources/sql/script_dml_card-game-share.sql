@@ -17,3 +17,19 @@ INSERT INTO raridade (descricao, codigo) VALUES ('Terreno Básico', 'basic land'
 /*-------------------------------- TIPO COLECAO ---------------------------------*/
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Expansão', 'expansion');
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- TIPO CARTA -----------------------------------*/
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Encantamento', 'enchantment');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Criatura', 'creature');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Feitiço', 'sorcery');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Mágica Instantânea', 'instant');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Planeswalker', 'planeswalker');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Artefato', 'artifact');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Terreno', 'land');
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- COR ------------------------------------------*/
+INSERT INTO cor (sigla, descricao, codigo) VALUES ('W', 'Branco', 'white');
+INSERT INTO cor (sigla, descricao, codigo) VALUES ('R', 'Vermelho', 'red');
+INSERT INTO cor (sigla, descricao, codigo) VALUES ('B', 'Preto', 'black');
+INSERT INTO cor (sigla, descricao, codigo) VALUES ('U', 'Azul', 'blue');
+INSERT INTO cor (sigla, descricao, codigo) VALUES ('G', 'Verde', 'green');
+/*-------------------------------------------------------------------------------*/

@@ -17,7 +17,10 @@ public class CartaDao {
     public static final String COLUNA_CUSTO_MANA_CONVERTIDO = "CUSTO_MANA_CONVERTIDO";
     public static final String COLUNA_CUSTO_MANA = "CUSTO_MANA";
     public static final String COLUNA_NUMERO = "NUMERO";
+    public static final String COLUNA_TEXTO = "TEXTO";
+    public static final String COLUNA_TEXTO_ORIGINAL = "TEXTO_ORIGINAL";
     public static final String COLUNA_CITACAO = "CITACAO";
+    public static final String COLUNA_JSON_ID = "JSON_ID";
     public static final String COLUNA_RARIDADE = "ID_RARIDADE";
     public static final String COLUNA_COLECAO = "ID_COLECAO";
 
@@ -27,6 +30,24 @@ public class CartaDao {
 
     public CartaDao(Connection conn) {
         this.conn = conn;
+    }
+
+    public ResultSet buscarPorJsonId(String jsonId) {
+        try {
+            PreparedStatement sql =
+                    conn.prepareStatement(SELECT_COMPLETO + " WHERE " + COLUNA_JSON_ID + " = ? ");
+            sql.setString(1, jsonId);
+            JDBC4ResultSet resultadoConsulta = (JDBC4ResultSet) sql.executeQuery();
+
+            if (!ResultSetUtil.isEmpty(resultadoConsulta)) {
+                resultadoConsulta.next();
+                return resultadoConsulta;
+            }
+
+        } catch (SQLException e) {
+            SQLUtil.tratarSQLException(e);
+        }
+        return null;
     }
 
 }

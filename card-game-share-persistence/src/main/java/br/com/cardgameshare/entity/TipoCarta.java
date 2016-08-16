@@ -3,18 +3,15 @@ package br.com.cardgameshare.entity;
 import javax.persistence.*;
 
 @javax.persistence.Entity
-@Table(name = "cor")
-public class Cor extends Entity {
+@Table(name = "tipo_carta")
+public class TipoCarta extends Entity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 
-    @Column(name = "sigla", length = 1, nullable = false)
-    private String sigla;
-
-    @Column(name = "nome", length = 100, nullable = false)
+    @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
     @Column(name = "codigo", length = 100, nullable = false)
@@ -26,14 +23,6 @@ public class Cor extends Entity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSigla() {
-        return sigla;
-    }
-
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
     }
 
     public String getDescricao() {
@@ -51,4 +40,5 @@ public class Cor extends Entity {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
 }

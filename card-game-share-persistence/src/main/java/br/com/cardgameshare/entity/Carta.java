@@ -26,17 +26,42 @@ public class Carta extends Entity {
     @Column(name = "numero", length = 100, nullable = false)
     private String numero;
 
+    @Column(name = "texto", length = 4000)
+    private String texto;
+
+    @Column(name = "texto_original", length = 4000)
+    private String textoOriginal;
+
     @ManyToOne
     @JoinColumn(name = "id_raridade")
     private Raridade raridade;
 
+    @ManyToMany
+    @JoinTable(name = "tipos_cartas", joinColumns = {
+            @JoinColumn(name = "id_carta", nullable = false) }, inverseJoinColumns = {
+            @JoinColumn(name = "id_tipo_carta", nullable = false) })
+    private List<TipoCarta> tipos;
+
+    @ManyToMany
+    @JoinTable(name = "cores_cartas", joinColumns = {
+            @JoinColumn(name = "id_carta", nullable = false) }, inverseJoinColumns = {
+            @JoinColumn(name = "id_cor", nullable = false) })
+    private List<Cor> cores;
+
+    @ManyToMany
+    @JoinTable(name = "identificadores_cores_cartas", joinColumns = {
+            @JoinColumn(name = "id_carta", nullable = false) }, inverseJoinColumns = {
+            @JoinColumn(name = "id_cor", nullable = false) })
+    private List<Cor> identificadoresCores;
+
     @Column(name = "citacao", length = 4000)
     private String citacao;
 
+    @Column(name = "json_id", length = 100)
+    private String jsonId;
+
 //    private Artista artista;
 
-//    private List<Cor> cores;
-//    private String jsonId;
 //    private String nomeImagem;
 //    private Layout layout;
 //    private List<FormatoLegalidade> formatosLegalidades;
@@ -48,9 +73,7 @@ public class Carta extends Entity {
 //    private String poder;
 //    private List<Colecao> colecoesPresentes;
 //    private List<SubTipo> subTipos;
-//    private String texto;
 //    private String resistencia;
-//    private List<Tipo> tipos;
 //    private SuperTipo superTipo;
 //    private Integer lealdade;
 //    private String marcaDAgua;
@@ -104,15 +127,15 @@ public class Carta extends Entity {
 //    public void setCitacao(String citacao) {
 //        this.citacao = citacao;
 //    }
-//
-//    public String getJsonId() {
-//        return jsonId;
-//    }
-//
-//    public void setJsonId(String jsonId) {
-//        this.jsonId = jsonId;
-//    }
-//
+
+    public String getJsonId() {
+        return jsonId;
+    }
+
+    public void setJsonId(String jsonId) {
+        this.jsonId = jsonId;
+    }
+
 //    public String getNomeImagem() {
 //        return nomeImagem;
 //    }
@@ -249,11 +272,11 @@ public class Carta extends Entity {
 //        this.resistencia = resistencia;
 //    }
 //
-//    public List<Tipo> getTipos() {
+//    public List<TipoCarta> getTipos() {
 //        return tipos;
 //    }
 //
-//    public void setTipos(List<Tipo> tipos) {
+//    public void setTipos(List<TipoCarta> tipos) {
 //        this.tipos = tipos;
 //    }
 //
@@ -375,5 +398,45 @@ public class Carta extends Entity {
 
     public void setCitacao(String citacao) {
         this.citacao = citacao;
+    }
+
+    public List<TipoCarta> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoCarta> tipos) {
+        this.tipos = tipos;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getTextoOriginal() {
+        return textoOriginal;
+    }
+
+    public void setTextoOriginal(String textoOriginal) {
+        this.textoOriginal = textoOriginal;
+    }
+
+    public List<Cor> getCores() {
+        return cores;
+    }
+
+    public void setCores(List<Cor> cores) {
+        this.cores = cores;
+    }
+
+    public List<Cor> getIdentificadoresCores() {
+        return identificadoresCores;
+    }
+
+    public void setIdentificadoresCores(List<Cor> identificadoresCores) {
+        this.identificadoresCores = identificadoresCores;
     }
 }

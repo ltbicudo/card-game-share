@@ -4,7 +4,7 @@ CREATE TABLE borda
   id BIGINT NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(100) NOT NULL,
   codigo VARCHAR(100) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
@@ -14,7 +14,7 @@ CREATE TABLE tipo_colecao
   id BIGINT NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(100) NOT NULL,
   codigo VARCHAR(100) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
@@ -23,7 +23,7 @@ CREATE TABLE bloco
 (
   id BIGINT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(100) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
@@ -72,7 +72,28 @@ CREATE TABLE raridade
   id BIGINT NOT NULL AUTO_INCREMENT,
   descricao VARCHAR(100) NOT NULL,
   codigo VARCHAR(100) NOT NULL,
-  PRIMARY KEY(id)
+  PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- TIPO CARTA -----------------------------------*/
+CREATE TABLE tipo_carta
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(100) NOT NULL,
+  codigo VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- COR ------------------------------------------*/
+CREATE TABLE cor
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  sigla VARCHAR(1) NOT NULL,
+  descricao VARCHAR(100) NOT NULL,
+  codigo VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
@@ -83,13 +104,49 @@ CREATE TABLE carta
   nome VARCHAR(100) NOT NULL,
   custo_mana_convertido BIGINT NULL,
   custo_mana VARCHAR(100) NULL,
-  numero varchar(100) NOT NULL,
+  numero VARCHAR(100) NOT NULL,
+  texto VARCHAR(4000) NULL,
+  texto_original VARCHAR(4000) NULL,
   id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,
   citacao VARCHAR(4000) NULL,
+  json_id VARCHAR(100) NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE,
   FOREIGN KEY (id_raridade) REFERENCES raridade(id) ON DELETE CASCADE
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- TIPOS CARTAS ---------------------------------*/
+CREATE TABLE tipos_cartas
+(
+  id_carta BIGINT NOT NULL,
+  id_tipo_carta BIGINT NOT NULL,
+  PRIMARY KEY (id_carta, id_tipo_carta),
+  FOREIGN KEY (id_carta) REFERENCES carta(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_tipo_carta) REFERENCES tipo_carta(id) ON DELETE CASCADE
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- CORES CARTAS ---------------------------------*/
+CREATE TABLE cores_cartas
+(
+  id_carta BIGINT NOT NULL,
+  id_cor BIGINT NOT NULL,
+  PRIMARY KEY (id_carta, id_cor),
+  FOREIGN KEY (id_carta) REFERENCES carta(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_cor) REFERENCES cor(id) ON DELETE CASCADE
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
+/*-------------------------------- IDENTIFICADORES CORES CARTAS -----------------*/
+CREATE TABLE identificadores_cores_cartas
+(
+  id_carta BIGINT NOT NULL,
+  id_cor BIGINT NOT NULL,
+  PRIMARY KEY (id_carta, id_cor),
+  FOREIGN KEY (id_carta) REFERENCES carta(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_cor) REFERENCES cor(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
