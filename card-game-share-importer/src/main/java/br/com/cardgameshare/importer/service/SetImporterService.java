@@ -77,14 +77,24 @@ public class SetImporterService {
         if (resultadoConsulta == null) {
 
             ResultSet borda = this.bordaDao.buscarPorCodigo((String) jsonObject.get("border"));
+            if (borda == null) {
+                throw new IllegalArgumentException("Borda não encontrada: " + (String) jsonObject.get("border"));
+            }
             ResultSet tipo = this.tipoColecaoDao.buscarPorCodigo((String) jsonObject.get("type"));
-            ResultSet bloco = this.blocoDao.buscarPorNome((String) jsonObject.get("block"));
-
-            if (bloco == null) {
-                List<ParametroDTO> listaParametrosInsercaoBloco = new ArrayList<ParametroDTO>();
-                listaParametrosInsercaoBloco.add(new ParametroDTO(BlocoDao.COLUNA_NOME, (String) jsonObject.get("block"), Types.VARCHAR));
-                this.genericDao.inserir(BlocoDao.TABELA, listaParametrosInsercaoBloco);
+            if (tipo == null) {
+                throw new IllegalArgumentException("Tipo de coleção não encontrado: " + (String) jsonObject.get("type"));
+            }
+            boolean colecaoPossuiBloco = false;
+            ResultSet bloco = null;
+            if (jsonObject.get("block") != null) {
+                colecaoPossuiBloco = true;
                 bloco = this.blocoDao.buscarPorNome((String) jsonObject.get("block"));
+                if (bloco == null) {
+                    List<ParametroDTO> listaParametrosInsercaoBloco = new ArrayList<ParametroDTO>();
+                    listaParametrosInsercaoBloco.add(new ParametroDTO(BlocoDao.COLUNA_NOME, (String) jsonObject.get("block"), Types.VARCHAR));
+                    this.genericDao.inserir(BlocoDao.TABELA, listaParametrosInsercaoBloco);
+                    bloco = this.blocoDao.buscarPorNome((String) jsonObject.get("block"));
+                }
             }
 
             List<ParametroDTO> listaParametrosInsercaoColecao = new ArrayList<ParametroDTO>();
@@ -93,7 +103,11 @@ public class SetImporterService {
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_DATA_LANCAMENTO, DateUtil.converterStringEmData((String) jsonObject.get("releaseDate"), "yyyy-MM-dd"), Types.DATE));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_BORDA, borda.getLong(BordaDao.COLUNA_ID), Types.NUMERIC));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_TIPO, tipo.getLong(TipoColecaoDao.COLUNA_ID), Types.NUMERIC));
-            listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_BLOCO, bloco.getLong(TipoColecaoDao.COLUNA_ID), Types.NUMERIC));
+            if (colecaoPossuiBloco) {
+                listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_BLOCO, bloco.getLong(TipoColecaoDao.COLUNA_ID), Types.NUMERIC));
+            } else {
+                listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_BLOCO, null, Types.NUMERIC));
+            }
             this.genericDao.inserir(ColecaoDao.TABELA, listaParametrosInsercaoColecao);
 
             resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
@@ -122,6 +136,11 @@ public class SetImporterService {
             layout String
             artista String
 
+        FAZER
+            ataque - criatura
+            defesa - criatura
+            lealdade - planeswalker
+            fazer uma varredura nos demais atributos criados pela Flavia
 
         NOK
             nomes estrangeiros [] Objeto

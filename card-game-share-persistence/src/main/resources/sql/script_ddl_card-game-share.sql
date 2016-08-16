@@ -45,7 +45,7 @@ CREATE TABLE colecao
   data_lancamento DATE NOT NULL,
   id_borda BIGINT NOT NULL,
   id_tipo_colecao BIGINT NOT NULL,
-  id_bloco BIGINT NOT NULL,
+  id_bloco BIGINT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_borda) REFERENCES borda(id) ON DELETE CASCADE,
   FOREIGN KEY (id_tipo_colecao) REFERENCES tipo_colecao(id) ON DELETE CASCADE,

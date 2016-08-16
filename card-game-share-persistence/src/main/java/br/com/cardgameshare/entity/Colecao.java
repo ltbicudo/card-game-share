@@ -23,11 +23,11 @@ public class Colecao extends Entity {
     private Date dataLancamento;
 
     @ManyToOne
-    @JoinColumn(name = "id_borda")
+    @JoinColumn(name = "id_borda", nullable = false)
     private Borda borda;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_colecao")
+    @JoinColumn(name = "id_tipo_colecao", nullable = false)
     private TipoColecao tipoColecao;
 
     @ManyToOne

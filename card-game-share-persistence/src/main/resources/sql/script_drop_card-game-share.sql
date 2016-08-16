@@ -1,0 +1,15 @@
+DROP TABLE identificadores_cores_cartas;
+DROP TABLE cores_cartas;
+DROP TABLE tipos_cartas;
+DROP TABLE carta;
+DROP TABLE layout;
+DROP TABLE cor;
+DROP TABLE tipo_carta;
+DROP TABLE raridade;
+DROP TABLE contato;
+DROP TABLE tipo_contato;
+DROP TABLE colecao;
+DROP TABLE bloco;
+DROP TABLE artista;
+DROP TABLE tipo_colecao;
+DROP TABLE borda;

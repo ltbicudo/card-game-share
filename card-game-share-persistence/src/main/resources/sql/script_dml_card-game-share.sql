@@ -16,6 +16,7 @@ INSERT INTO raridade (descricao, codigo) VALUES ('Terreno Básico', 'basic land'
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------- TIPO COLECAO ---------------------------------*/
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Expansão', 'expansion');
+INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Reimpressão', 'reprint');
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------- TIPO CARTA -----------------------------------*/
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Encantamento', 'enchantment');
@@ -25,6 +26,7 @@ INSERT INTO tipo_carta (descricao, codigo) VALUES ('Mágica Instantânea', 'inst
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Planeswalker', 'planeswalker');
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Artefato', 'artifact');
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Terreno', 'land');
+INSERT INTO tipo_carta (descricao, codigo) VALUES ('Tribal', 'tribal');
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------- COR ------------------------------------------*/
 INSERT INTO cor (sigla, descricao, codigo) VALUES ('W', 'Branco', 'white');
