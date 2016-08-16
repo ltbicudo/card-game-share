@@ -17,6 +17,8 @@ INSERT INTO raridade (descricao, codigo) VALUES ('Terreno Básico', 'basic land'
 /*-------------------------------- TIPO COLECAO ---------------------------------*/
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Expansão', 'expansion');
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Reimpressão', 'reprint');
+INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Básica', 'starter');
+INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Duel Deck', 'duel deck');
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------- TIPO CARTA -----------------------------------*/
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Encantamento', 'enchantment');
@@ -38,4 +40,6 @@ INSERT INTO cor (sigla, descricao, codigo) VALUES ('G', 'Verde', 'green');
 /*-------------------------------- LAYOUT ---------------------------------------*/
 INSERT INTO layout (descricao, codigo) VALUES ('Normal', 'normal');
 INSERT INTO layout (descricao, codigo) VALUES ('Face Dupla', 'double-faced');
+INSERT INTO layout (descricao, codigo) VALUES ('Fusão', 'meld');
+INSERT INTO layout (descricao, codigo) VALUES ('Token', 'token');
 /*-------------------------------------------------------------------------------*/

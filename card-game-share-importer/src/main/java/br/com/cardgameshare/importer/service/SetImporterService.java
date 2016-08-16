@@ -71,7 +71,7 @@ public class SetImporterService {
 
     private Long importarInformacoesColecao(JSONObject jsonObject) throws Exception {
 
-        this.resultadoImportacao.append("Iniciando importação da coleção ").append((String) jsonObject.get("name")).append(" (").append((String) jsonObject.get("code")).append(")\n\n");
+        this.resultadoImportacao.append("Iniciando importação da coleção ").append((String) jsonObject.get("name")).append(" (").append((String) jsonObject.get("code")).append(")\n");
         // Validação de pré-existência da coleção
         ResultSet resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
         if (resultadoConsulta == null) {
@@ -140,6 +140,12 @@ public class SetImporterService {
             ataque - criatura
             defesa - criatura
             lealdade - planeswalker
+            validar o campo tipo (não existe no java nem no banco) - Possivelmente colocar a coluna tipo
+                exemplo
+                    Types -> Land
+                    SuperType -> Basic
+                    Type -> Basic Land
+            subtipos
             fazer uma varredura nos demais atributos criados pela Flavia
 
         NOK
@@ -256,7 +262,7 @@ public class SetImporterService {
             this.resultadoImportacao.append(identificacaoCartaLog).append(" importada para o banco de dados\n");
         }
 
-        this.resultadoImportacao.append("\nFinalização da importação das cartas finalizada\n");
+        this.resultadoImportacao.append("\nFinalização da importação das cartas\n");
         this.resultadoImportacao.append("Total cartas na coleção: ").append(cartas.size()).append("\n");
         this.resultadoImportacao.append("Total cartas importadas: ").append(contadorCartasImportadas);
     }
