@@ -30,10 +30,12 @@ public class Carta extends Entity {
     @JoinColumn(name = "id_raridade")
     private Raridade raridade;
 
+    @Column(name = "citacao", length = 4000)
+    private String citacao;
+
 //    private Artista artista;
 
 //    private List<Cor> cores;
-//    private String citacao;
 //    private String jsonId;
 //    private String nomeImagem;
 //    private Layout layout;
@@ -365,5 +367,13 @@ public class Carta extends Entity {
 
     public void setCustoMana(String custoMana) {
         this.custoMana = custoMana;
+    }
+
+    public String getCitacao() {
+        return citacao;
+    }
+
+    public void setCitacao(String citacao) {
+        this.citacao = citacao;
     }
 }

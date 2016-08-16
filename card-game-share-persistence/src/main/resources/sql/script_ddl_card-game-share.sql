@@ -86,6 +86,7 @@ CREATE TABLE carta
   numero varchar(100) NOT NULL,
   id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,
+  citacao VARCHAR(4000) NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE,
   FOREIGN KEY (id_raridade) REFERENCES raridade(id) ON DELETE CASCADE
