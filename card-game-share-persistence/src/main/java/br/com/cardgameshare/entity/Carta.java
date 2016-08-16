@@ -36,6 +36,9 @@ public class Carta extends Entity {
     @JoinColumn(name = "id_raridade")
     private Raridade raridade;
 
+    @Column(name = "tipo", length = 100, nullable = false)
+    private String tipo;
+
     @ManyToMany
     @JoinTable(name = "tipos_cartas", joinColumns = {
             @JoinColumn(name = "id_carta", nullable = false) }, inverseJoinColumns = {
@@ -459,5 +462,13 @@ public class Carta extends Entity {
 
     public void setArtista(Artista artista) {
         this.artista = artista;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

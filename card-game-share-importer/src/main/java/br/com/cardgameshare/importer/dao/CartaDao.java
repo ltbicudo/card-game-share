@@ -18,6 +18,7 @@ public class CartaDao {
     public static final String COLUNA_CUSTO_MANA = "CUSTO_MANA";
     public static final String COLUNA_NUMERO = "NUMERO";
     public static final String COLUNA_TEXTO = "TEXTO";
+    public static final String COLUNA_TIPO = "TIPO";
     public static final String COLUNA_TEXTO_ORIGINAL = "TEXTO_ORIGINAL";
     public static final String COLUNA_CITACAO = "CITACAO";
     public static final String COLUNA_JSON_ID = "JSON_ID";

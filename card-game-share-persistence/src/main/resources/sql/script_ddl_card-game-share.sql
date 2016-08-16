@@ -124,6 +124,7 @@ CREATE TABLE carta
   custo_mana_convertido BIGINT NULL,
   custo_mana VARCHAR(100) NULL,
   numero VARCHAR(100) NOT NULL,
+  tipo VARCHAR(100) NOT NULL,
   id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,
   id_layout BIGINT NOT NULL,
