@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class TipoColecao extends Entity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
 

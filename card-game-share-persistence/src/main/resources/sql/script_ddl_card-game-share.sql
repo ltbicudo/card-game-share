@@ -1,3 +1,16 @@
+/*-------------------------------- USUARIO --------------------------------------*/
+CREATE TABLE usuario
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  data_ultimo_login TIMESTAMP NULL,
+  bloqueado BOOLEAN NOT NULL,
+  senha VARCHAR(32) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- BORDA ----------------------------------------*/
 CREATE TABLE borda
 (
