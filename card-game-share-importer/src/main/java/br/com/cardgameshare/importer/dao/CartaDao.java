@@ -22,6 +22,8 @@ public class CartaDao {
     public static final String COLUNA_CITACAO = "CITACAO";
     public static final String COLUNA_JSON_ID = "JSON_ID";
     public static final String COLUNA_RARIDADE = "ID_RARIDADE";
+    public static final String COLUNA_LAYOUT = "ID_LAYOUT";
+    public static final String COLUNA_ARTISTA = "ID_ARTISTA";
     public static final String COLUNA_COLECAO = "ID_COLECAO";
 
     private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(CartaDao.class);

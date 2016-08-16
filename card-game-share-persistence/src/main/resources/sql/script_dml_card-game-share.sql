@@ -33,3 +33,7 @@ INSERT INTO cor (sigla, descricao, codigo) VALUES ('B', 'Preto', 'black');
 INSERT INTO cor (sigla, descricao, codigo) VALUES ('U', 'Azul', 'blue');
 INSERT INTO cor (sigla, descricao, codigo) VALUES ('G', 'Verde', 'green');
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- LAYOUT ---------------------------------------*/
+INSERT INTO layout (descricao, codigo) VALUES ('Normal', 'normal');
+INSERT INTO layout (descricao, codigo) VALUES ('Face Dupla', 'double-faced');
+/*-------------------------------------------------------------------------------*/

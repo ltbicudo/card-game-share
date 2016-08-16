@@ -54,16 +54,21 @@ public class Carta extends Entity {
             @JoinColumn(name = "id_cor", nullable = false) })
     private List<Cor> identificadoresCores;
 
+    @ManyToOne
+    @JoinColumn(name = "id_layout")
+    private Layout layout;
+
     @Column(name = "citacao", length = 4000)
     private String citacao;
 
     @Column(name = "json_id", length = 100)
     private String jsonId;
 
-//    private Artista artista;
+    @ManyToOne
+    @JoinColumn(name = "id_artista")
+    private Artista artista;
 
 //    private String nomeImagem;
-//    private Layout layout;
 //    private List<FormatoLegalidade> formatosLegalidades;
 //    private String jsonMciNumber;
 //    private Long jsonMultiVerseId;
@@ -438,5 +443,21 @@ public class Carta extends Entity {
 
     public void setIdentificadoresCores(List<Cor> identificadoresCores) {
         this.identificadoresCores = identificadoresCores;
+    }
+
+    public Layout getLayout() {
+        return layout;
+    }
+
+    public void setLayout(Layout layout) {
+        this.layout = layout;
+    }
+
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Artista artista) {
+        this.artista = artista;
     }
 }

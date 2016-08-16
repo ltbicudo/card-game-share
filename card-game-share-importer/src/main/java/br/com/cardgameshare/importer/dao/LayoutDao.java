@@ -10,39 +10,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CorDao {
+public class LayoutDao {
 
 
-    public static final String TABELA = "COR";
+    public static final String TABELA = "LAYOUT";
     public static final String COLUNA_ID = "ID";
-    public static final String COLUNA_SIGLA = "SIGLA";
     public static final String COLUNA_DESCRICAO = "DESCRICAO";
     public static final String COLUNA_CODIGO = "CODIGO";
 
-    private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(CorDao.class);
+    private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(LayoutDao.class);
 
     private Connection conn;
 
-    public CorDao(Connection conn) {
+    public LayoutDao(Connection conn) {
         this.conn = conn;
-    }
-
-    public ResultSet buscarPorSigla(String sigla) {
-        try {
-            PreparedStatement sql =
-                    conn.prepareStatement(SELECT_COMPLETO + " WHERE " + COLUNA_SIGLA + " = ? ");
-            sql.setString(1, sigla);
-            JDBC4ResultSet resultadoConsulta = (JDBC4ResultSet) sql.executeQuery();
-
-            if (!ResultSetUtil.isEmpty(resultadoConsulta)) {
-                resultadoConsulta.next();
-                return resultadoConsulta;
-            }
-
-        } catch (SQLException e) {
-            SQLUtil.tratarSQLException(e);
-        }
-        return null;
     }
 
     public ResultSet buscarPorCodigo(String codigo) {

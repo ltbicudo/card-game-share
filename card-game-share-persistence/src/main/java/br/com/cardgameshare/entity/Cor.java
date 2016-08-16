@@ -14,7 +14,7 @@ public class Cor extends Entity {
     @Column(name = "sigla", length = 1, nullable = false)
     private String sigla;
 
-    @Column(name = "nome", length = 100, nullable = false)
+    @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
     @Column(name = "codigo", length = 100, nullable = false)

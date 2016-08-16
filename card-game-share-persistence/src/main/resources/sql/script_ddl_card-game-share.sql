@@ -18,6 +18,15 @@ CREATE TABLE tipo_colecao
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- ARTISTA --------------------------------------*/
+CREATE TABLE artista
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  nome VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- BLOCO ----------------------------------------*/
 CREATE TABLE bloco
 (
@@ -97,6 +106,16 @@ CREATE TABLE cor
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- LAYOUT ---------------------------------------*/
+CREATE TABLE layout
+(
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(100) NOT NULL,
+  codigo VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- CARTA ----------------------------------------*/
 CREATE TABLE carta
 (
@@ -105,15 +124,19 @@ CREATE TABLE carta
   custo_mana_convertido BIGINT NULL,
   custo_mana VARCHAR(100) NULL,
   numero VARCHAR(100) NOT NULL,
-  texto VARCHAR(4000) NULL,
-  texto_original VARCHAR(4000) NULL,
   id_raridade BIGINT NOT NULL,
   id_colecao BIGINT NOT NULL,
+  id_layout BIGINT NOT NULL,
+  texto VARCHAR(4000) NULL,
+  texto_original VARCHAR(4000) NULL,
   citacao VARCHAR(4000) NULL,
+  id_artista BIGINT NOT NULL,
   json_id VARCHAR(100) NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_raridade) REFERENCES raridade(id) ON DELETE CASCADE
+  FOREIGN KEY (id_raridade) REFERENCES raridade(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_layout) REFERENCES layout(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_artista) REFERENCES artista(id) ON DELETE CASCADE
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/

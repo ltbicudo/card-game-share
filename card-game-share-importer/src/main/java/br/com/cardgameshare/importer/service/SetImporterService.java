@@ -18,6 +18,7 @@ import java.util.Properties;
 public class SetImporterService {
 
     private Connection conn;
+    private StringBuilder resultadoImportacao;
 
     private GenericDao genericDao;
     private ColecaoDao colecaoDao;
@@ -28,6 +29,8 @@ public class SetImporterService {
     private RaridadeDao raridadeDao;
     private TipoCartaDao tipoCartaDao;
     private CorDao corDao;
+    private LayoutDao layoutDao;
+    private ArtistaDao artistaDao;
 
     private Properties importerProperties;
 
@@ -52,6 +55,9 @@ public class SetImporterService {
             this.conn.commit();
             this.conn.close();
 
+            // Exibição dos resultados
+            System.out.print(this.resultadoImportacao.toString());
+
         } catch (Exception e) {
             // Fechando a conexão
             try {
@@ -65,6 +71,7 @@ public class SetImporterService {
 
     private Long importarInformacoesColecao(JSONObject jsonObject) throws Exception {
 
+        this.resultadoImportacao.append("Iniciando importação da coleção ").append((String) jsonObject.get("name")).append(" (").append((String) jsonObject.get("code")).append(")\n\n");
         // Validação de pré-existência da coleção
         ResultSet resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
         if (resultadoConsulta == null) {
@@ -90,18 +97,59 @@ public class SetImporterService {
             this.genericDao.inserir(ColecaoDao.TABELA, listaParametrosInsercaoColecao);
 
             resultadoConsulta = this.colecaoDao.buscarPorCodigo((String) jsonObject.get("code"));
+        } else {
+            this.resultadoImportacao.append("Coleção já existente no banco de dados e terá apenas as cartas importadas\n");
         }
         return resultadoConsulta.getLong(ColecaoDao.COLUNA_ID);
     }
 
+    // TODO campos que ainda faltam importar
+    /*
+        OK
+            nome String
+            cmc Long
+            custo mana String
+            numero String
+            raridade String
+            citacao String
+            jsonId String
+            tipo String
+            tipos [] String
+            texto String
+            texto original String
+            cores [] String
+            identificadores de cor [] String
+            layout String
+            artista String
+
+
+        NOK
+            nomes estrangeiros [] Objeto
+            nome da imagem String
+            legalidades [] Objeto
+            multiverse id Long
+            tipo original String
+            printings [] String
+     */
+
     private void importarInformacoesCartas(JSONObject jsonObject, Long idColecao) throws Exception {
 
+        this.resultadoImportacao.append("\nIniciando importação das cartas\n");
         JSONArray cartas = (JSONArray) jsonObject.get("cards");
 
         Iterator<JSONObject> iterator = cartas.iterator();
         List<ParametroDTO> listaParametrosInsercaoCarta;
+        int contadorCartasImportadas = 0;
         while (iterator.hasNext()) {
             JSONObject cartaAtual = iterator.next();
+            String identificacaoCartaLog = (String)cartaAtual.get("name") + " (" + (String) cartaAtual.get("id") + ")";
+
+            ResultSet cartaConsultada = this.cartaDao.buscarPorJsonId((String) cartaAtual.get("id"));
+            if (cartaConsultada != null) {
+                this.resultadoImportacao.append(identificacaoCartaLog).append(" já existente no banco de dados e não será atualizada\n");
+                continue;
+            }
+
             listaParametrosInsercaoCarta = new ArrayList<ParametroDTO>();
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_NOME, (String)cartaAtual.get("name"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CUSTO_MANA_CONVERTIDO, (Long)cartaAtual.get("cmc"), Types.NUMERIC));
@@ -113,16 +161,29 @@ public class SetImporterService {
             if (raridade == null) {
                 throw new IllegalArgumentException("Raridade não encontrada: " + (String) cartaAtual.get("rarity"));
             }
+            ResultSet layout = this.layoutDao.buscarPorCodigo((String) cartaAtual.get("layout")); // FIXME ajustar para não consultar o layout para cada carta
+            if (layout == null) {
+                throw new IllegalArgumentException("Layout não encontrado: " + (String) cartaAtual.get("layout"));
+            }
+            ResultSet artista = this.artistaDao.buscarPorNome((String) cartaAtual.get("artist")); // FIXME ajustar para não consultar o artista para cada carta
+            if (artista == null) {
+                List<ParametroDTO> listaParametrosInsercaoArtista = new ArrayList<ParametroDTO>();
+                listaParametrosInsercaoArtista.add(new ParametroDTO(ArtistaDao.COLUNA_NOME, (String) cartaAtual.get("artist"), Types.VARCHAR));
+                this.genericDao.inserir(ArtistaDao.TABELA, listaParametrosInsercaoArtista);
+                artista = this.artistaDao.buscarPorNome((String) cartaAtual.get("artist"));
+            }
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_CITACAO, (String) cartaAtual.get("flavor"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_JSON_ID, (String) cartaAtual.get("id"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_RARIDADE, raridade.getLong(RaridadeDao.COLUNA_ID), Types.NUMERIC));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_LAYOUT, layout.getLong(LayoutDao.COLUNA_ID), Types.NUMERIC));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_ARTISTA, artista.getLong(LayoutDao.COLUNA_ID), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_COLECAO, idColecao, Types.NUMERIC));
 
             this.genericDao.inserir(CartaDao.TABELA, listaParametrosInsercaoCarta);
 
             ResultSet carta = this.cartaDao.buscarPorJsonId((String) cartaAtual.get("id"));
             if (carta == null) {
-                throw new IllegalArgumentException("Carta recém inserida não foi encontrada: " + (String) cartaAtual.get("id") + " : " + (String)cartaAtual.get("name"));
+                throw new IllegalArgumentException("Carta recém inserida não foi encontrada: " + identificacaoCartaLog);
             }
 
             JSONArray tipos = (JSONArray) cartaAtual.get("types");
@@ -172,8 +233,13 @@ public class SetImporterService {
                     this.genericDao.inserir(IdentificadoresCoresCartasDao.TABELA, listaParametrosInsercaoIdentificadoresCoresCartas);
                 }
             }
-
+            contadorCartasImportadas++;
+            this.resultadoImportacao.append(identificacaoCartaLog).append(" importada para o banco de dados\n");
         }
+
+        this.resultadoImportacao.append("\nFinalização da importação das cartas finalizada\n");
+        this.resultadoImportacao.append("Total cartas na coleção: ").append(cartas.size()).append("\n");
+        this.resultadoImportacao.append("Total cartas importadas: ").append(contadorCartasImportadas);
     }
 
     private void prepararService() {
@@ -187,6 +253,9 @@ public class SetImporterService {
                     (String) this.importerProperties.get(PropertiesKeyEnum.DATABASE_PASSWORD.getValor()));
             this.conn.setAutoCommit(false);
 
+            // Resultado importação
+            this.resultadoImportacao = new StringBuilder();
+
             // Inicialização dos DAOs
             this.genericDao = new GenericDao(this.conn);
             this.colecaoDao = new ColecaoDao(this.conn);
@@ -197,6 +266,8 @@ public class SetImporterService {
             this.raridadeDao = new RaridadeDao(this.conn);
             this.tipoCartaDao = new TipoCartaDao(this.conn);
             this.corDao = new CorDao(this.conn);
+            this.layoutDao = new LayoutDao(this.conn);
+            this.artistaDao = new ArtistaDao(this.conn);
 
         } catch (SQLException e) {
             SQLUtil.tratarSQLException(e);
