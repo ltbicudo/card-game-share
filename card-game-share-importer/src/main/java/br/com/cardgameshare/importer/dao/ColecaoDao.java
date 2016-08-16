@@ -21,7 +21,6 @@ public class ColecaoDao {
     public static final String COLUNA_BLOCO = "ID_BLOCO";
 
     private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(ColecaoDao.class);
-    private static final String INSERT_COMPLETO = SQLUtil.obterInsertCompletoTabela(ColecaoDao.class);
 
     private Connection conn;
 
@@ -45,23 +44,6 @@ public class ColecaoDao {
             SQLUtil.tratarSQLException(e);
         }
         return null;
-    }
-
-    public void inserir(String nome, String codigo, Date dataLancamento, Long borda, Long tipo, Long bloco) {
-
-        try {
-            PreparedStatement sql = conn.prepareStatement(INSERT_COMPLETO);
-            sql.setString(1, nome);
-            sql.setString(2, codigo);
-            sql.setDate(3, DateUtil.converterDataUtilEmDataSQL(dataLancamento));
-            sql.setLong(4, borda);
-            sql.setLong(5, tipo);
-            sql.setLong(6, bloco);
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            SQLUtil.tratarSQLException(e);
-        }
-
     }
 
 }

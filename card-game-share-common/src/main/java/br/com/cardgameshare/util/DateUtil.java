@@ -27,4 +27,11 @@ public class DateUtil {
         return new java.sql.Date(valor.getTime());
     }
 
+    public static java.sql.Timestamp converterDataUtilEmTimestampSQL(Date valor) {
+        if (valor == null) {
+            return null;
+        }
+        return new java.sql.Timestamp(valor.getTime());
+    }
+
 }

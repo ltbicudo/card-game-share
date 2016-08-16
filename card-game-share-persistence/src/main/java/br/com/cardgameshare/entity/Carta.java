@@ -5,21 +5,26 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Flavia on 7/3/2016.
- */
 @javax.persistence.Entity
 @Table(name = "carta")
 public class Carta extends Entity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CARTA")
-    @SequenceGenerator(name = "SEQ_CARTA", sequenceName = "SEQ_CARTA", allocationSize = 1)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(unique = true, nullable = false, precision = 22)
     private Long id;
-//    private Artista artista;
-    @Column(name = "custoManaConvertido", nullable = false, precision = 22)
+
+    @Column(name = "nome", length = 100, nullable = false)
+    private String nome;
+
+    @Column(name = "custo_mana_convertido", precision = 22)
     private Long custoManaConvertido;
+
+    @Column(name = "numero", length = 100, nullable = false)
+    private String numero;
+
+//    private Artista artista;
+
 //    private List<Cor> cores;
 //    private String citacao;
 //    private String jsonId;
@@ -29,9 +34,7 @@ public class Carta extends Entity {
 //    private String custoMana;
 //    private String jsonMciNumber;
 //    private Long jsonMultiVerseId;
-//    private String nome;
 //    private List<String> names;
-//    private String numero;
 //    private String textoOriginal;
 //    private String tipoOriginal;
 //    private String poder;
@@ -150,15 +153,15 @@ public class Carta extends Entity {
 //    public void setJsonMultiVerseId(Long jsonMultiVerseId) {
 //        this.jsonMultiVerseId = jsonMultiVerseId;
 //    }
-//
-//    public String getNome() {
-//        return nome;
-//    }
-//
-//    public void setNome(String nome) {
-//        this.nome = nome;
-//    }
-//
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
 //    public List<String> getNames() {
 //        return names;
 //    }
@@ -166,15 +169,15 @@ public class Carta extends Entity {
 //    public void setNames(List<String> names) {
 //        this.names = names;
 //    }
-//
-//    public String getNumero() {
-//        return numero;
-//    }
-//
-//    public void setNumero(String numero) {
-//        this.numero = numero;
-//    }
-//
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
 //    public String getTextoOriginal() {
 //        return textoOriginal;
 //    }

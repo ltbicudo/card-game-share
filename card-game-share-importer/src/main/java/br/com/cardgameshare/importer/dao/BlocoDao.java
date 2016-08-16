@@ -18,7 +18,6 @@ public class BlocoDao {
     public static final String COLUNA_NOME = "NOME";
 
     private static final String SELECT_COMPLETO = SQLUtil.obterSelectCompletoTabela(BlocoDao.class);
-    private static final String INSERT_COMPLETO = SQLUtil.obterInsertCompletoTabela(BlocoDao.class);
 
     private Connection conn;
 
@@ -42,18 +41,6 @@ public class BlocoDao {
             SQLUtil.tratarSQLException(e);
         }
         return null;
-    }
-
-    public void inserir(String nome) {
-
-        try {
-            PreparedStatement sql = conn.prepareStatement(INSERT_COMPLETO);
-            sql.setString(1, nome);
-            sql.executeUpdate();
-        } catch (SQLException e) {
-            SQLUtil.tratarSQLException(e);
-        }
-
     }
 
 }
