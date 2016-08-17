@@ -12,7 +12,7 @@
 
                 <p:menuitem value="WANT LIST" id="menuItemWantList" containerStyleClass="menuItemWantList" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-cart" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
                 <p:menuitem value="HAVE LIST" id="menuItemHaveList" containerStyleClass="menuItemHaveList" action="#{nav.direcionarParaTela('pretty:have-list')}" icon="ui-icon-folder-collapsed" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
-                <p:menuitem value="MY CARDS"  id="menuItemMyCards"  containerStyleClass="menuItemMyCards" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="MY CARDS"  id="menuItemMyCards"  containerStyleClass="menuItemMyCards" action="#{nav.direcionarParaTela('pretty:my-cards')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
 
                 <f:facet name="options">
                     <p:commandButton value="LOGIN" id="menuItemLogin" icon="ui-icon-extlink" onclick="PF('loginModal').show(); return false;" rendered="#{!loginManager.isUsuarioLogado()}" />

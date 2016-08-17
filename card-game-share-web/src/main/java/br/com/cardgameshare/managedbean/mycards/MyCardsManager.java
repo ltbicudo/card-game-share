@@ -1,22 +1,13 @@
-package br.com.cardgameshare.managedbean.havelist;
+package br.com.cardgameshare.managedbean.mycards;
 
-import br.com.cardgameshare.dto.ContatoDTO;
 import br.com.cardgameshare.entity.Carta;
-import br.com.cardgameshare.entity.TipoContato;
-import br.com.cardgameshare.exception.ExcecaoNegocial;
-import br.com.cardgameshare.managedbean.login.LoginManager;
 import br.com.cardgameshare.service.CartaService;
-import br.com.cardgameshare.service.ContatoService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,13 +15,18 @@ import java.util.List;
  */
 @ManagedBean
 @RequestScoped
-public class HaveListManager {
+public class MyCardsManager {
+
+    @EJB
+    private CartaService cartaService;
+
+    private Long cartaSelecionada;
 
     @PostConstruct
     private void init() {
     }
 
-    @URLAction(mappingId = "have-list")
+    @URLAction(mappingId = "my-cards")
     public String load() {
         // TODO descomentar código abaixo
 //        if (!LoginManager.isUsuarioLogado()) {
@@ -39,4 +35,16 @@ public class HaveListManager {
         return null;
     }
 
+    public List<Carta> buscarCartas(String query) {
+        List<Carta> resultadoConsulta = this.cartaService.listarPorNome(query);
+        return resultadoConsulta;
+    }
+
+    public Long getCartaSelecionada() {
+        return cartaSelecionada;
+    }
+
+    public void setCartaSelecionada(Long cartaSelecionada) {
+        this.cartaSelecionada = cartaSelecionada;
+    }
 }
