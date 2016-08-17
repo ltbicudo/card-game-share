@@ -1,9 +1,11 @@
 package br.com.cardgameshare.managedbean.havelist;
 
 import br.com.cardgameshare.dto.ContatoDTO;
+import br.com.cardgameshare.entity.Carta;
 import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.managedbean.login.LoginManager;
+import br.com.cardgameshare.service.CartaService;
 import br.com.cardgameshare.service.ContatoService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import org.primefaces.context.RequestContext;
@@ -14,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,16 +26,42 @@ import java.util.List;
 @RequestScoped
 public class HaveListManager {
 
+    @EJB
+    private CartaService cartaService;
+
+    private Long cartaSelecionada; // FIXME construir manager pra consulta de cartas
+
     @PostConstruct
     private void init() {
     }
 
     @URLAction(mappingId = "have-list")
     public String load() {
+        // TODO descomentar código abaixo
 //        if (!LoginManager.isUsuarioLogado()) {
 //            return "pretty:inicio";
 //        }
         return null;
     }
 
+    public List<Carta> buscarCartas(String query) {
+
+        List<Carta> resultadoConsulta = this.cartaService.listarPorNome(query);
+        return resultadoConsulta;
+
+//        List<String> results = new ArrayList<String>();
+//        for (Carta cartaAtual : resultadoConsulta) {
+//            results.add(cartaAtual.getNome());
+//        }
+//
+//        return results;
+    }
+
+    public Long getCartaSelecionada() {
+        return cartaSelecionada;
+    }
+
+    public void setCartaSelecionada(Long cartaSelecionada) {
+        this.cartaSelecionada = cartaSelecionada;
+    }
 }
