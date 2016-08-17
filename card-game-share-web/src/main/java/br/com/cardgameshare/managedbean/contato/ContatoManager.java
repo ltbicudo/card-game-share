@@ -6,6 +6,7 @@ import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.service.ContatoService;
 import br.com.cardgameshare.service.UsuarioService;
+import com.ocpsoft.pretty.faces.annotation.URLAction;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

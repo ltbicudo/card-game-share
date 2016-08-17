@@ -29,7 +29,7 @@ public class LoginManager {
         this.loginDTO = new LoginDTO();
     }
 
-    public boolean isUsuarioLogado() {
+    public static boolean isUsuarioLogado() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("CGS_USUARIO_LOGADO") != null;
     }
 

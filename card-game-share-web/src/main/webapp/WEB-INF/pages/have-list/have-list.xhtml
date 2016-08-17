@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="body">
+        <h:form id="formHaveList" prependId="false">
+
+            <div class="ui-grid ui-grid-responsive">
+
+                HAVE LIST
+
+                <!---->
+                <!--&lt;!&ndash; Nome &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-1">-->
+                        <!--<p:outputLabel for="name" value="#{message['label.nome']}" />-->
+                    <!--</div>-->
+                    <!--<div class="ui-grid-col-11">-->
+                        <!--<p:inputText id="name" size="60" maxlength="100" required="true" value="#{cadastroManager.cadastroDTO.nome}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; Email &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-1">-->
+                        <!--<p:outputLabel for="email" value="#{message['label.email']}" />-->
+                    <!--</div>-->
+                    <!--<div class="ui-grid-col-11">-->
+                        <!--<p:inputText id="email" size="60" maxlength="100" required="true" value="#{cadastroManager.cadastroDTO.email}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; Confirmação Email &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-1">-->
+                        <!--<p:outputLabel for="confirmacaoEmail" value="#{message['label.confimacao.email']}" />-->
+                    <!--</div>-->
+                    <!--<div class="ui-grid-col-11">-->
+                        <!--<p:inputText id="confirmacaoEmail" size="60" maxlength="100" required="true" value="#{cadastroManager.cadastroDTO.confirmacaoEmail}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; Senha &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-1">-->
+                        <!--<p:outputLabel for="senha" value="#{message['label.senha']}" />-->
+                    <!--</div>-->
+                    <!--<div class="ui-grid-col-11">-->
+                        <!--<p:password id="senha" size="30" maxlength="22"-->
+                                    <!--goodLabel="Boa" strongLabel="Forte" weakLabel="Fraca" promptLabel="#{message['label.promptSenha']}" feedback="true"-->
+                                    <!--required="true" value="#{cadastroManager.cadastroDTO.senha}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; Confirmação Senha &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-1">-->
+                        <!--<p:outputLabel for="confirmacaoSenha" value="#{message['label.confirmacao.senha']}" />-->
+                    <!--</div>-->
+                    <!--<div class="ui-grid-col-11">-->
+                        <!--<p:password id="confirmacaoSenha" size="30" maxlength="22"-->
+                                    <!--goodLabel="Boa" strongLabel="Forte" weakLabel="Fraca" promptLabel="#{message['label.promptSenha']}" feedback="true"-->
+                                    <!--required="true" value="#{cadastroManager.cadastroDTO.confirmacaoSenha}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+                <!--&lt;!&ndash; Botoes &ndash;&gt;-->
+                <!--<div class="ui-grid-row">-->
+                    <!--<div class="ui-grid-col-12">-->
+                        <!--<p:commandButton    id="btnCriarConta"-->
+                                            <!--value="#{message['btn.criar.conta']}"-->
+                                            <!--update="formHaveList"-->
+                                            <!--action="#{cadastroManager.cadastrar()}" />-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

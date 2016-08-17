@@ -5,12 +5,13 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <div class="ui-grid-col-12">
+        <!-- icones estao vindo do jquery http://jqueryui.com/themeroller/#!themeGallery=undefined -->
         <h:form id="formMenuBarHeader" prependId="false">
             <p:menubar>
                 <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" oncomplete="PF('statusDialog').show();" />
 
-                <p:menuitem value="WANT LIST" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
-                <p:menuitem value="HAVE LIST" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="WANT LIST" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-cart" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="HAVE LIST" action="#{nav.direcionarParaTela('pretty:have-list')}" icon="ui-icon-folder-collapsed" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
                 <p:menuitem value="MY CARDS" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
 
                 <f:facet name="options">

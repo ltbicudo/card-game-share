@@ -16,7 +16,8 @@ import javax.faces.bean.ManagedBean;
 @URLMappings(mappings = {
         @URLMapping(id = "inicio", pattern = "/", viewId = "/WEB-INF/pages/landing.xhtml"),
         @URLMapping(id = "cadastrar", pattern = "/cadastrar", viewId = "/WEB-INF/pages/cadastro/cadastro.xhtml"),
-        @URLMapping(id = "contato", pattern = "/contato", viewId = "/WEB-INF/pages/contato/contato.xhtml")
+        @URLMapping(id = "contato", pattern = "/contato", viewId = "/WEB-INF/pages/contato/contato.xhtml"),
+        @URLMapping(id = "have-list", pattern = "/have-list", viewId = "/WEB-INF/pages/have-list/have-list.xhtml")
     }
 )
 public class NavigationContext {
