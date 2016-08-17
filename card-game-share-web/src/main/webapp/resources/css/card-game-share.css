@@ -16,3 +16,7 @@ body {
     text-align: right !important;
     padding-right: 5px !important;
 }
+
+.custom-menu-item {
+    background-color: grey !important;
+}

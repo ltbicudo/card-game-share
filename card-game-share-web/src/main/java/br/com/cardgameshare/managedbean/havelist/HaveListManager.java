@@ -6,6 +6,7 @@ import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.managedbean.login.LoginManager;
 import br.com.cardgameshare.service.ContatoService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
+import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -28,9 +29,9 @@ public class HaveListManager {
 
     @URLAction(mappingId = "have-list")
     public String load() {
-        if (!LoginManager.isUsuarioLogado()) {
-            return "pretty:inicio";
-        }
+//        if (!LoginManager.isUsuarioLogado()) {
+//            return "pretty:inicio";
+//        }
         return null;
     }
 
