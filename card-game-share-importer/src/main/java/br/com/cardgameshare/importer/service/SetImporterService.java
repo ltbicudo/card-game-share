@@ -139,6 +139,7 @@ public class SetImporterService {
             ataque - criatura
             defesa - criatura
             lealdade - planeswalker
+            multiverse id Long
 
         FAZER
             subtipos
@@ -149,7 +150,6 @@ public class SetImporterService {
             nomes estrangeiros [] Objeto
             nome da imagem String
             legalidades [] Objeto
-            multiverse id Long
             tipo original String
             printings [] String
      */
@@ -181,6 +181,7 @@ public class SetImporterService {
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_PODER, (String) cartaAtual.get("power"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_RESISTENCIA, (String) cartaAtual.get("toughness"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_LEALDADE, (Long) cartaAtual.get("loyalty"), Types.NUMERIC));
+            listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_MULTIVERSE_ID, (Long) cartaAtual.get("multiverseid"), Types.NUMERIC));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO, (String) cartaAtual.get("text"), Types.VARCHAR));
             listaParametrosInsercaoCarta.add(new ParametroDTO(CartaDao.COLUNA_TEXTO_ORIGINAL, (String) cartaAtual.get("originalText"), Types.VARCHAR));
             ResultSet raridade = this.raridadeDao.buscarPorCodigo((String) cartaAtual.get("rarity")); // FIXME ajustar para não consultar a rairdade para cada carta

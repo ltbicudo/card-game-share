@@ -53,7 +53,7 @@ public class LoginManager {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso", "")); // Possivelmente remover
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
-            return "pretty:inicio";
+            return "pretty:my-cards";
 
         } catch (ExcecaoNegocial e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));

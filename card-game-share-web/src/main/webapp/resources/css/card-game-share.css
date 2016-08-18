@@ -17,6 +17,10 @@ body {
     padding-right: 5px !important;
 }
 
+.ui-chkbox .ui-widget {
+    vertical-align: middle !important;
+}
+
 .custom-menu-item {
     background-color: grey !important;
 }

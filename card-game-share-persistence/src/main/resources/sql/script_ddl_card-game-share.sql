@@ -148,6 +148,7 @@ CREATE TABLE carta
   texto_original VARCHAR(4000) NULL,
   citacao VARCHAR(4000) NULL,
   id_artista BIGINT NOT NULL,
+  multiverse_id BIGINT NOT NULL,
   json_id VARCHAR(100) NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_colecao) REFERENCES colecao(id) ON DELETE CASCADE,

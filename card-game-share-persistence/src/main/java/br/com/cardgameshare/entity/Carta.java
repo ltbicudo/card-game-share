@@ -45,8 +45,11 @@ public class Carta extends Entity {
     @Column(name = "resistencia", length = 100)
     private String resistencia;
 
-    @Column(name = "lealdade", length = 100)
-    private Integer lealdade;
+    @Column(name = "lealdade", precision = 22)
+    private Long lealdade;
+
+    @Column(name = "multiverse_id", precision = 22)
+    private Long multiverseId;
 
     @ManyToMany
     @JoinTable(name = "tipos_cartas", joinColumns = {
@@ -111,6 +114,12 @@ public class Carta extends Entity {
         this.id = id;
     }
 
+    public String getGathererURLImage() {
+        if (this.multiverseId != null) {
+            return "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + this.multiverseId + "&type=card";
+        }
+        return "/resources/images/card-back.jpg";
+    }
 
 //    public Artista getArtista() {
 //        return artista;
@@ -496,11 +505,19 @@ public class Carta extends Entity {
         this.resistencia = resistencia;
     }
 
-    public Integer getLealdade() {
+    public Long getLealdade() {
         return lealdade;
     }
 
-    public void setLealdade(Integer lealdade) {
+    public void setLealdade(Long lealdade) {
         this.lealdade = lealdade;
+    }
+
+    public Long getMultiverseId() {
+        return multiverseId;
+    }
+
+    public void setMultiverseId(Long multiverseId) {
+        this.multiverseId = multiverseId;
     }
 }

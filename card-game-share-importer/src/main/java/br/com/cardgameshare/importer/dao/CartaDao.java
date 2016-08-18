@@ -22,6 +22,7 @@ public class CartaDao {
     public static final String COLUNA_PODER = "PODER";
     public static final String COLUNA_RESISTENCIA = "RESISTENCIA";
     public static final String COLUNA_LEALDADE = "LEALDADE";
+    public static final String COLUNA_MULTIVERSE_ID = "MULTIVERSE_ID";
     public static final String COLUNA_TEXTO_ORIGINAL = "TEXTO_ORIGINAL";
     public static final String COLUNA_CITACAO = "CITACAO";
     public static final String COLUNA_JSON_ID = "JSON_ID";

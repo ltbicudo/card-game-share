@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
         @URLMapping(id = "inicio", pattern = "/", viewId = "/WEB-INF/pages/landing.xhtml"),
         @URLMapping(id = "cadastrar", pattern = "/cadastrar", viewId = "/WEB-INF/pages/cadastro/cadastro.xhtml"),
         @URLMapping(id = "contato", pattern = "/contato", viewId = "/WEB-INF/pages/contato/contato.xhtml"),
-        @URLMapping(id = "have-list", pattern = "/have-list", viewId = "/WEB-INF/pages/have-list/have-list.xhtml"),
+        @URLMapping(id = "sell-list", pattern = "/sell-list", viewId = "/WEB-INF/pages/sell-list/sell-list.xhtml"),
         @URLMapping(id = "my-cards", pattern = "/my-cards", viewId = "/WEB-INF/pages/my-cards/my-cards.xhtml")
     }
 )
