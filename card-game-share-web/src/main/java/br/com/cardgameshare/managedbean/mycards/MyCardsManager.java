@@ -3,6 +3,8 @@ package br.com.cardgameshare.managedbean.mycards;
 import br.com.cardgameshare.entity.Carta;
 import br.com.cardgameshare.service.CartaService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
+import org.primefaces.component.dashboard.Dashboard;
+import org.primefaces.component.panel.Panel;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
@@ -10,9 +12,11 @@ import org.primefaces.model.DefaultDashboardModel;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import java.util.ArrayList;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.context.FacesContext;
 import java.util.List;
 
 /**
@@ -26,7 +30,7 @@ public class MyCardsManager {
     private CartaService cartaService;
 
     private Carta cartaSelecionada;
-    private DashboardModel dashboardModel;
+    private Dashboard dashboardCartas;
 
     @PostConstruct
     private void init() {
@@ -39,17 +43,45 @@ public class MyCardsManager {
 //            return "pretty:inicio";
 //        }
 
-        this.prepararDashBoardCartas();
+        this.prepararDashboardCartas();
 
         return null;
     }
 
-    private void prepararDashBoardCartas() {
-        this.dashboardModel = new DefaultDashboardModel();
-        DashboardColumn coluna1 = new DefaultDashboardColumn();
-        coluna1.addWidget("colecao01");
+    private void prepararDashboardCartas() {
 
-        this.dashboardModel.addColumn(coluna1);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Application application = fc.getApplication();
+
+        this.dashboardCartas = (Dashboard) application.createComponent(fc, "org.primefaces.component.Dashboard", "org.primefaces.component.DashboardRenderer");
+        this.dashboardCartas.setId("dashboardCartas");
+
+        DashboardModel model = new DefaultDashboardModel();
+        DashboardColumn coluna01 = new DefaultDashboardColumn();
+        model.addColumn(coluna01);
+        DashboardColumn coluna02 = new DefaultDashboardColumn();
+        model.addColumn(coluna02);
+        this.dashboardCartas.setModel(model);
+
+        int items = 5;
+
+        for( int i = 0, n = items; i < n; i++ ) {
+            Panel panel = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+            panel.setId("colecao" + i);
+            panel.setHeader("Header Colecao " + i);
+            panel.setClosable(false);
+            panel.setToggleable(true);
+
+            this.dashboardCartas.getChildren().add(panel);
+
+            DashboardColumn column = model.getColumn(i%2);
+            column.addWidget(panel.getId());
+            HtmlOutputText text = new HtmlOutputText();
+            text.setValue("Texto colecao " + i);
+
+            panel.getChildren().add(text);
+        }
+
     }
 
     public List<Carta> buscarCartas(String query) {
@@ -65,12 +97,11 @@ public class MyCardsManager {
         this.cartaSelecionada = cartaSelecionada;
     }
 
-    public DashboardModel getDashboardModel() {
-        return dashboardModel;
+    public Dashboard getDashboardCartas() {
+        return dashboardCartas;
     }
 
-    public void setDashboardModel(DashboardModel dashboardModel) {
-        this.dashboardModel = dashboardModel;
+    public void setDashboardCartas(Dashboard dashboardCartas) {
+        this.dashboardCartas = dashboardCartas;
     }
-
 }
