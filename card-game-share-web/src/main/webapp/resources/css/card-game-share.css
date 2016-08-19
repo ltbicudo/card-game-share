@@ -24,3 +24,8 @@ body {
 .custom-menu-item {
     background-color: grey !important;
 }
+
+.dashboard-grid-custom {
+    margin-right: 15px;
+    margin-bottom: 15px;
+}

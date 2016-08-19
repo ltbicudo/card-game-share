@@ -69,6 +69,7 @@ public class MyCardsManager {
             Panel panel = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
             panel.setId("colecao" + i);
             panel.setHeader("Header Colecao " + i);
+            panel.setStyleClass("dashboard-grid-custom");
             panel.setClosable(false);
             panel.setToggleable(true);
 
