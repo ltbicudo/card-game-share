@@ -1,10 +1,13 @@
 package br.com.cardgameshare.managedbean.mycards;
 
+import br.com.cardgameshare.dto.CartaColecaoDTO;
+import br.com.cardgameshare.dto.CartaDTO;
 import br.com.cardgameshare.entity.Carta;
 import br.com.cardgameshare.service.CartaService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import org.primefaces.component.dashboard.Dashboard;
 import org.primefaces.component.panel.Panel;
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
 import org.primefaces.model.DefaultDashboardColumn;
@@ -17,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +33,8 @@ public class MyCardsManager {
     @EJB
     private CartaService cartaService;
 
-    private Carta cartaSelecionada;
+    private String nomeCartaPesquisada;
+    private CartaDTO cartaSelecionada;
     private Dashboard dashboardCartas;
 
     @PostConstruct
@@ -85,16 +90,31 @@ public class MyCardsManager {
 
     }
 
-    public List<Carta> buscarCartas(String query) {
-        List<Carta> resultadoConsulta = this.cartaService.listarPorNome(query);
-        return resultadoConsulta;
+    public List<String> buscarCartas(String query) {
+        return this.cartaService.listarPorNomeDistinct(query);
     }
 
-    public Carta getCartaSelecionada() {
+    public void prepararCartaSelecionada() {
+        CartaDTO cartaDTO = new CartaDTO();
+        List<Carta> listaCartaColecao = this.cartaService.listarPorNome(this.nomeCartaPesquisada);
+        List<CartaColecaoDTO> listaCartaColecaoDTO = new ArrayList<CartaColecaoDTO>();
+        for (Carta cartaAtual : listaCartaColecao) {
+            CartaColecaoDTO cartaColecaoDTOAtual = new CartaColecaoDTO();
+            cartaColecaoDTOAtual.setIdCarta(cartaAtual.getId());
+            cartaColecaoDTOAtual.setIdColecao(cartaAtual.getColecao().getId());
+            cartaColecaoDTOAtual.setGathererURLImage(cartaAtual.getGathererURLImage());
+            listaCartaColecaoDTO.add(cartaColecaoDTOAtual);
+        }
+        cartaDTO.setIndiceColecaoAtual(0);
+        cartaDTO.setListaCartaColecao(listaCartaColecaoDTO);
+        this.cartaSelecionada = cartaDTO;
+    }
+
+    public CartaDTO getCartaSelecionada() {
         return cartaSelecionada;
     }
 
-    public void setCartaSelecionada(Carta cartaSelecionada) {
+    public void setCartaSelecionada(CartaDTO cartaSelecionada) {
         this.cartaSelecionada = cartaSelecionada;
     }
 
@@ -104,5 +124,13 @@ public class MyCardsManager {
 
     public void setDashboardCartas(Dashboard dashboardCartas) {
         this.dashboardCartas = dashboardCartas;
+    }
+
+    public String getNomeCartaPesquisada() {
+        return nomeCartaPesquisada;
+    }
+
+    public void setNomeCartaPesquisada(String nomeCartaPesquisada) {
+        this.nomeCartaPesquisada = nomeCartaPesquisada;
     }
 }

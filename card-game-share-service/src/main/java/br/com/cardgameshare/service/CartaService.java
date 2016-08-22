@@ -11,6 +11,10 @@ import java.util.List;
 @Stateless
 public class CartaService extends Service {
 
+    public List<String> listarPorNomeDistinct(String nome) {
+        return super.createCartaRepository().listarPorNomeDistinct(nome);
+    }
+
     public List<Carta> listarPorNome(String nome) {
         return super.createCartaRepository().listarPorNome(nome);
     }

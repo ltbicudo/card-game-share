@@ -83,6 +83,10 @@ public class Carta extends Entity {
     @JoinColumn(name = "id_artista")
     private Artista artista;
 
+    @ManyToOne
+    @JoinColumn(name = "id_colecao")
+    private Colecao colecao;
+
 //    private String nomeImagem;
 //    private List<FormatoLegalidade> formatosLegalidades;
 //    private String jsonMciNumber;
@@ -519,5 +523,13 @@ public class Carta extends Entity {
 
     public void setMultiverseId(Long multiverseId) {
         this.multiverseId = multiverseId;
+    }
+
+    public Colecao getColecao() {
+        return colecao;
+    }
+
+    public void setColecao(Colecao colecao) {
+        this.colecao = colecao;
     }
 }

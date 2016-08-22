@@ -19,6 +19,7 @@ INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Expansão', 'expansion');
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Reimpressão', 'reprint');
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Básica', 'starter');
 INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Duel Deck', 'duel deck');
+INSERT INTO tipo_colecao (descricao, codigo) VALUES ('Core', 'core');
 /*-------------------------------------------------------------------------------*/
 /*-------------------------------- TIPO CARTA -----------------------------------*/
 INSERT INTO tipo_carta (descricao, codigo) VALUES ('Encantamento', 'enchantment');

@@ -34,8 +34,8 @@ public class Colecao extends Entity {
     @JoinColumn(name = "id_bloco")
     private Bloco bloco;
 
-    private String jsonGetererCode;
-    private String jsonMagicCardsInfoCode;
+    //private String jsonGetererCode;
+    //private String jsonMagicCardsInfoCode;
 
     public Long getId() {
         return id;
@@ -85,21 +85,21 @@ public class Colecao extends Entity {
         this.tipoColecao = tipoColecao;
     }
 
-    public String getJsonGetererCode() {
-        return jsonGetererCode;
-    }
+//    public String getJsonGetererCode() {
+//        return jsonGetererCode;
+//    }
 
-    public void setJsonGetererCode(String jsonGetererCode) {
-        this.jsonGetererCode = jsonGetererCode;
-    }
-
-    public String getJsonMagicCardsInfoCode() {
-        return jsonMagicCardsInfoCode;
-    }
-
-    public void setJsonMagicCardsInfoCode(String jsonMagicCardsInfoCode) {
-        this.jsonMagicCardsInfoCode = jsonMagicCardsInfoCode;
-    }
+//    public void setJsonGetererCode(String jsonGetererCode) {
+//        this.jsonGetererCode = jsonGetererCode;
+//    }
+//
+//    public String getJsonMagicCardsInfoCode() {
+//        return jsonMagicCardsInfoCode;
+//    }
+//
+//    public void setJsonMagicCardsInfoCode(String jsonMagicCardsInfoCode) {
+//        this.jsonMagicCardsInfoCode = jsonMagicCardsInfoCode;
+//    }
 
     public Bloco getBloco() {
         return bloco;
