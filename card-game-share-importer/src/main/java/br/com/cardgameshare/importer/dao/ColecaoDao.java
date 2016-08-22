@@ -16,6 +16,7 @@ public class ColecaoDao {
     public static final String COLUNA_NOME = "NOME";
     public static final String COLUNA_CODIGO = "CODIGO";
     public static final String COLUNA_DATA_LANCAMENTO = "DATA_LANCAMENTO";
+    public static final String COLUNA_URL_LOGO = "URL_LOGO";
     public static final String COLUNA_BORDA = "ID_BORDA";
     public static final String COLUNA_TIPO = "ID_TIPO_COLECAO";
     public static final String COLUNA_BLOCO = "ID_BLOCO";

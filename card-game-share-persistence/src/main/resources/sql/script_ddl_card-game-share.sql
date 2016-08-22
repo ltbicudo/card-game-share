@@ -56,6 +56,7 @@ CREATE TABLE colecao
   nome VARCHAR(100) NOT NULL,
   codigo VARCHAR(3) NOT NULL,
   data_lancamento DATE NOT NULL,
+  url_logo VARCHAR(100) NULL,
   id_borda BIGINT NOT NULL,
   id_tipo_colecao BIGINT NOT NULL,
   id_bloco BIGINT NULL,

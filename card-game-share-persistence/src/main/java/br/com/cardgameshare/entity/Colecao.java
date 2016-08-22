@@ -22,6 +22,9 @@ public class Colecao extends Entity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataLancamento;
 
+    @Column(name = "url_logo", length = 100)
+    private String urlLogo;
+
     @ManyToOne
     @JoinColumn(name = "id_borda", nullable = false)
     private Borda borda;
@@ -107,5 +110,13 @@ public class Colecao extends Entity {
 
     public void setBloco(Bloco bloco) {
         this.bloco = bloco;
+    }
+
+    public String getUrlLogo() {
+        return urlLogo;
+    }
+
+    public void setUrlLogo(String urlLogo) {
+        this.urlLogo = urlLogo;
     }
 }

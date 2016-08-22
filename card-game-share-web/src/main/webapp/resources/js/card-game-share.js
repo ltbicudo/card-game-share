@@ -4,3 +4,8 @@ function selecionarMenu(menuId) {
     $('.menuItemMyCards').removeClass('custom-menu-item');
     $(menuId).addClass('custom-menu-item');
 }
+
+function selecionarColecaoCarta(idCartaColecao) {
+    $('#hdnCartaColecaoSelecionada').val(idCartaColecao);
+    $('#btnSelecionarCartaColecao').click();
+}

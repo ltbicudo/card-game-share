@@ -18,8 +18,10 @@ import javax.ejb.EJB;
 import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ import java.util.List;
  * ManagedBean para controle da tela de Have List
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class MyCardsManager {
 
     @EJB
@@ -35,6 +37,7 @@ public class MyCardsManager {
 
     private String nomeCartaPesquisada;
     private CartaDTO cartaSelecionada;
+    private String idCartaColecaoSelecionada;
     private Dashboard dashboardCartas;
 
     @PostConstruct
@@ -98,16 +101,24 @@ public class MyCardsManager {
         CartaDTO cartaDTO = new CartaDTO();
         List<Carta> listaCartaColecao = this.cartaService.listarPorNome(this.nomeCartaPesquisada);
         List<CartaColecaoDTO> listaCartaColecaoDTO = new ArrayList<CartaColecaoDTO>();
+        long contador = 0;
         for (Carta cartaAtual : listaCartaColecao) {
             CartaColecaoDTO cartaColecaoDTOAtual = new CartaColecaoDTO();
+            cartaColecaoDTOAtual.setId(contador++);
             cartaColecaoDTOAtual.setIdCarta(cartaAtual.getId());
             cartaColecaoDTOAtual.setIdColecao(cartaAtual.getColecao().getId());
+            cartaColecaoDTOAtual.setNomeColecao(cartaAtual.getColecao().getNome());
             cartaColecaoDTOAtual.setGathererURLImage(cartaAtual.getGathererURLImage());
+            cartaColecaoDTOAtual.setUrlLogo(cartaAtual.getColecao().getUrlLogo());
             listaCartaColecaoDTO.add(cartaColecaoDTOAtual);
         }
         cartaDTO.setIndiceColecaoAtual(0);
         cartaDTO.setListaCartaColecao(listaCartaColecaoDTO);
         this.cartaSelecionada = cartaDTO;
+    }
+
+    public void selecionarCartaColecao() {
+        this.cartaSelecionada.setIndiceColecaoAtual(Integer.parseInt(this.idCartaColecaoSelecionada));
     }
 
     public CartaDTO getCartaSelecionada() {
@@ -132,5 +143,13 @@ public class MyCardsManager {
 
     public void setNomeCartaPesquisada(String nomeCartaPesquisada) {
         this.nomeCartaPesquisada = nomeCartaPesquisada;
+    }
+
+    public String getIdCartaColecaoSelecionada() {
+        return idCartaColecaoSelecionada;
+    }
+
+    public void setIdCartaColecaoSelecionada(String idCartaColecaoSelecionada) {
+        this.idCartaColecaoSelecionada = idCartaColecaoSelecionada;
     }
 }

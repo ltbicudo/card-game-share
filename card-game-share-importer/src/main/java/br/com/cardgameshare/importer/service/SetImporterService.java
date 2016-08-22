@@ -58,6 +58,11 @@ public class SetImporterService {
             // Exibição dos resultados
             System.out.print(this.resultadoImportacao.toString());
 
+            System.out.println("\n\nATENCAO:");
+            System.out.println("Não esqueça de salvar a imagem da coleção no projeto");
+            System.out.println("Exemplo OGW de onde pegar internet: https://hydra-media.cursecdn.com/mtgsalvation.gamepedia.com/thumb/d/de/OGW_symbol.png/27px-OGW_symbol.png?version=4992272ee7a344cc9372ceea1202bddd");
+            System.out.println("Exemplo OGW de onde salvar na aplicação: /resources/images/colecoes/OGW.png");
+
         } catch (Exception e) {
             // Fechando a conexão
             try {
@@ -101,6 +106,7 @@ public class SetImporterService {
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_NOME, (String) jsonObject.get("name"), Types.VARCHAR));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_CODIGO, (String) jsonObject.get("code"), Types.VARCHAR));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_DATA_LANCAMENTO, DateUtil.converterStringEmData((String) jsonObject.get("releaseDate"), "yyyy-MM-dd"), Types.DATE));
+            listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_URL_LOGO, "/resources/images/colecoes/" + (String) jsonObject.get("code") + ".png", Types.VARCHAR));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_BORDA, borda.getLong(BordaDao.COLUNA_ID), Types.NUMERIC));
             listaParametrosInsercaoColecao.add(new ParametroDTO(ColecaoDao.COLUNA_TIPO, tipo.getLong(TipoColecaoDao.COLUNA_ID), Types.NUMERIC));
             if (colecaoPossuiBloco) {

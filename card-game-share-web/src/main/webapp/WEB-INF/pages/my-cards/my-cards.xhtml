@@ -70,11 +70,20 @@
                                 </p:panelGrid>
                             </h:panelGroup>
 
-                            <h:panelGroup  rendered="#{myCardsManager.cartaSelecionada ne null}">
+                            <h:panelGroup rendered="#{myCardsManager.cartaSelecionada ne null}">
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column>
                                             <p:graphicImage url="#{myCardsManager.cartaSelecionada.cartaColecaoAtual().gathererURLImage}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Coleções " />
+                                            <ui:repeat value="#{myCardsManager.cartaSelecionada.listaCartaColecao}" var="cartaColecao">
+                                                <p:graphicImage url="#{cartaColecao.urlLogo}" title="#{cartaColecao.nomeColecao}" onclick="selecionarColecaoCarta('#{cartaColecao.id}');">
+                                                </p:graphicImage>
+                                            </ui:repeat>
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -105,6 +114,10 @@
                 </div>
 
             </div>
+
+            <p:commandButton id="btnSelecionarCartaColecao" action="#{myCardsManager.selecionarCartaColecao}" style="display: none;" update="painelCartaSelecionada" />
+            <p:inputText id="hdnCartaColecaoSelecionada" value="#{myCardsManager.idCartaColecaoSelecionada}" style="display: none;" />
+
         </h:form>
     </ui:define>
 

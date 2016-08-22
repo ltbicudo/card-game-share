@@ -85,28 +85,4 @@ public class MTGJsonImporter {
         }
     }
 
-    /**
-     *
-     *    {
-     *    "age":100,
-     *    "name":"mkyong.com",
-     *    "messages":["msg 1","msg 2","msg 3"]
-     *    }
-     *
-     *    JSONObject jsonObject = (JSONObject) obj;
-     *
-     *    String name = (String) jsonObject.get("name");
-     *    System.out.println(name);
-     *
-     *    long age = (Long) jsonObject.get("age");
-     *    System.out.println(age);
-     *
-     *    // loop array
-     *    JSONArray msg = (JSONArray) jsonObject.get("messages");
-     *    Iterator<String> iterator = msg.iterator();
-     *    while (iterator.hasNext()) {
-     *    System.out.println(iterator.next());
-     }
-     */
-
 }
