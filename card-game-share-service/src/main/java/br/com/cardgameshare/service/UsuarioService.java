@@ -78,7 +78,7 @@ public class UsuarioService extends Service {
         }
     }
 
-    public void entrar(LoginDTO dto) throws ExcecaoNegocial {
+    public CadastroDTO entrar(LoginDTO dto) throws ExcecaoNegocial {
 
         // Localizar a conta
         CadastroDTO usuarioEncontrado = super.createUsuarioRepository().buscarUsuarioPorEmail(dto.getEmail());
@@ -94,6 +94,8 @@ public class UsuarioService extends Service {
 
         usuarioLogin.setDataUltimoLogin(new Date());
         super.createUsuarioRepository().atualizarUsuario(usuarioLogin);
+
+        return usuarioLogin;
     }
 
     public void enviarSenhaNova(LoginDTO dto) throws ExcecaoNegocial {
@@ -127,7 +129,11 @@ public class UsuarioService extends Service {
 
         // Salvar a senha na base de dados
         super.createUsuarioRepository().atualizarSenhaGeradaUsuario(dto.getEmailCadastro(), MD5Converter.convertStringToMd5(senhaNova));
-
     }
+
+    public Usuario obterUsuarioPorId(Long idUsuario) {
+        return this.createUsuarioRepository().obterUsuarioPorId(idUsuario);
+    }
+
 
 }

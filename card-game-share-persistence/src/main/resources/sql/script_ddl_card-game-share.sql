@@ -159,6 +159,17 @@ CREATE TABLE carta
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*-------------------------------------------------------------------------------*/
+/*-------------------------------- CARTAS USUARIOS -------------------------------*/
+CREATE TABLE cartas_usuarios
+(
+  id_usuario BIGINT NOT NULL,
+  id_carta BIGINT NOT NULL,
+  PRIMARY KEY (id_usuario, id_carta),
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+  FOREIGN KEY (id_carta) REFERENCES carta(id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*-------------------------------------------------------------------------------*/
 /*-------------------------------- TIPOS CARTAS ---------------------------------*/
 CREATE TABLE tipos_cartas
 (

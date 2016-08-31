@@ -3,7 +3,11 @@ package br.com.cardgameshare.managedbean.mycards;
 import br.com.cardgameshare.dto.CartaColecaoDTO;
 import br.com.cardgameshare.dto.CartaDTO;
 import br.com.cardgameshare.entity.Carta;
+import br.com.cardgameshare.entity.Colecao;
+import br.com.cardgameshare.entity.Usuario;
+import br.com.cardgameshare.managedbean.login.LoginManager;
 import br.com.cardgameshare.service.CartaService;
+import br.com.cardgameshare.service.UsuarioService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import org.primefaces.component.dashboard.Dashboard;
 import org.primefaces.component.panel.Panel;
@@ -23,6 +27,8 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -35,6 +41,11 @@ public class MyCardsManager {
     @EJB
     private CartaService cartaService;
 
+    @EJB
+    private UsuarioService usuarioService;
+
+    private Usuario usuario;
+
     private String nomeCartaPesquisada;
     private CartaDTO cartaSelecionada;
     private String idCartaColecaoSelecionada;
@@ -46,10 +57,9 @@ public class MyCardsManager {
 
     @URLAction(mappingId = "my-cards")
     public String load() {
-        // TODO descomentar código abaixo
-//        if (!LoginManager.isUsuarioLogado()) {
-//            return "pretty:inicio";
-//        }
+        if (!LoginManager.isUsuarioLogado()) {
+            return "pretty:inicio";
+        }
 
         this.prepararDashboardCartas();
 
@@ -58,37 +68,76 @@ public class MyCardsManager {
 
     private void prepararDashboardCartas() {
 
-        FacesContext fc = FacesContext.getCurrentInstance();
-        Application application = fc.getApplication();
+        this.usuario = this.usuarioService.obterUsuarioPorId(LoginManager.obterUsuarioLogado().getId());
 
-        this.dashboardCartas = (Dashboard) application.createComponent(fc, "org.primefaces.component.Dashboard", "org.primefaces.component.DashboardRenderer");
-        this.dashboardCartas.setId("dashboardCartas");
+        if (this.usuario.getCartas().isEmpty()) {
 
-        DashboardModel model = new DefaultDashboardModel();
-        DashboardColumn coluna01 = new DefaultDashboardColumn();
-        model.addColumn(coluna01);
-        DashboardColumn coluna02 = new DefaultDashboardColumn();
-        model.addColumn(coluna02);
-        this.dashboardCartas.setModel(model);
+        } else {
 
-        int items = 5;
+            FacesContext fc = FacesContext.getCurrentInstance();
+            Application application = fc.getApplication();
 
-        for( int i = 0, n = items; i < n; i++ ) {
-            Panel panel = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
-            panel.setId("colecao" + i);
-            panel.setHeader("Header Colecao " + i);
-            panel.setStyleClass("dashboard-grid-custom");
-            panel.setClosable(false);
-            panel.setToggleable(true);
+            this.dashboardCartas = (Dashboard) application.createComponent(fc, "org.primefaces.component.Dashboard", "org.primefaces.component.DashboardRenderer");
+            this.dashboardCartas.setId("dashboardCartas");
 
-            this.dashboardCartas.getChildren().add(panel);
+            DashboardModel model = new DefaultDashboardModel();
+            DashboardColumn colunaEsquerda = new DefaultDashboardColumn();
+            model.addColumn(colunaEsquerda);
+            DashboardColumn colunaDireita = new DefaultDashboardColumn();
+            model.addColumn(colunaDireita);
+            this.dashboardCartas.setModel(model);
 
-            DashboardColumn column = model.getColumn(i%2);
-            column.addWidget(panel.getId());
-            HtmlOutputText text = new HtmlOutputText();
-            text.setValue("Texto colecao " + i);
+            // Ordenação da lista por coleção
+            Collections.sort(this.usuario.getCartas(), new Comparator<Carta>() {
+                @Override
+                public int compare(Carta o1, Carta o2) {
+                    return o1.getColecao().getId().compareTo(o2.getColecao().getId());
+                }
+            });
 
-            panel.getChildren().add(text);
+            Long idColecaoAtual = null;
+            boolean colunaAtualEsquerda = true;
+            Panel panelAtual = null;
+            for (Carta cartaAtual : this.usuario.getCartas()) {
+
+                Colecao colecaoAtual = cartaAtual.getColecao();
+
+                if (idColecaoAtual == null || !colecaoAtual.getId().equals(idColecaoAtual)) {
+                    // Nova coleção
+
+                    // Panel
+                    panelAtual = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+                    panelAtual.setId("colecao_" + colecaoAtual.getCodigo());
+                    panelAtual.setHeader(colecaoAtual.getNome() + " - " + colecaoAtual.getCodigo());
+                    panelAtual.setStyleClass("dashboard-grid-custom");
+                    panelAtual.setClosable(false);
+                    panelAtual.setToggleable(true);
+                    this.dashboardCartas.getChildren().add(panelAtual);
+                    DashboardColumn column = model.getColumn(colunaAtualEsquerda ? 0 : 1);
+                    column.addWidget(panelAtual.getId());
+
+                    // Carta
+                    HtmlOutputText textoCarta = new HtmlOutputText();
+                    textoCarta.setValue(cartaAtual.getNome());
+                    panelAtual.getChildren().add(textoCarta);
+
+                    // Quantidade
+
+                    // Botão excluir
+
+                    colunaAtualEsquerda = !colunaAtualEsquerda;
+                    idColecaoAtual = colecaoAtual.getId();
+                } else {
+                    // Coleção já existente na lista
+
+                    // Carta
+                    HtmlOutputText textoCarta = new HtmlOutputText();
+                    textoCarta.setValue(cartaAtual.getNome());
+                    panelAtual.getChildren().add(textoCarta);
+                }
+
+            }
+
         }
 
     }

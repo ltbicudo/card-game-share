@@ -1,6 +1,7 @@
 DROP TABLE identificadores_cores_cartas;
 DROP TABLE cores_cartas;
 DROP TABLE tipos_cartas;
+DROP TABLE cartas_usuarios;
 DROP TABLE carta;
 DROP TABLE layout;
 DROP TABLE cor;

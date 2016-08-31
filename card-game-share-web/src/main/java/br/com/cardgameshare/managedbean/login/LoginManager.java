@@ -30,7 +30,11 @@ public class LoginManager {
     }
 
     public static boolean isUsuarioLogado() {
-        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("CGS_USUARIO_LOGADO") != null;
+        return "S".equals(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("CGS_INDICADOR_USUARIO_LOGADO"));
+    }
+
+    public static CadastroDTO obterUsuarioLogado() {
+        return (CadastroDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("CGS_USUARIO_LOGADO");
     }
 
     /**
@@ -46,9 +50,10 @@ public class LoginManager {
             this.usuarioService.validarUsuarioParaEntrar(this.loginDTO);
 
             // Login com usuário
-            this.usuarioService.entrar(this.loginDTO);
+            CadastroDTO usuarioLogin = this.usuarioService.entrar(this.loginDTO);
 
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("CGS_USUARIO_LOGADO", "S");
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("CGS_INDICADOR_USUARIO_LOGADO", "S");
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("CGS_USUARIO_LOGADO", usuarioLogin);
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login realizado com sucesso", "")); // Possivelmente remover
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
@@ -67,6 +72,7 @@ public class LoginManager {
      * @return
      */
     public String sair() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CGS_INDICADOR_USUARIO_LOGADO");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("CGS_USUARIO_LOGADO");
         return "pretty:inicio";
     }

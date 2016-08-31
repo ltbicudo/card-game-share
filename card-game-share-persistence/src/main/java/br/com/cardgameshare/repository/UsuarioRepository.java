@@ -5,6 +5,7 @@ import br.com.cardgameshare.entity.TipoContato;
 import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.security.MD5Converter;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -117,6 +118,17 @@ public class UsuarioRepository extends Repository {
         super.persistirTransacao();
         super.fecharTransacao();
 
+    }
+
+    public Usuario obterUsuarioPorId(Long idUsuario) {
+        Session session = super.obterSession();
+        Criteria criteria = session.createCriteria(Usuario.class);
+        criteria.add(Restrictions.eq("id", idUsuario));
+        criteria.setFetchMode("cartas", FetchMode.JOIN);
+
+        Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
+        super.fecharTransacao();
+        return usuarioEncontrado;
     }
 
 }

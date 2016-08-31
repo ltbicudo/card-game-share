@@ -2,6 +2,7 @@ package br.com.cardgameshare.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "usuario")
@@ -27,6 +28,12 @@ public class Usuario extends Entity {
 
     @Column(name = "senha", length = 32, nullable = false)
     private String senha;
+
+    @ManyToMany
+    @JoinTable(name = "cartas_usuarios", joinColumns = {
+            @JoinColumn(name = "id_usuario", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = {
+            @JoinColumn(name = "id_carta", referencedColumnName = "id", nullable = false) })
+    private List<Carta> cartas;
 
     public String getSenha() {
         return senha;
@@ -74,5 +81,13 @@ public class Usuario extends Entity {
 
     public void setBloqueado(Boolean bloqueado) {
         this.bloqueado = bloqueado;
+    }
+
+    public List<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
     }
 }
