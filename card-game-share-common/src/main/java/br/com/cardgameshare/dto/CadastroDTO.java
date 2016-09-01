@@ -1,6 +1,7 @@
 package br.com.cardgameshare.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class CadastroDTO extends DTO {
 
@@ -11,6 +12,7 @@ public class CadastroDTO extends DTO {
     private String confirmacaoSenha;
     private Boolean bloqueado;
     private Date dataUltimoLogin;
+    private List<CartaDTO> cartas;
 
     public Boolean getBloqueado() {
         return bloqueado;
@@ -66,5 +68,13 @@ public class CadastroDTO extends DTO {
 
     public void setDataUltimoLogin(Date dataUltimoLogin) {
         this.dataUltimoLogin = dataUltimoLogin;
+    }
+
+    public List<CartaDTO> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(List<CartaDTO> cartas) {
+        this.cartas = cartas;
     }
 }
