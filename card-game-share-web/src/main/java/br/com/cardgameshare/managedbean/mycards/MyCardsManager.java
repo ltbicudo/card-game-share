@@ -9,8 +9,13 @@ import br.com.cardgameshare.managedbean.login.LoginManager;
 import br.com.cardgameshare.service.CartaService;
 import br.com.cardgameshare.service.UsuarioService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
+import org.primefaces.component.button.Button;
+import org.primefaces.component.column.Column;
 import org.primefaces.component.dashboard.Dashboard;
 import org.primefaces.component.panel.Panel;
+import org.primefaces.component.panelgrid.PanelGrid;
+import org.primefaces.component.row.Row;
+import org.primefaces.component.spacer.Spacer;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DashboardColumn;
 import org.primefaces.model.DashboardModel;
@@ -98,6 +103,11 @@ public class MyCardsManager {
             Long idColecaoAtual = null;
             boolean colunaAtualEsquerda = true;
             Panel panelAtual = null;
+
+            HtmlOutputText pulaLinha = new HtmlOutputText();
+            pulaLinha.setValue("&lt;br /&gt;");
+            pulaLinha.setEscape(false);
+
             for (Carta cartaAtual : this.usuario.getCartas()) {
 
                 Colecao colecaoAtual = cartaAtual.getColecao();
@@ -106,7 +116,8 @@ public class MyCardsManager {
                     // Nova coleção
 
                     // Panel
-                    panelAtual = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+//                    panelAtual = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+                    panelAtual = new Panel();
                     panelAtual.setId("colecao_" + colecaoAtual.getCodigo());
                     panelAtual.setHeader(colecaoAtual.getNome() + " - " + colecaoAtual.getCodigo());
                     panelAtual.setStyleClass("dashboard-grid-custom");
@@ -116,6 +127,16 @@ public class MyCardsManager {
                     DashboardColumn column = model.getColumn(colunaAtualEsquerda ? 0 : 1);
                     column.addWidget(panelAtual.getId());
 
+                    PanelGrid panelGrid = new PanelGrid();
+                    Row linha = new Row();
+                    Column coluna = new Column();
+                    HtmlOutputText texto = new HtmlOutputText();
+                    texto.setValue("teste panel grid");
+                    coluna.getChildren().add(texto);
+                    linha.getChildren().add(coluna);
+                    panelGrid.getChildren().add(linha);
+                    panelAtual.getChildren().add(panelGrid);
+
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
                     textoCarta.setValue(cartaAtual.getNome());
@@ -124,16 +145,25 @@ public class MyCardsManager {
                     // Quantidade
 
                     // Botão excluir
+                    Button botaoExcluir = new Button();
+                    botaoExcluir.setValue("Excluir");
+                    panelAtual.getChildren().add(botaoExcluir);
 
                     colunaAtualEsquerda = !colunaAtualEsquerda;
                     idColecaoAtual = colecaoAtual.getId();
                 } else {
                     // Coleção já existente na lista
+                    panelAtual.getChildren().add(pulaLinha);
 
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
                     textoCarta.setValue(cartaAtual.getNome());
                     panelAtual.getChildren().add(textoCarta);
+
+                    // Botão excluir
+                    Button botaoExcluir = new Button();
+                    botaoExcluir.setValue("Excluir");
+                    panelAtual.getChildren().add(botaoExcluir);
                 }
 
             }

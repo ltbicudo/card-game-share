@@ -72,6 +72,7 @@ public class UsuarioRepository extends Repository {
         Criteria criteria = session.createCriteria(Usuario.class);
         criteria.add(Restrictions.eq("email", email));
         criteria.add(Restrictions.eq("senha", MD5Converter.convertStringToMd5(senha)));
+        criteria.setFetchMode("cartas", FetchMode.JOIN);
 
         Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
         super.fecharTransacao();
