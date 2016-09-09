@@ -29,11 +29,9 @@ public class Usuario extends Entity {
     @Column(name = "senha", length = 32, nullable = false)
     private String senha;
 
-    @ManyToMany
-    @JoinTable(name = "cartas_usuarios", joinColumns = {
-            @JoinColumn(name = "id_usuario", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = {
-            @JoinColumn(name = "id_carta", referencedColumnName = "id", nullable = false) })
-    private List<Carta> cartas;
+    @OneToMany
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
+    private List<CartasUsuarios> cartas;
 
     public String getSenha() {
         return senha;
@@ -83,11 +81,11 @@ public class Usuario extends Entity {
         this.bloqueado = bloqueado;
     }
 
-    public List<Carta> getCartas() {
+    public List<CartasUsuarios> getCartas() {
         return cartas;
     }
 
-    public void setCartas(List<Carta> cartas) {
+    public void setCartas(List<CartasUsuarios> cartas) {
         this.cartas = cartas;
     }
 }

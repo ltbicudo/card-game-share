@@ -12,7 +12,7 @@ public class CadastroDTO extends DTO {
     private String confirmacaoSenha;
     private Boolean bloqueado;
     private Date dataUltimoLogin;
-    private List<CartaDTO> cartas;
+    private List<CartasUsuariosDTO> cartas;
 
     public Boolean getBloqueado() {
         return bloqueado;
@@ -70,11 +70,11 @@ public class CadastroDTO extends DTO {
         this.dataUltimoLogin = dataUltimoLogin;
     }
 
-    public List<CartaDTO> getCartas() {
+    public List<CartasUsuariosDTO> getCartas() {
         return cartas;
     }
 
-    public void setCartas(List<CartaDTO> cartas) {
+    public void setCartas(List<CartasUsuariosDTO> cartas) {
         this.cartas = cartas;
     }
 }

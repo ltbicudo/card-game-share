@@ -29,3 +29,7 @@ body {
     margin-right: 15px;
     margin-bottom: 15px;
 }
+
+.dashboard-panel-grid-custom {
+    border: hidden !important;
+}

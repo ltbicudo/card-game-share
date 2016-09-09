@@ -2,9 +2,8 @@ package br.com.cardgameshare.repository;
 
 import br.com.cardgameshare.dto.CadastroDTO;
 import br.com.cardgameshare.dto.CartaDTO;
-import br.com.cardgameshare.entity.Carta;
-import br.com.cardgameshare.entity.TipoContato;
-import br.com.cardgameshare.entity.Usuario;
+import br.com.cardgameshare.dto.CartasUsuariosDTO;
+import br.com.cardgameshare.entity.*;
 import br.com.cardgameshare.security.MD5Converter;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -73,6 +72,7 @@ public class UsuarioRepository extends Repository {
         criteria.add(Restrictions.eq("email", email));
         criteria.add(Restrictions.eq("senha", MD5Converter.convertStringToMd5(senha)));
         criteria.setFetchMode("cartas", FetchMode.JOIN);
+        criteria.setFetchMode("cartas.carta", FetchMode.JOIN);
 
         Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
         super.fecharTransacao();
@@ -88,11 +88,19 @@ public class UsuarioRepository extends Repository {
             cadastroDTO.setDataUltimoLogin(usuarioEncontrado.getDataUltimoLogin());
 
             if (usuarioEncontrado.getCartas() != null && !usuarioEncontrado.getCartas().isEmpty()) {
-                List<CartaDTO> cartas = new ArrayList<CartaDTO>();
-                for (Carta cartaAtual : usuarioEncontrado.getCartas()) {
+                List<CartasUsuariosDTO> cartas = new ArrayList<CartasUsuariosDTO>();
+                for (CartasUsuarios cartasUsuariosAtual : usuarioEncontrado.getCartas()) {
+                    CartasUsuariosDTO cartasUsuariosDTOAtual = new CartasUsuariosDTO();
+                    cartasUsuariosDTOAtual.setIdUsuario(usuarioEncontrado.getId());
+
                     CartaDTO cartaDTOAtual = new CartaDTO();
-                    cartaDTOAtual.setId(cartaAtual.getId());
-                    cartas.add(cartaDTOAtual);
+                    cartaDTOAtual.setId(cartasUsuariosAtual.getCarta().getId());
+                    cartaDTOAtual.setNome(cartasUsuariosAtual.getCarta().getNome());
+                    cartasUsuariosDTOAtual.setCarta(cartaDTOAtual);
+
+                    cartasUsuariosDTOAtual.setQuantidade(cartasUsuariosAtual.getQuantidade());
+
+                    cartas.add(cartasUsuariosDTOAtual);
                 }
                 cadastroDTO.setCartas(cartas);
             }
@@ -114,13 +122,17 @@ public class UsuarioRepository extends Repository {
         usuario.setBloqueado(dto.getBloqueado());
         usuario.setDataUltimoLogin(dto.getDataUltimoLogin());
         if (dto.getCartas() != null && !dto.getCartas().isEmpty()) {
-            List<Carta> cartas = new ArrayList<Carta>();
-            for (CartaDTO cartaDTOAtual : dto.getCartas()) {
-                Carta cartaAtual = new Carta();
-                cartaAtual.setId(cartaDTOAtual.getId());
-                cartas.add(cartaAtual);
+            List<CartasUsuarios> cartasUsuarios = new ArrayList<CartasUsuarios>();
+            for (CartasUsuariosDTO cartasUsuariosDTOAtual : dto.getCartas()) {
+                CartasUsuarios cartasUsuariosAtual = new CartasUsuarios();
+                CartasUsuariosPK cartasUsuariosPKAtual = new CartasUsuariosPK();
+                cartasUsuariosPKAtual.setIdUsuario(dto.getId());
+                cartasUsuariosPKAtual.setIdCarta(cartasUsuariosDTOAtual.getCarta().getId());
+                cartasUsuariosAtual.setQuantidade(cartasUsuariosDTOAtual.getQuantidade());
+                cartasUsuariosAtual.setPk(cartasUsuariosPKAtual);
+                cartasUsuarios.add(cartasUsuariosAtual);
             }
-            usuario.setCartas(cartas);
+            usuario.setCartas(cartasUsuarios);
         }
 
         super.em.merge(usuario);

@@ -3,6 +3,7 @@ package br.com.cardgameshare.managedbean.mycards;
 import br.com.cardgameshare.dto.CartaColecaoDTO;
 import br.com.cardgameshare.dto.CartaDTO;
 import br.com.cardgameshare.entity.Carta;
+import br.com.cardgameshare.entity.CartasUsuarios;
 import br.com.cardgameshare.entity.Colecao;
 import br.com.cardgameshare.entity.Usuario;
 import br.com.cardgameshare.managedbean.login.LoginManager;
@@ -93,30 +94,26 @@ public class MyCardsManager {
             this.dashboardCartas.setModel(model);
 
             // Ordenação da lista por coleção
-            Collections.sort(this.usuario.getCartas(), new Comparator<Carta>() {
+            Collections.sort(this.usuario.getCartas(), new Comparator<CartasUsuarios>() {
                 @Override
-                public int compare(Carta o1, Carta o2) {
-                    return o1.getColecao().getId().compareTo(o2.getColecao().getId());
+                public int compare(CartasUsuarios o1, CartasUsuarios o2) {
+                    return o1.getCarta().getColecao().getId().compareTo(o2.getCarta().getColecao().getId());
                 }
             });
 
             Long idColecaoAtual = null;
             boolean colunaAtualEsquerda = true;
             Panel panelAtual = null;
+            PanelGrid panelGrid = null;
 
-            HtmlOutputText pulaLinha = new HtmlOutputText();
-            pulaLinha.setValue("&lt;br /&gt;");
-            pulaLinha.setEscape(false);
+            for (CartasUsuarios cartasUsuariosAtual : this.usuario.getCartas()) {
 
-            for (Carta cartaAtual : this.usuario.getCartas()) {
-
-                Colecao colecaoAtual = cartaAtual.getColecao();
+                Colecao colecaoAtual = cartasUsuariosAtual.getCarta().getColecao();
 
                 if (idColecaoAtual == null || !colecaoAtual.getId().equals(idColecaoAtual)) {
                     // Nova coleção
 
-                    // Panel
-//                    panelAtual = (Panel) application.createComponent(fc, "org.primefaces.component.Panel", "org.primefaces.component.PanelRenderer");
+                    // Panel Coleção
                     panelAtual = new Panel();
                     panelAtual.setId("colecao_" + colecaoAtual.getCodigo());
                     panelAtual.setHeader(colecaoAtual.getNome() + " - " + colecaoAtual.getCodigo());
@@ -127,43 +124,55 @@ public class MyCardsManager {
                     DashboardColumn column = model.getColumn(colunaAtualEsquerda ? 0 : 1);
                     column.addWidget(panelAtual.getId());
 
-                    PanelGrid panelGrid = new PanelGrid();
+                    // Panel Grid Cartas
+                    panelGrid = new PanelGrid();
+                    panelGrid.setStyleClass("dashboard-panel-grid-custom");
+
+                    // Linha
                     Row linha = new Row();
                     Column coluna = new Column();
-                    HtmlOutputText texto = new HtmlOutputText();
-                    texto.setValue("teste panel grid");
-                    coluna.getChildren().add(texto);
-                    linha.getChildren().add(coluna);
-                    panelGrid.getChildren().add(linha);
-                    panelAtual.getChildren().add(panelGrid);
 
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
-                    textoCarta.setValue(cartaAtual.getNome());
-                    panelAtual.getChildren().add(textoCarta);
+                    textoCarta.setValue(cartasUsuariosAtual.getCarta().getNome());
+                    coluna.getChildren().add(textoCarta);
 
                     // Quantidade
 
                     // Botão excluir
                     Button botaoExcluir = new Button();
                     botaoExcluir.setValue("Excluir");
-                    panelAtual.getChildren().add(botaoExcluir);
+                    coluna.getChildren().add(botaoExcluir);
 
+                    linha.getChildren().add(coluna);
+                    panelGrid.getChildren().add(linha);
+                    panelAtual.getChildren().add(panelGrid);
+
+                    // Troca da coluna
                     colunaAtualEsquerda = !colunaAtualEsquerda;
                     idColecaoAtual = colecaoAtual.getId();
                 } else {
                     // Coleção já existente na lista
-                    panelAtual.getChildren().add(pulaLinha);
+
+                    // Linha
+                    Row linha = new Row();
+                    Column coluna = new Column();
 
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
-                    textoCarta.setValue(cartaAtual.getNome());
-                    panelAtual.getChildren().add(textoCarta);
+                    textoCarta.setValue(cartasUsuariosAtual.getCarta().getNome());
+                    coluna.getChildren().add(textoCarta);
+
+                    // Quantidade
 
                     // Botão excluir
                     Button botaoExcluir = new Button();
                     botaoExcluir.setValue("Excluir");
-                    panelAtual.getChildren().add(botaoExcluir);
+                    coluna.getChildren().add(botaoExcluir);
+
+                    linha.getChildren().add(coluna);
+                    panelGrid.getChildren().add(linha);
+                    panelAtual.getChildren().add(panelGrid);
                 }
 
             }

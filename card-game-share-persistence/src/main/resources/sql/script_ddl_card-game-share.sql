@@ -164,6 +164,7 @@ CREATE TABLE cartas_usuarios
 (
   id_usuario BIGINT NOT NULL,
   id_carta BIGINT NOT NULL,
+  quantidade BIGINT NOT NULL,
   PRIMARY KEY (id_usuario, id_carta),
   FOREIGN KEY (id_usuario) REFERENCES usuario(id),
   FOREIGN KEY (id_carta) REFERENCES carta(id)

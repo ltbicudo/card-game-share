@@ -11,7 +11,7 @@
                 <p:menuitem value="HOME" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-home" oncomplete="PF('statusDialog').show();" />
 
                 <p:menuitem value="WANT LIST" id="menuItemWantList" containerStyleClass="menuItemWantList" action="#{nav.direcionarParaTela('pretty:inicio')}" icon="ui-icon-cart" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
-                <p:menuitem value="Sell LIST" id="menuItemSellList" containerStyleClass="menuItemSellList" action="#{nav.direcionarParaTela('pretty:sell-list')}" icon="ui-icon-cart" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
+                <p:menuitem value="SELL LIST" id="menuItemSellList" containerStyleClass="menuItemSellList" action="#{nav.direcionarParaTela('pretty:sell-list')}" icon="ui-icon-cart" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
                 <p:menuitem value="MY CARDS"  id="menuItemMyCards"  containerStyleClass="menuItemMyCards" action="#{nav.direcionarParaTela('pretty:my-cards')}" icon="ui-icon-tag" oncomplete="PF('statusDialog').show();" rendered="#{loginManager.isUsuarioLogado()}" />
 
                 <f:facet name="options">
