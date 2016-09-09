@@ -227,6 +227,7 @@ public class MyCardsManager {
 
         this.prepararDashboardCartas();
 
+        // FIXME tentar não redirecionar a página mas sim atualizar as infos da tela
         return "pretty:my-cards";
     }
 
