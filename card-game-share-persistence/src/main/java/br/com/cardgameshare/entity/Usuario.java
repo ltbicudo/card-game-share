@@ -29,10 +29,6 @@ public class Usuario extends Entity {
     @Column(name = "senha", length = 32, nullable = false)
     private String senha;
 
-    @OneToMany
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id")
-    private List<CartasUsuarios> cartas;
-
     public String getSenha() {
         return senha;
     }
@@ -81,11 +77,4 @@ public class Usuario extends Entity {
         this.bloqueado = bloqueado;
     }
 
-    public List<CartasUsuarios> getCartas() {
-        return cartas;
-    }
-
-    public void setCartas(List<CartasUsuarios> cartas) {
-        this.cartas = cartas;
-    }
 }

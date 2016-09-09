@@ -71,8 +71,6 @@ public class UsuarioRepository extends Repository {
         Criteria criteria = session.createCriteria(Usuario.class);
         criteria.add(Restrictions.eq("email", email));
         criteria.add(Restrictions.eq("senha", MD5Converter.convertStringToMd5(senha)));
-        criteria.setFetchMode("cartas", FetchMode.JOIN);
-        criteria.setFetchMode("cartas.carta", FetchMode.JOIN);
 
         Usuario usuarioEncontrado = (Usuario) criteria.uniqueResult();
         super.fecharTransacao();
@@ -87,27 +85,16 @@ public class UsuarioRepository extends Repository {
             cadastroDTO.setBloqueado(usuarioEncontrado.getBloqueado());
             cadastroDTO.setDataUltimoLogin(usuarioEncontrado.getDataUltimoLogin());
 
-            if (usuarioEncontrado.getCartas() != null && !usuarioEncontrado.getCartas().isEmpty()) {
-                List<CartasUsuariosDTO> cartas = new ArrayList<CartasUsuariosDTO>();
-                for (CartasUsuarios cartasUsuariosAtual : usuarioEncontrado.getCartas()) {
-                    CartasUsuariosDTO cartasUsuariosDTOAtual = new CartasUsuariosDTO();
-                    cartasUsuariosDTOAtual.setIdUsuario(usuarioEncontrado.getId());
-
-                    CartaDTO cartaDTOAtual = new CartaDTO();
-                    cartaDTOAtual.setId(cartasUsuariosAtual.getCarta().getId());
-                    cartaDTOAtual.setNome(cartasUsuariosAtual.getCarta().getNome());
-                    cartasUsuariosDTOAtual.setCarta(cartaDTOAtual);
-
-                    cartasUsuariosDTOAtual.setQuantidade(cartasUsuariosAtual.getQuantidade());
-
-                    cartas.add(cartasUsuariosDTOAtual);
-                }
-                cadastroDTO.setCartas(cartas);
-            }
-
             return cadastroDTO;
         }
         return null;
+    }
+
+    public void atualizarUsuario(Usuario usuario) {
+        super.abrirTransacao();
+        super.em.merge(usuario);
+        super.persistirTransacao();
+        super.fecharTransacao();
     }
 
     public void atualizarUsuario(CadastroDTO dto) {
@@ -121,19 +108,6 @@ public class UsuarioRepository extends Repository {
         usuario.setSenha(dto.getSenha());
         usuario.setBloqueado(dto.getBloqueado());
         usuario.setDataUltimoLogin(dto.getDataUltimoLogin());
-        if (dto.getCartas() != null && !dto.getCartas().isEmpty()) {
-            List<CartasUsuarios> cartasUsuarios = new ArrayList<CartasUsuarios>();
-            for (CartasUsuariosDTO cartasUsuariosDTOAtual : dto.getCartas()) {
-                CartasUsuarios cartasUsuariosAtual = new CartasUsuarios();
-                CartasUsuariosPK cartasUsuariosPKAtual = new CartasUsuariosPK();
-                cartasUsuariosPKAtual.setIdUsuario(dto.getId());
-                cartasUsuariosPKAtual.setIdCarta(cartasUsuariosDTOAtual.getCarta().getId());
-                cartasUsuariosAtual.setQuantidade(cartasUsuariosDTOAtual.getQuantidade());
-                cartasUsuariosAtual.setPk(cartasUsuariosPKAtual);
-                cartasUsuarios.add(cartasUsuariosAtual);
-            }
-            usuario.setCartas(cartasUsuarios);
-        }
 
         super.em.merge(usuario);
         super.persistirTransacao();

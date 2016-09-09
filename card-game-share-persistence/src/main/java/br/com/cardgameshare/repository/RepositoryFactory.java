@@ -33,6 +33,10 @@ public class RepositoryFactory {
         return new CartaRepository(entityManagerFactory.createEntityManager());
     }
 
+    public CartasUsuariosRepository createCartasUsuariosRepository() {
+        return new CartasUsuariosRepository(entityManagerFactory.createEntityManager());
+    }
+
     @PreDestroy
     private void preDestroy() {
         this.entityManagerFactory.close();

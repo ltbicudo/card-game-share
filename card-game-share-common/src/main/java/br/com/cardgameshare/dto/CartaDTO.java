@@ -38,4 +38,12 @@ public class CartaDTO extends DTO {
     public void setIndiceColecaoAtual(int indiceColecaoAtual) {
         this.indiceColecaoAtual = indiceColecaoAtual;
     }
+
+    @Override
+    public Long getId() {
+        if (this.listaCartaColecao != null && this.listaCartaColecao.size() > this.indiceColecaoAtual) {
+            return this.listaCartaColecao.get(this.indiceColecaoAtual).getIdCarta();
+        }
+        return 0L;
+    }
 }

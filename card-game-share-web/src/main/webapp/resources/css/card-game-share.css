@@ -33,3 +33,9 @@ body {
 .dashboard-panel-grid-custom {
     border: hidden !important;
 }
+
+.dashboard-icon-exclusion-custom {
+    width: 15px !important;
+    vertical-align: bottom !important;
+    float: right !important;
+}

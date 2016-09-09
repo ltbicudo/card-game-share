@@ -12,6 +12,10 @@ public class CartasUsuarios extends Entity {
     private CartasUsuariosPK pk;
 
     @OneToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id", insertable = false, updatable = false)
+    private Usuario usuario;
+
+    @OneToOne
     @JoinColumn(name = "id_carta", referencedColumnName = "id", insertable = false, updatable = false)
     private Carta carta;
 
@@ -40,5 +44,13 @@ public class CartasUsuarios extends Entity {
 
     public void setCarta(Carta carta) {
         this.carta = carta;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -2,17 +2,18 @@ package br.com.cardgameshare.managedbean.mycards;
 
 import br.com.cardgameshare.dto.CartaColecaoDTO;
 import br.com.cardgameshare.dto.CartaDTO;
-import br.com.cardgameshare.entity.Carta;
-import br.com.cardgameshare.entity.CartasUsuarios;
-import br.com.cardgameshare.entity.Colecao;
-import br.com.cardgameshare.entity.Usuario;
+import br.com.cardgameshare.dto.CartasUsuariosDTO;
+import br.com.cardgameshare.entity.*;
+import br.com.cardgameshare.exception.ExcecaoNegocial;
 import br.com.cardgameshare.managedbean.login.LoginManager;
 import br.com.cardgameshare.service.CartaService;
+import br.com.cardgameshare.service.CartasUsuariosService;
 import br.com.cardgameshare.service.UsuarioService;
 import com.ocpsoft.pretty.faces.annotation.URLAction;
 import org.primefaces.component.button.Button;
 import org.primefaces.component.column.Column;
 import org.primefaces.component.dashboard.Dashboard;
+import org.primefaces.component.graphicimage.GraphicImage;
 import org.primefaces.component.panel.Panel;
 import org.primefaces.component.panelgrid.PanelGrid;
 import org.primefaces.component.row.Row;
@@ -50,12 +51,14 @@ public class MyCardsManager {
     @EJB
     private UsuarioService usuarioService;
 
-    private Usuario usuario;
+    @EJB
+    private CartasUsuariosService cartasUsuariosService;
 
     private String nomeCartaPesquisada;
     private CartaDTO cartaSelecionada;
     private String idCartaColecaoSelecionada;
     private Dashboard dashboardCartas;
+    private Long quantidade;
 
     @PostConstruct
     private void init() {
@@ -74,9 +77,9 @@ public class MyCardsManager {
 
     private void prepararDashboardCartas() {
 
-        this.usuario = this.usuarioService.obterUsuarioPorId(LoginManager.obterUsuarioLogado().getId());
+        List<CartasUsuariosDTO> cartas = this.cartasUsuariosService.listarCartasPorUsuario(LoginManager.obterUsuarioLogado().getId());
 
-        if (this.usuario.getCartas().isEmpty()) {
+        if (cartas.isEmpty()) {
 
         } else {
 
@@ -84,7 +87,7 @@ public class MyCardsManager {
             Application application = fc.getApplication();
 
             this.dashboardCartas = (Dashboard) application.createComponent(fc, "org.primefaces.component.Dashboard", "org.primefaces.component.DashboardRenderer");
-            this.dashboardCartas.setId("dashboardCartas");
+            this.dashboardCartas.setId("myCardsDashboard");
 
             DashboardModel model = new DefaultDashboardModel();
             DashboardColumn colunaEsquerda = new DefaultDashboardColumn();
@@ -94,10 +97,10 @@ public class MyCardsManager {
             this.dashboardCartas.setModel(model);
 
             // Ordenação da lista por coleção
-            Collections.sort(this.usuario.getCartas(), new Comparator<CartasUsuarios>() {
+            Collections.sort(cartas, new Comparator<CartasUsuariosDTO>() {
                 @Override
-                public int compare(CartasUsuarios o1, CartasUsuarios o2) {
-                    return o1.getCarta().getColecao().getId().compareTo(o2.getCarta().getColecao().getId());
+                public int compare(CartasUsuariosDTO o1, CartasUsuariosDTO o2) {
+                    return o1.getIdColecao().compareTo(o2.getIdColecao());
                 }
             });
 
@@ -106,17 +109,15 @@ public class MyCardsManager {
             Panel panelAtual = null;
             PanelGrid panelGrid = null;
 
-            for (CartasUsuarios cartasUsuariosAtual : this.usuario.getCartas()) {
+            for (CartasUsuariosDTO cartasUsuariosDTOAtual : cartas) {
 
-                Colecao colecaoAtual = cartasUsuariosAtual.getCarta().getColecao();
-
-                if (idColecaoAtual == null || !colecaoAtual.getId().equals(idColecaoAtual)) {
+                if (idColecaoAtual == null || !cartasUsuariosDTOAtual.getIdColecao().equals(idColecaoAtual)) {
                     // Nova coleção
 
                     // Panel Coleção
                     panelAtual = new Panel();
-                    panelAtual.setId("colecao_" + colecaoAtual.getCodigo());
-                    panelAtual.setHeader(colecaoAtual.getNome() + " - " + colecaoAtual.getCodigo());
+                    panelAtual.setId("colecao_" + cartasUsuariosDTOAtual.getIdColecao());
+                    panelAtual.setHeader(cartasUsuariosDTOAtual.getNomeColecao() + " - " + cartasUsuariosDTOAtual.getCodigoColecao());
                     panelAtual.setStyleClass("dashboard-grid-custom");
                     panelAtual.setClosable(false);
                     panelAtual.setToggleable(true);
@@ -130,47 +131,49 @@ public class MyCardsManager {
 
                     // Linha
                     Row linha = new Row();
-                    Column coluna = new Column();
+                    Column colunaTexto = new Column();
+                    Column colunaBotao = new Column();
 
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
-                    textoCarta.setValue(cartasUsuariosAtual.getCarta().getNome());
-                    coluna.getChildren().add(textoCarta);
-
-                    // Quantidade
+                    textoCarta.setValue(cartasUsuariosDTOAtual.getQuantidade() + " x " + cartasUsuariosDTOAtual.getNomeCarta());
+                    colunaTexto.getChildren().add(textoCarta);
 
                     // Botão excluir
-                    Button botaoExcluir = new Button();
-                    botaoExcluir.setValue("Excluir");
-                    coluna.getChildren().add(botaoExcluir);
+                    GraphicImage imageExcluir = new GraphicImage();
+                    imageExcluir.setUrl("http://findicons.com/files/icons/573/must_have/48/remove.png");
+                    imageExcluir.setStyleClass("dashboard-icon-exclusion-custom");
+                    colunaBotao.getChildren().add(imageExcluir);
 
-                    linha.getChildren().add(coluna);
+                    linha.getChildren().add(colunaTexto);
+                    linha.getChildren().add(colunaBotao);
                     panelGrid.getChildren().add(linha);
                     panelAtual.getChildren().add(panelGrid);
 
-                    // Troca da coluna
+                    // Troca da colunaTexto
                     colunaAtualEsquerda = !colunaAtualEsquerda;
-                    idColecaoAtual = colecaoAtual.getId();
+                    idColecaoAtual = cartasUsuariosDTOAtual.getIdColecao();
                 } else {
                     // Coleção já existente na lista
 
                     // Linha
                     Row linha = new Row();
-                    Column coluna = new Column();
+                    Column colunaTexto = new Column();
+                    Column colunaBotao = new Column();
 
                     // Carta
                     HtmlOutputText textoCarta = new HtmlOutputText();
-                    textoCarta.setValue(cartasUsuariosAtual.getCarta().getNome());
-                    coluna.getChildren().add(textoCarta);
-
-                    // Quantidade
+                    textoCarta.setValue(cartasUsuariosDTOAtual.getQuantidade() + " x " + cartasUsuariosDTOAtual.getNomeCarta());
+                    colunaTexto.getChildren().add(textoCarta);
 
                     // Botão excluir
-                    Button botaoExcluir = new Button();
-                    botaoExcluir.setValue("Excluir");
-                    coluna.getChildren().add(botaoExcluir);
+                    GraphicImage imageExcluir = new GraphicImage();
+                    imageExcluir.setUrl("http://findicons.com/files/icons/573/must_have/48/remove.png");
+                    imageExcluir.setStyleClass("dashboard-icon-exclusion-custom");
+                    colunaBotao.getChildren().add(imageExcluir);
 
-                    linha.getChildren().add(coluna);
+                    linha.getChildren().add(colunaTexto);
+                    linha.getChildren().add(colunaBotao);
                     panelGrid.getChildren().add(linha);
                     panelAtual.getChildren().add(panelGrid);
                 }
@@ -209,6 +212,24 @@ public class MyCardsManager {
         this.cartaSelecionada.setIndiceColecaoAtual(Integer.parseInt(this.idCartaColecaoSelecionada));
     }
 
+    public String adicionarCartaEmMyCards() {
+
+        CartasUsuariosDTO cartasUsuariosDTOAtual = new CartasUsuariosDTO();
+        cartasUsuariosDTOAtual.setIdUsuario(LoginManager.obterUsuarioLogado().getId());
+        cartasUsuariosDTOAtual.setIdCarta(this.cartaSelecionada.getId());
+        cartasUsuariosDTOAtual.setQuantidade(this.quantidade);
+
+        this.cartasUsuariosService.salvar(cartasUsuariosDTOAtual);
+
+        this.cartaSelecionada = null;
+        this.quantidade = null;
+        this.nomeCartaPesquisada = null;
+
+        this.prepararDashboardCartas();
+
+        return "pretty:my-cards";
+    }
+
     public CartaDTO getCartaSelecionada() {
         return cartaSelecionada;
     }
@@ -239,5 +260,13 @@ public class MyCardsManager {
 
     public void setIdCartaColecaoSelecionada(String idCartaColecaoSelecionada) {
         this.idCartaColecaoSelecionada = idCartaColecaoSelecionada;
+    }
+
+    public Long getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Long quantidade) {
+        this.quantidade = quantidade;
     }
 }

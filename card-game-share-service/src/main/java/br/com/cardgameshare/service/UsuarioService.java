@@ -98,6 +98,10 @@ public class UsuarioService extends Service {
         return usuarioLogin;
     }
 
+    public void atualizar(Usuario usuario) {
+        super.createUsuarioRepository().atualizarUsuario(usuario);
+    }
+
     public void enviarSenhaNova(LoginDTO dto) throws ExcecaoNegocial {
 
         // Localizar a conta
